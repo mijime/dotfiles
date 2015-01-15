@@ -1,0 +1,7 @@
+#!/bin/bash
+
+LOCAL_SSH_KEY=${LOCAL_SSH_KEY:-$HOME/.ssh/id_rsa.pub}
+REMOTE_ATH_KEY=${REMOTE_ATH_KEY:=.ssh/authorized_keys}
+REMOTE_SSH_DIR=${REMOTE_ATH_KEY%/*}
+
+cat $LOCAL_SSH_KEY | ssh $* "mkdir -p $REMOTE_SSH_DIR && chmod 0700 $REMOTE_SSH_DIR && cat >> $REMOTE_ATH_KEY && chmod 0600 $REMOTE_ATH_KEY"

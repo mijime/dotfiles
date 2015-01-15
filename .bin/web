@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require 'webrick'
+
+docRoot = unless ARGV.empty? then ARGV.shift else '.' end
+port = unless ARGV.empty? then ARGV.shift else 3000 end
+
+WEBrick::HTTPServer.new({:DocumentRoot => docRoot, :Port => port}).start

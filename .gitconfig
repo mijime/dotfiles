@@ -1,0 +1,14 @@
+[core]
+    editor = vim -c \"set fenc=utf-8\"
+    filemode = false
+[color]
+    ui = auto
+[alias]
+    ignore   = update-index --assume-unchanged
+    unignore = update-index --no-assume-unchanged
+    ignored  = !git ls-files -v | grep "^h"
+    st       = status --short
+[include]
+    path = ~/.gitconfig.local
+[push]
+    default = simple

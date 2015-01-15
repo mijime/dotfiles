@@ -1,0 +1,52 @@
+#!/bin/bash
+
+function getAddr {
+    HOST=$*
+    echo $HOST | sed s%".*@"%%g
+}
+
+N=0
+NEXT_PORT=22
+NEXT_PORT_INIT=2000
+VERBOSE=
+SSH_OPTION="-t"
+SSH_OPTION_FIRST=""
+
+while getopts vdfF:i:p:s: OPT
+do
+    case $OPT in
+    f) SSH_OPTION_FIRST="$SSH_OPTION_FIRST -f";;
+    F) SSH_OPTION_FIRST="$SSH_OPTION_FIRST -F $OPTARG";;
+    i) SSH_OPTION_FIRST="$SSH_OPTION_FIRST -i $OPTARG";;
+    p) NEXT_PORT=$OPTARG;;
+    v) VERBOSE=v;;
+    d) DEBUG=1;;
+    s) USE_SUDO=1;;
+    *);;
+    esac
+done
+shift $((OPTIND - 1))
+
+HOSTS=$*
+HOST_NUM=0
+for arg in $HOSTS; do HOST_NUM=$(expr $HOST_NUM + 1); done
+SSH=$([ -z $USE_SUDO ] && echo ssh || echo sudo ssh)
+
+for arg in $HOSTS; do
+    HOST=$arg
+
+    N=$(expr $N + 1)
+    PREV_NEXT_PORT=$NEXT_PORT
+    if test $N -eq $HOST_NUM
+        then NEXT_PORT=22
+        else NEXT_PORT=$(expr $N + $NEXT_PORT_INIT)
+    fi
+
+    CMD="$CMD $SSH $SSH_OPTION_FIRST $SSH_OPTION -${VERBOSE}L 0.0.0.0:$PREV_NEXT_PORT:$(getAddr $HOST):$NEXT_PORT $HOST"
+    SSH_OPTION_FIRST=""
+done
+
+if [ -z ${DEBUG} ]
+then $CMD
+else echo $CMD
+fi

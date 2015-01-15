@@ -1,0 +1,7 @@
+.git/
+.vim/bundle/
+.vim/.netrwhist
+local.*
+local
+*.lock
+*.log
