@@ -18,6 +18,7 @@ golang_items=(
     github.com/docker/docker/docker
     github.com/peco/peco/cmd/peco
     github.com/mitchellh/gox
+    github.com/tj/stack/cmd/stack
 )
 
 main(){
