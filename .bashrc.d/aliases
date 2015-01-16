@@ -53,7 +53,6 @@ alias ll='ls -l'                              # long list
 alias la='ls -A'                              # all but . and ..
 alias l='ls -CF'                              #
 alias mkdir='mkdir -p'
-alias apt-cyg="apt-cyg -u"
 alias df='df -h'
 alias du='du -h'
 alias cd=pushd_func
@@ -61,9 +60,5 @@ alias pd=popd_func
 alias dirs='dirs -v | awk "!uniq[\$2]{uniq[\$2]=1;print \$0}" | sort -k 2'
 alias lmake='make -f ~/.Makefile'
 alias ansible-playbook='ANSIBLE_SSH_ARGS="-F $HOME/.ssh/config" ansible-playbook -c ssh'
-
-if [ $OSTYPE = cygwin ] && hash cygstart 2> /dev/null
-  then alias open=cygstart
-fi
 
 aliasf(){ alias | grep $* | sed -e "s/^\([^=]*\)=\(.*\)/\1 => \2/" -e "s/'//g" ; }
