@@ -36,10 +36,6 @@ alias dtop='docker top'
 
 alias dip='docker ps -q | xargs docker inspect --format "{{.Id}} {{.NetworkSettings.IPAddress}}"'
 
-dalias(){
-    alias | grep 'docker' | sed -e "s/^\([^=]*\)=\(.*\)/\1 => \2/" -e "s/'//g" | sort
-}
-
 dclean(){
     docker ps -aq | xargs docker rm 2>/dev/null
     docker images | awk '/<none>/{print$3}' | xargs docker rmi 2>/dev/null

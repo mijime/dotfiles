@@ -65,3 +65,5 @@ alias ansible-playbook='ANSIBLE_SSH_ARGS="-F $HOME/.ssh/config" ansible-playbook
 if [ $OSTYPE = cygwin ] && hash cygstart 2> /dev/null
   then alias open=cygstart
 fi
+
+aliasf(){ alias | grep $* | sed -e "s/^\([^=]*\)=\(.*\)/\1 => \2/" -e "s/'//g" ; }
