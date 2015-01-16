@@ -61,4 +61,4 @@ alias dirs='dirs -v | awk "!uniq[\$2]{uniq[\$2]=1;print \$0}" | sort -k 2'
 alias lmake='make -f ~/.Makefile'
 alias ansible-playbook='ANSIBLE_SSH_ARGS="-F $HOME/.ssh/config" ansible-playbook -c ssh'
 
-aliasf(){ alias | grep $* | sed -e "s/^\([^=]*\)=\(.*\)/\1 => \2/" -e "s/'//g" ; }
+aliasf(){ alias | sed -e "s/^\([^=]*\)=\(.*\)/\1 => \2/" -e "s/'//g" | grep $* --color ; }
