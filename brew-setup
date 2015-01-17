@@ -12,6 +12,7 @@ brew_items=(
     awscli
     ffmpeg imagemagick
     zsh zsh-completions
+    googlecl
 )
 
 brew_cask_items=(

@@ -2,28 +2,45 @@
 
 cd ${0%/*}
 
-git submodule init
-git submodule update
+vim_bundles=(
+    Shougo/neobundle.vim
+    Shougo/vimproc.git
+)
 
-for bundle_vim in Shougo/neobundle.vim Shougo/vimproc.git tpope/vim-fugitive.git
-do
-    bundle_path=.vim/bundle/$(echo ${bundle_vim##*/} | sed s%.git$%%g)
-    [[ ! -d $bundle_path ]] &&
-        git clone git://github.com/$bundle_vim $bundle_path
-done
+dotfiles=(
+    .bash_profile
+    .bashrc
+    .bashrc.d
+    .bin
+    .dir_colors
+    .gemrc
+    .gitconfig
+    .gitignore
+    .inputrc
+    .Makefile
+    .tmux.conf
+    .vim
+    .vimrc
+)
 
-dir=$(pwd)
+init_vim_bundle(){
+    git submodule init
+    git submodule update
+    for bundle_vim in ${vim_bundles[@]}
+    do
+        bundle_path=.vim/bundle/$(echo ${bundle_vim##*/} | sed s%.git$%%g)
+        [[ ! -d $bundle_path ]] &&
+            git clone git://github.com/$bundle_vim $bundle_path
+    done
+}
 
-ln -sf $(echo \
-        $dir/.bash* \
-        $dir/.dir_colors \
-        $dir/.inputrc \
-        $dir/.vim* \
-        $dir/.gitconfig \
-        $dir/.tmux.conf \
-        $dir/.gemrc \
-        $dir/.bin \
-        $dir/.Makefile \
-        | sed s%$HOME/%%g) ~
+link_dotfiles(){
+    dir=$(pwd | sed -e "s%$HOME/%%g")
 
-. ~/.bash_profile
+    ln -sf $(echo ${dotfiles[@]} | sed -e "s%^%$dir/%g" -e "s% % $dir/%g") ~
+
+    . ~/.bash_profile
+}
+
+init_vim_bundle
+link_dotfiles
