@@ -1,6 +1,6 @@
 #!/bin/bash -xe
 
-BREW_ITEMS=(
+brew_items=(
     brew-cask
     go python ruby
     adobe-air-sdk haxe
@@ -14,7 +14,7 @@ BREW_ITEMS=(
     zsh zsh-completions
 )
 
-BREW_CASK_ITEMS=(
+brew_cask_items=(
     dropbox
     google-chrome
     vagrant
@@ -38,7 +38,7 @@ install_brew(){
 }
 
 install_brew_items(){
-    brew install ${BREW_ITEMS[@]}
+    brew install ${brew_items[@]}
 }
 
 update_brew_items(){
@@ -49,7 +49,7 @@ update_brew_items(){
 }
 
 install_brew_cask_items(){
-    brew-cask install ${BREW_CASK_ITEMS[@]}
+    brew-cask install ${brew_cask_items[@]}
 }
 
 update_brew_cask_items(){
