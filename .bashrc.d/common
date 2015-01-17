@@ -10,12 +10,17 @@ case $SHELL in
     *bash)
         shopt -u histappend
         export HISTSIZE=9999
-        # コマンド入力時間を記録
         export HISTTIMEFORMAT='%y/%m/%d %H:%M:%S  '
-        # historyに記録しないコマンド
-        export HISTIGNORE=ls:la:ll:lla:history:pwd:cd*
-        export HISTCONTROL=ignoredups:ignorespace:erasedups
-    ;;
+        export HISTIGNORE='ls:la:ll:lla:history:pwd:cd*'
+        export HISTCONTROL='ignoredups:ignorespace:erasedups'
+        ;;
+    *zsh)
+        HISTFILE=~/.zsh_history
+        HISTSIZE=10000
+        SAVEHIST=10000
+        setopt hist_ignore_dups
+        setopt share_history
+        ;;
 esac
 
 # [prompt]
