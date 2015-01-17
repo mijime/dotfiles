@@ -2,11 +2,6 @@
 
 cd ${0%/*}
 
-vim_bundles=(
-    Shougo/neobundle.vim
-    Shougo/vimproc.git
-)
-
 dotfiles=(
     .bash_profile
     .bashrc
@@ -23,15 +18,9 @@ dotfiles=(
     .vimrc
 )
 
-init_vim_bundle(){
+init_gitmodules(){
     git submodule init
     git submodule update
-    for bundle_vim in ${vim_bundles[@]}
-    do
-        bundle_path=.vim/bundle/$(echo ${bundle_vim##*/} | sed s%.git$%%g)
-        [[ ! -d $bundle_path ]] &&
-            git clone git://github.com/$bundle_vim $bundle_path
-    done
 }
 
 link_dotfiles(){
@@ -42,5 +31,5 @@ link_dotfiles(){
     . ~/.bash_profile
 }
 
-init_vim_bundle
+init_gitmodules
 link_dotfiles
