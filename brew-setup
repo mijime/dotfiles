@@ -1,0 +1,61 @@
+#!/bin/bash -xe
+
+BREW_ITEMS=(
+    brew-cask
+    go python ruby
+    adobe-air-sdk haxe
+    android-sdk ant
+    docker fig
+    fabric ansible
+    git git-flow mercurial
+    vim nkf jq tmux weechat
+    awscli
+    ffmpeg imagemagick
+    zsh zsh-completions
+)
+
+BREW_CASK_ITEMS=(
+    dropbox
+    google-chrome
+    vagrant
+    virtualbox
+)
+
+main(){
+    install_brew
+
+    install_brew_items
+    update_brew_items
+
+    install_brew_cask_items
+    update_brew_cask_items
+}
+
+install_brew(){
+    type brew || {
+        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    }
+}
+
+install_brew_items(){
+    brew install ${BREW_ITEMS[@]}
+}
+
+update_brew_items(){
+    brew update
+    brew upgrade
+    brew cleanup
+    brew doctor
+}
+
+install_brew_cask_items(){
+    brew-cask install ${BREW_CASK_ITEMS[@]}
+}
+
+update_brew_cask_items(){
+    brew-cask update
+    brew-cask cleanup
+    brew-cask doctor
+}
+
+${1:-main}
