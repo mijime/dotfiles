@@ -2,7 +2,7 @@
 
 brew_items=(
     brew-cask
-    go python ruby
+    go python ruby npm
     adobe-air-sdk haxe
     android-sdk ant
     docker fig

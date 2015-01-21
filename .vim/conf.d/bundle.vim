@@ -22,5 +22,7 @@ NeoBundle 'taku-o/vim-toggle'               " +でtrue <-> falseなどをtoggle
 NeoBundle 'tpope/vim-fugitive'              " ブランチを表示
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'VimClojure'
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'vim-scripts/jade.vim'
 
 call neobundle#end()
