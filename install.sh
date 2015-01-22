@@ -1,13 +1,28 @@
 #!/bin/bash -e
 
 yum_items=(
-    vim nkf fuse-sshfs
+    vim nkf fuse-sshfs jq
     git gitflow
     sysstat psacct
 )
 
 pip_items=(
     awscli ansible fabric fig googlecl
+)
+
+npm_items=(
+    coffee-script
+    js2coffee
+    html2jade
+    css2stylus
+    yo
+    grunt-cli
+    bower
+    gulp
+    generator-chrome-extension
+    generator-chromeapp-coffee
+    generator-hubot
+    generator-angular
 )
 
 gem_items=(
@@ -52,6 +67,13 @@ install_pip_items(){
 
     easy_install pip
     pip install --upgrade ${pip_items[@]}
+}
+
+install_npm_items(){
+if type yum 2>/dev/null; then
+    yum -y install npm
+fi
+    npm install -g ${npm_items[@]}
 }
 
 install_gem_items(){
