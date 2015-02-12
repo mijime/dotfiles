@@ -1,0 +1,47 @@
+#!/bin/bash
+
+role(){
+    while true
+    do
+        case $1 in
+        --name|-n)
+            name=$2
+            shift 2 || break
+        ;;
+        init)
+            tasks=($tasks $1)
+            shift || break
+        ;;
+        *)
+            break
+        ;;
+        esac
+    done
+
+    for task in $tasks
+    do
+        case $task in
+        init)
+            [[ -z $name ]] && exit 1
+            mkdir -p roles/$name/{tasks,defaults,meta,templates,files,vars}
+        ;;
+        esac
+    done
+}
+
+main(){
+    while true
+    do
+        case $1 in
+        role)
+            shift || break
+            role $*
+        ;;
+        *)
+            break
+        ;;
+        esac
+    done
+}
+
+main $*

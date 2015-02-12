@@ -1,4 +1,3 @@
-
 autocmd BufWritePre * :%s/\s\+$//ge
 
 function! SOLSpaceHilight()

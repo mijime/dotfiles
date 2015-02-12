@@ -16,4 +16,5 @@ if neobundle#tap('jazzradio.vim')
   \     'function_prefix' : 'jazzradio'
   \   }
   \ })
+  nmap <silent> [unite]j :Unite jazzradio<CR>
 endif
