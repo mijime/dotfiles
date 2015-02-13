@@ -21,6 +21,7 @@ dotfiles=(
 init_gitmodules(){
     git submodule init
     git submodule update
+    cd .vim/bundle/vimproc && make
 }
 
 link_dotfiles(){
@@ -31,5 +32,5 @@ link_dotfiles(){
     . ~/.bash_profile
 }
 
-init_gitmodules
 link_dotfiles
+init_gitmodules
