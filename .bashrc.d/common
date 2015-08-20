@@ -1,17 +1,17 @@
 #!/bin/bash
 
 # [history]
-function __share_history {
+__share_history(){
     history -a
     history -r
 }
 
-case $SHELL in
+case ${SHELL} in
     *bash)
         shopt -u histappend
         export HISTSIZE=9999
         export HISTTIMEFORMAT='%y/%m/%d %H:%M:%S  '
-        export HISTIGNORE='ls:la:ll:lla:history:pwd:cd*'
+        export HISTIGNORE='l[sla]:history:pwd:exit:cd:[bf]g:jobs'
         export HISTCONTROL='ignoredups:ignorespace:erasedups'
         ;;
     *zsh)
@@ -24,29 +24,22 @@ case $SHELL in
 esac
 
 # [prompt]
-function custom_prompt {
-    prompt_result=$?
+__git_status_ps1(){
+  git status --short 2>/dev/null |
+    awk -v FS='' 'BEGIN{d=0;}$1~/^[AMDR]$/&&$2==" "{d++}END{printf "%s/%s",d,NR}'
+}
 
-    __share_history
-
-    PS1="\[\e[0;00m\]\[\e[1;30m\]$ssh_prompt
-$name_color\u\[\e[0;37m\]@\[\e[0;32m\]\h \[\e[0;33m\]\w \[\e[0;37m\]\t $(__stat_ps1)
-\[\e[0;31m\]$(__git_ps1)\[\e[0;37m\]\$ \[\e[0;00m\]"
+custom_prompt(){
+  __shell_result=$?
+  [[ 0 -eq ${__shell_result} ]] && __shell_result_ps1="\[\e[0;32m\][${__shell_result}]" || __shell_result_ps1="\[\e[0;31m\][${__shell_result}]"
+  [[ -z ${__no_git_prompt} ]] && {
+    __git_branch_ps1=$(git branch --no-color 2>/dev/null | grep '^*' | cut -d ' ' -f 2)
+    [[ -z ${__git_branch_ps1} ]] && __git_ps1= || __git_ps1="\[\e[31m\](${__git_branch_ps1} $(__git_status_ps1)) "
+  } || {
+    unset __git_branch_ps1
+    unset __git_ps1
+  }
+  PS1="\[\e]0;\w\a\]\n\[\e[36m\]\u\[\e[0m\]@\[\e[34m\]\h \[\e[35m\]$(date +%H:%M:%S) \[\e[33m\]\w ${__shell_result_ps1}\n${__git_ps1}\[\e[0m\]\$ "
 }
 
 PROMPT_COMMAND='custom_prompt'
-
-function __git_ps1 {
-    [[ ! -z $NO_PROMPT_GIT ]] && return
-
-    git_diff=$([[ -z $(git status --short 2> /dev/null) ]] || echo " *")
-    git_branch=$(git branch --no-color 2> /dev/null | awk '/^\*/{print$2}')
-    [[ ! -z $git_branch ]] && echo "($git_branch$git_diff) "
-}
-
-function __stat_ps1 {
-    [[ 0 -eq $prompt_result ]] && echo "\[\e[0;32m\][$prompt_result] " || echo "\[\e[0;31m\][$prompt_result] "
-}
-
-name_color=$([[ -z "$SSH_CLIENT" ]] && echo "\[\e[0;36m\]" || echo "\[\e[0;35m\]")
-ssh_prompt=$(echo $SSH_CLIENT | awk '$1!=""{printf "From: %s\n", $1}')

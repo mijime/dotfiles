@@ -31,34 +31,21 @@ darwin*)
     ;;
 esac
 
-function pushd_func {
-    if [ -z "$*" ]
-        then cd ~
-        else pushd "$*" > /dev/null
-    fi
-}
-
-function popd_func {
-    popd "$*" > /dev/null
-}
-
-alias less='less -rN'                         # raw control characters
-alias whence='type -a'                        # where, of a sort
-alias grep='grep --color'                     # show differences in colour
-alias egrep='egrep --color=auto'              # show differences in colour
-alias fgrep='fgrep --color=auto'              # show differences in colour
-alias dir='ls --color=auto --format=vertical'
-alias vdir='ls --color=auto --format=long'
-alias ll='ls -l'                              # long list
-alias la='ls -A'                              # all but . and ..
 alias l='ls -CF'                              #
-alias mkdir='mkdir -p'
+alias ls='ls --color'
+alias la='ls -A'                              # all but . and ..
+alias ll='ls -l'
 alias df='df -h'
 alias du='du -h'
-alias cd=pushd_func
-alias pd=popd_func
-alias dirs='dirs -v | awk "!uniq[\$2]{uniq[\$2]=1;print \$0}" | sort -k 2'
-alias lmake='make -f ~/.Makefile'
-alias ansible-playbook='ANSIBLE_SSH_ARGS="-F $HOME/.ssh/config" ansible-playbook -c ssh'
+alias grep='grep --color'                     # show differences in colour
+alias less='less -rN'                         # raw control characters
+alias mkdir='mkdir -p'
+alias whence='type -a'                        # where, of a sort
+alias rm='mv --backup=numbered --target-directory=$HOME/.Trash'
 
-aliasf(){ alias | sed -e "s/^\([^=]*\)=\(.*\)/\1 => \2/" -e "s/'//g" | grep $* --color ; }
+# alias cd='pushd'
+# alias dirs='dirs -v'
+# alias ansible-playbook='ANSIBLE_SSH_ARGS="-F $HOME/.ssh/config" ansible-playbook -c ssh'
+# alias lmake='make -f ~/.Makefile'
+
+aliasf(){ alias | sed -e "s/^\([^=]*\)=\(.*\)/\1 => \2/" -e "s/'//g" | grep --color $* ; }

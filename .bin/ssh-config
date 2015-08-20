@@ -1,0 +1,6 @@
+#!/bin/bash -e
+
+project_dir=${project_dir:-$HOME/.ssh/projects}
+ssh_config=${ssh_config:-$HOME/.ssh/config}
+
+find ${project_dir} -type f -name ssh_config | LANG=C sort -n | xargs --no-run-if-empty cat | grep -v '^$' | tee ${ssh_config}

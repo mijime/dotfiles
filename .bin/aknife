@@ -1,47 +1,71 @@
 #!/bin/bash
 
-role(){
-    while true
-    do
-        case $1 in
-        --name|-n)
-            name=$2
-            shift 2 || break
-        ;;
-        init)
-            tasks=($tasks $1)
-            shift || break
-        ;;
-        *)
-            break
-        ;;
-        esac
-    done
+__create(){
+  while true
+  do
+    case $1 in
+    --name|-n)
+      name=$2
+      shift 2 || break
+      ;;
+    role*)
+      tasks=(${tasks} $1)
+      shift || break
+      ;;
+    *)
+      break
+      ;;
+    esac
+  done
 
-    for task in $tasks
-    do
-        case $task in
-        init)
-            [[ -z $name ]] && exit 1
-            mkdir -p roles/$name/{tasks,defaults,meta,templates,files,vars}
-        ;;
-        esac
-    done
+  for task in ${tasks[@]}
+  do
+    case ${task} in
+    role*)
+      [[ -z ${name} ]] && exit 1
+      mkdir -p ${name}/{tasks,defaults,handlers,meta,templates,files,vars}
+      echo created: ${name}/{tasks,defaults,handlers,meta,templates,files,vars}
+      ;;
+    *)
+      break
+      ;;
+    esac
+  done
 }
 
-main(){
-    while true
-    do
+__main(){
+  while true
+  do
+    case $1 in
+    c|create)
+      shift || break
+      __create $@
+      ;;
+
+    p|play)
+      shift || break
+      while [[ ! -z $1 ]]
+      do
         case $1 in
-        role)
-            shift || break
-            role $*
-        ;;
+        -F)
+          export ANSIBLE_SSH_ARGS="-F $2"
+          shift 2 || break
+          ;;
         *)
-            break
-        ;;
+          args="${args} $1"
+          shift || break
+          ;;
         esac
-    done
+      done
+      ansible-playbook -c ssh ${args}
+      break
+      ;;
+
+    *)
+      break
+      ;;
+    esac
+  done
 }
 
-main $*
+__main $@

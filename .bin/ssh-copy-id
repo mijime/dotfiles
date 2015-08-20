@@ -1,7 +1,39 @@
 #!/bin/bash
 
-LOCAL_SSH_KEY=${LOCAL_SSH_KEY:-$HOME/.ssh/id_rsa.pub}
-REMOTE_ATH_KEY=${REMOTE_ATH_KEY:=.ssh/authorized_keys}
-REMOTE_SSH_DIR=${REMOTE_ATH_KEY%/*}
+local_public_key=${local_public_key:-${HOME}/.ssh/id_rsa.pub}
+remote_public_keys=${remote_public_keys:=.ssh/authorized_keys}
 
-cat $LOCAL_SSH_KEY | ssh $* "mkdir -p $REMOTE_SSH_DIR && chmod 0700 $REMOTE_SSH_DIR && cat >> $REMOTE_ATH_KEY && chmod 0600 $REMOTE_ATH_KEY"
+__append_authorized_keys(){
+  cat <<EOF
+mkdir -p ${remote_public_keys%/*} && tee -a ${remote_public_keys}
+EOF
+}
+
+while true
+do
+  case $1 in
+    -l|--local)
+      local_public_key=$2
+      shift 2 || exit 2
+      ;;
+    -r|--remote)
+      remote_public_keys=$2
+      shift 2 || exit 2
+      ;;
+    -d|--dry-run)
+      dry_run=1
+      shift || exit 1
+      ;;
+    *)
+      ssh_options=(${ssh_options[@]} $1)
+      shift || break
+      ;;
+  esac
+done
+
+if [[ -z ${dry_run} ]]
+then cat ${local_public_key} | ssh ${ssh_options[@]} "$(__append_authorized_keys)"
+else cat <<EOF
+cat ${local_public_key} | ssh ${ssh_options[@]} "$(__append_authorized_keys)"
+EOF
+fi

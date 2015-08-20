@@ -1,0 +1,13 @@
+#!/bin/bash
+
+case $(uname) in
+    MSYS*)
+        export MSYS='winsymlinks'
+        alias open=start
+        ;;
+    CYGWIN*)
+        export CYGWIN='nodosfilewarning winsymlinks'
+        alias open=cygstart
+        alias apt-cyg='apt-cyg -u'
+        ;;
+esac

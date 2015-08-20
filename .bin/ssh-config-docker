@@ -1,0 +1,64 @@
+#!/bin/bash -e
+
+no_key=
+config_command=create
+
+__ssh_key_options(){
+  cat <<EOF
+  PasswordAuthentication no
+  IdentitiesOnly yes
+  IdentityFile "{{.Driver.PrivateKeyPath}}"
+EOF
+}
+
+docker_config_template(){
+  cat <<EOF
+Host {{.Driver.MachineName}}.{{.DriverName}}
+  Hostname {{.Driver.IPAddress}}
+  User {{.Driver.SSHUser}}
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  LogLevel FATAL
+$([[ -z ${no_key} ]] && __ssh_key_options)
+EOF
+}
+
+docker_config_render(){
+  docker-machine inspect $@ --format "$(docker_config_template)" |
+    sed -e 's@\\@/@g'
+}
+
+docker_config_reload(){
+  ssh-config > /dev/null
+}
+
+docker_config_create(){
+  for machine in ${@}
+  do
+    mkdir -p ${HOME}/.ssh/projects/docker-machine/${machine}
+    docker_config_render ${machine} |
+      tee ${HOME}/.ssh/projects/docker-machine/${machine}/ssh_config
+  done
+
+  docker_config_reload
+}
+
+while true
+do
+  case $1 in
+  -c|--command)
+    config_command=$2
+    shift 2 || exit 2
+    ;;
+  -K|--no-key)
+    no_key=1
+    shift || exit 1
+    ;;
+  *)
+    machines=(${machines[@]} $1)
+    shift || break
+    ;;
+  esac
+done
+
+docker_config_${config_command} ${machines[@]}

@@ -1,0 +1,29 @@
+#!/bin/bash -e
+
+while true
+do
+  case $1 in
+  *.pfx)
+    target=$1
+    shift || break
+    ;;
+  *)
+    options=(${options[@]} $1)
+    shift || break
+    ;;
+  esac
+done
+
+[[ -z ${target} ]] && exit 1
+
+prefix=${target%.pfx}
+
+mkdir -p ${prefix}
+# create key file
+openssl pkcs12 ${options[@]} -nocerts -nodes  -in ${target} -out ${prefix}.key
+# create crt file
+openssl pkcs12 ${options[@]} -clcerts -nokeys -in ${target} -out ${prefix}.crt
+# Create CA file
+openssl pkcs12 ${options[@]} -cacerts -nokeys -in ${target} -out ${prefix}.ca
+
+tar cvfz ${prefix}.tar.gz ${prefix}.key ${prefix}.crt ${prefix}.ca

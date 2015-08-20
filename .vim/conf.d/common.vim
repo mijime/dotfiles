@@ -10,8 +10,10 @@ set listchars=tab:>\ ,trail:-,nbsp:%,extends:>,precedes:<
 set nocompatible
 set number
 set expandtab
-set shiftwidth=4
-set tabstop=4
+" set autoindent
+" set smartindent
+" set cindent
+set tabstop=2 shiftwidth=2 softtabstop=0
 
 " netrw
 let g:netrw_liststyle = 3
@@ -36,14 +38,15 @@ nmap <C-E> <END>
 nmap j gj
 nmap k gk
 
-if isdirectory("~/.vim-backup")
+vnoremap < <gv
+vnoremap > >gv
+
+if isdirectory("$HOME/.vim-backup")
     set backup
-    set backupdir=~/.vim-backup
+    set backupdir=$HOME/.vim-backup
 endif
 
 nmap <silent> <Space>. :<C-u>tabedit $MYVIMRC<CR>
-
-filetype plugin indent on
 
 setlocal formatoptions-=r
 setlocal formatoptions-=o

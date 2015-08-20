@@ -1,0 +1,22 @@
+#!/bin/bash
+
+vagrant_config_create(){
+  mkdir -p ~/.ssh/projects/vagrant/$(pwd|xargs basename) && \
+    vagrant ssh-config | sed "s/^Host default/Host $(pwd|xargs basename)/g" | \
+    tee ~/.ssh/projects/vagrant/$(pwd|xargs basename)/ssh_config
+
+  vagrant_config_reload
+}
+
+vagrant_config_list(){
+  find ~/.ssh/projects/vagrant -type f -name ssh_config
+
+  vagrant_config_reload
+}
+
+vagrant_config_reload(){
+  ssh-config>/dev/null
+}
+
+
+vagrant_config_${1:-create}

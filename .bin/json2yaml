@@ -1,24 +1,2 @@
-#!/bin/env ruby
-
-require 'json'
-require 'yaml'
-
-def main
-    begin
-        raw_json = ARGF.read
-        obj = JSON.load raw_json
-        puts YAML.dump obj
-
-    rescue JSON::ParserError => e
-        puts "[E] json parse error !"
-        exit 1
-
-    rescue => e
-        p e
-        exit 1
-    end
-end
-
-if __FILE__ == $0
-    main
-end
+#!/bin/bash
+remarshal -if json -of yaml ${@}
