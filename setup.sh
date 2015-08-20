@@ -26,9 +26,7 @@ init_gitmodules(){
 
 link_dotfiles(){
     dir=$(pwd | sed -e "s%$HOME/%%g")
-
     ln -sf $(echo ${dotfiles[@]} | sed -e "s%^%$dir/%g" -e "s% % $dir/%g") ~
-
     . ~/.bash_profile
 }
 

@@ -11,28 +11,23 @@
 # Interactive operation...
 case ${OSTYPE} in
 darwin*)
-    alias ls="ls -G"
     export LSCOLORS=gxfxcxdxbxegedabagacad
+    alias ls='ls -G'
+    alias rm='rm_expand'
+    rm_expand(){
+      mkdir -p ${HOME}/.Trash/$(date +%F/%H/%M/%S)
+      mv $@ ${HOME}/.Trash/$(date +%F/%H/%M/%S)/
+    }
     ;;
-*)
-    case ${TERM} in
-    "emacs")
-        export LS_COLORS="no=00:fi=00:di=35:ln=36:ex=32"
-        export TERM_LENGTH="90"
-        alias ls="ls --classify --color --show-control-char -C"
-        ;;
-    *)
-        stty -ixon -ixoff
-        eval $(dircolors ~/.dir_colors)
-        alias ls="ls --classify --color=auto --show-control-char"
-        alias ls='ls -hF --color=tty' # classify files in colour
-        ;;
-    esac
+  *)
+    stty -ixon -ixoff
+    eval $(dircolors ${HOME}/.dir_colors)
+    alias ls='ls --color'
+    alias rm='mv --backup=numbered --target-directory=${HOME}/.Trash'
     ;;
 esac
 
 alias l='ls -CF'                              #
-alias ls='ls --color'
 alias la='ls -A'                              # all but . and ..
 alias ll='ls -l'
 alias df='df -h'
@@ -41,11 +36,10 @@ alias grep='grep --color'                     # show differences in colour
 alias less='less -rN'                         # raw control characters
 alias mkdir='mkdir -p'
 alias whence='type -a'                        # where, of a sort
-alias rm='mv --backup=numbered --target-directory=$HOME/.Trash'
 
 # alias cd='pushd'
 # alias dirs='dirs -v'
-# alias ansible-playbook='ANSIBLE_SSH_ARGS="-F $HOME/.ssh/config" ansible-playbook -c ssh'
-# alias lmake='make -f ~/.Makefile'
+# alias ansible-playbook='ANSIBLE_SSH_ARGS='-F ${HOME}/.ssh/config' ansible-playbook -c ssh'
+# alias lmake='make -f ${HOME}/.Makefile'
 
-aliasf(){ alias | sed -e "s/^\([^=]*\)=\(.*\)/\1 => \2/" -e "s/'//g" | grep --color $* ; }
+aliasf(){ alias | sed -e 's/^\([^=]*\)=\(.*\)/\1 => \2/' -e "s/'//g" | grep --color $@; }
