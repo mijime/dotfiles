@@ -29,7 +29,7 @@ docker_config_render(){
 }
 
 docker_config_reload(){
-  ssh-config > /dev/null
+  ssh-config-create > /dev/null
 }
 
 docker_config_create(){

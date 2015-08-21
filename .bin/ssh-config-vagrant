@@ -15,7 +15,7 @@ vagrant_config_list(){
 }
 
 vagrant_config_reload(){
-  ssh-config>/dev/null
+  ssh-config-create > /dev/null
 }
 
 
