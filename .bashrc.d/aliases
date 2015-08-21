@@ -11,31 +11,46 @@
 # Interactive operation...
 case ${OSTYPE} in
 darwin*)
-    export LSCOLORS=gxfxcxdxbxegedabagacad
-    alias ls='ls -G'
-    alias rm='rm_expand'
-    rm_expand(){
-      mkdir -p ${HOME}/.Trash/$(date +%F/%H/%M/%S)
-      mv $@ ${HOME}/.Trash/$(date +%F/%H/%M/%S)/
-    }
-    ;;
-  *)
-    stty -ixon -ixoff
-    eval $(dircolors ${HOME}/.dir_colors)
-    alias ls='ls --color'
-    alias rm='mv --backup=numbered --target-directory=${HOME}/.Trash'
-    ;;
+  export LSCOLORS=gxfxcxdxbxegedabagacad
+  alias ls='ls -G'
+  alias rm='rm_expand'
+  rm_expand(){
+    mkdir -p ${HOME}/.Trash/$(date +%F/%H/%M/%S)
+    mv $@ ${HOME}/.Trash/$(date +%F/%H/%M/%S)/
+  }
+  ;;
+
+msys*)
+  # stty -ixon -ixoff
+  eval $(dircolors ${HOME}/.dir_colors)
+  alias ls='ls --color'
+  alias rm='mv --backup=numbered --target-directory=${HOME}/.Trash'
+
+  export MSYS='winsymlinks'
+  alias open=start
+  ;;
+
+cygwin*)
+  # stty -ixon -ixoff
+  eval $(dircolors ${HOME}/.dir_colors)
+  alias ls='ls --color'
+  alias rm='mv --backup=numbered --target-directory=${HOME}/.Trash'
+
+  export CYGWIN='nodosfilewarning winsymlinks'
+  alias open=cygstart
+  alias apt-cyg='apt-cyg -u'
+  ;;
 esac
 
-alias l='ls -CF'                              #
-alias la='ls -A'                              # all but . and ..
+alias l='ls -CF'          #
+alias la='ls -A'          # all but . and ..
 alias ll='ls -l'
 alias df='df -h'
 alias du='du -h'
-alias grep='grep --color'                     # show differences in colour
-alias less='less -rN'                         # raw control characters
+alias grep='grep --color' # show differences in colour
+alias less='less -rN'     # raw control characters
 alias mkdir='mkdir -p'
-alias whence='type -a'                        # where, of a sort
+alias whence='type -a'    # where, of a sort
 
 # alias cd='pushd'
 # alias dirs='dirs -v'
