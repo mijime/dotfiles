@@ -4,7 +4,7 @@ function! SOLSpaceHilight()
 endf
 
 function! JISX0208SpaceHilight()
-  syntax match JISX0208Space "$B!!(B" display containedin=ALL
+  syntax match JISX0208Space "　" display containedin=ALL
   highlight JISX0208Space term=underline ctermbg=LightCyan
 endf
 

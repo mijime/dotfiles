@@ -1,0 +1,1 @@
+  NeoBundle 'nanotech/jellybeans.vim'
