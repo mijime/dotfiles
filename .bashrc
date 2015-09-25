@@ -8,7 +8,7 @@ for bashrc in /etc/bash_completion
 done
 
 case ${TERM} in
-cygwin|xterm*)
+screen|cygwin|xterm*)
     for bashrc_d in ${HOME}/.bashrc.d
         do [ -d ${bashrc_d}/ ] && \
             for bashrc in $(find ${bashrc_d}/ -type f)
