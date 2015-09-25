@@ -1,4 +1,4 @@
-NeoBundle 'jdonaldson/vaxe'
+NeoBundleLazy 'jdonaldson/vaxe'
 
 autocmd MyAutoCmd FileType haxe
       \ setl autowrite
@@ -25,4 +25,4 @@ endif
 let g:neocomplete#sources#omni#input_patterns.haxe = '\v([\]''"\)]|\w|(^\s*))(\.|\()'
 
 au BufRead,BufNewFile,BufReadPre *.hx set filetype=haxe
-autocmd FileType haxe setlocal sw=2 sts=2 ts=2 et
+autocmd MyAutoCmd FileType haxe setlocal sw=2 sts=2 ts=2 et

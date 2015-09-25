@@ -8,7 +8,7 @@ nnoremap <silent> [unite]r :<C-u>Unite<Space>register<CR>
 nnoremap <silent> [unite]t :<C-u>Unite<Space>tab<CR>
 nnoremap <silent> [unite]h :<C-u>Unite<Space>history/yank<CR>
 
-autocmd FileType unite call s:unite_my_settings()
+autocmd MyAutoCmd FileType unite call s:unite_my_settings()
 
 function! s:unite_my_settings()"{{{
   nmap <buffer> <ESC> <Plug>(unite_exit)
