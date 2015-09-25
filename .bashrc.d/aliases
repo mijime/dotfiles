@@ -56,5 +56,7 @@ alias whence='type -a'    # where, of a sort
 # alias dirs='dirs -v'
 # alias ansible-playbook='ANSIBLE_SSH_ARGS='-F ${HOME}/.ssh/config' ansible-playbook -c ssh'
 # alias lmake='make -f ${HOME}/.Makefile'
+alias clean_trash='time \rm -rfv ${HOME}/.Trash && mkdir -p ${HOME}/.Trash'
 
 aliasf(){ alias | sed -e 's/^\([^=]*\)=\(.*\)/\1 => \2/' -e "s/'//g" | grep --color $@; }
+alias uuid="date +%s | md5sum | cut -c 1-4"
