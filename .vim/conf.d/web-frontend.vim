@@ -9,3 +9,6 @@ autocmd MyAutoCmd FileType jade setlocal sw=2 sts=2 ts=2 et
 NeoBundleLazy 'leafgarland/typescript-vim',{'autoload': {'filetypes': ['ts']}}
 autocmd MyAutoCmd BufRead,BufNewFile,BufReadPre *.ts set filetype=typescript
 autocmd MyAutoCmd FileType typescript setlocal sw=2 sts=2 ts=2 et
+
+NeoBundle 'pangloss/vim-javascript'
+NeoBundleLazy 'mxw/vim-jsx',{'depends': ['pangloss/vim-javascript']}
