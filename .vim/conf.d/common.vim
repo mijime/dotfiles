@@ -52,12 +52,12 @@ nmap k gk
 vnoremap < <gv
 vnoremap > >gv
 
-if isdirectory("$HOME/.vim-backup")
+if isdirectory($HOME.'/.vim-backup')
     set backup
-    set backupdir=$HOME/.vim-backup
+    set backupdir=~/.vim-backup
 endif
 
-nmap <silent> <Space>. :<C-u>tabedit $MYVIMRC<CR>
+nmap <silent> <Space>. :<C-u>source $MYVIMRC<CR>
 
 setlocal formatoptions-=r
 setlocal formatoptions-=o
