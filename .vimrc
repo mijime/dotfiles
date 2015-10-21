@@ -10,6 +10,7 @@ set runtimepath+=~/.vim/bundle/neobundle.vim/
 call neobundle#begin($HOME.'/.vim/bundle/')
   NeoBundle 'Shougo/neobundle.vim'
   NeoBundle 'Shougo/unite.vim'
+  NeoBundle 'Shougo/vimproc.vim'
   set runtimepath+=~/.vim/
   runtime! conf.d/*.vim
 call neobundle#end()
