@@ -11,13 +11,9 @@
 # Interactive operation...
 case ${OSTYPE} in
 darwin*)
-  export LSCOLORS=gxfxcxdxbxegedabagacad
-  alias ls='ls -G'
-  alias rm='rm_expand'
-  rm_expand(){
-    mkdir -p ${HOME}/.Trash/$(date +%F/%H/%M/%S)
-    mv $@ ${HOME}/.Trash/$(date +%F/%H/%M/%S)/
-  }
+  eval $(dircolors ${HOME}/.dir_colors)
+  alias ls='ls --color'
+  alias rm='mv --backup=numbered --target-directory=${HOME}/.Trash'
   ;;
 
 msys*)
