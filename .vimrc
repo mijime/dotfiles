@@ -6,18 +6,25 @@ augroup END
 set nocompatible " Be iMproved
 filetype off     " Required!
 
-set runtimepath+=~/.vim/bundle/neobundle.vim/
-call neobundle#begin($HOME.'/.vim/bundle/')
-  NeoBundle 'Shougo/neobundle.vim'
-  NeoBundle 'Shougo/unite.vim'
-  NeoBundle 'Shougo/vimproc.vim'
-  set runtimepath+=~/.vim/
-  runtime! conf.d/*.vim
-call neobundle#end()
+set runtimepath+=~/.vim/conf.d
 
-colorscheme desert " default color
-if filereadable($HOME.'/.vimrc.local')
-  source ~/.vimrc.local
+if has('vim_starting')
+  set nocompatible
+  if !isdirectory(expand('~/.vim/bundle/neobundle.vim'))
+    echo 'install neobundle...'
+    :call system('git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim')
+  endif
 endif
 
+set runtimepath+=~/.vim/bundle/neobundle.vim
+call neobundle#begin(expand('~/.vim/bundle'))
+let g:neobundle_default_git_protocol='https'
+NeoBundle 'Shougo/neobundle.vim'
+NeoBundle 'Shougo/vimproc.vim', {'build': {'unix': 'make'}}
+
+NeoBundle 'Shougo/unite.vim'
+runtime! neobundle/*.vim
+call neobundle#end()
+
 filetype plugin indent on " Required!
+runtime! common/*.vim
