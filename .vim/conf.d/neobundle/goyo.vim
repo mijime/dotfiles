@@ -6,7 +6,7 @@ function! s:goyo_enter()
   set noshowcmd
   set scrolloff=999
   set number
-  Limelight 0.7
+  Limelight
 endfunction
 
 function! s:goyo_leave()
@@ -17,8 +17,8 @@ function! s:goyo_leave()
   quit
 endfunction
 
-let g:limelight_conceal_ctermfg = 'gray'
-let g:limelight_conceal_guifg = 'DarkGray'
+let g:limelight_conceal_ctermfg = 'darkgray'
+let g:limelight_conceal_guifg = 'darkgray'
 let g:limelight_default_coefficient = 0.7
 let g:limelight_paragraph_span = 1
 let g:limelight_priority = -1
