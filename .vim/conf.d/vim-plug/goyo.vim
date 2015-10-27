@@ -1,5 +1,5 @@
-NeoBundle 'junegunn/goyo.vim'
-NeoBundle 'junegunn/limelight.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 
 function! s:goyo_enter()
   set noshowmode
@@ -14,7 +14,7 @@ function! s:goyo_leave()
   set showcmd
   set scrolloff=5
   Limelight!
-  quit
+  " quit
 endfunction
 
 let g:limelight_conceal_ctermfg = 'darkgray'
