@@ -1,0 +1,4 @@
+ansible
+awscli
+docker-compose
+wheel
