@@ -1,1 +1,0 @@
-/home/kojima/.vim/bundle/vim-plug/vim-plug/plug.vim
