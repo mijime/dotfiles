@@ -1,28 +1,23 @@
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 
-function! s:goyo_enter()
-  set noshowmode
-  set noshowcmd
-  set scrolloff=999
-  set number
+func! s:goyo_enter()
   Limelight
-endfunction
+  nmap [goyo]<C-g> :<C-u>Goyo!<CR>
+endf
 
-function! s:goyo_leave()
-  set showmode
-  set showcmd
-  set scrolloff=5
+func! s:goyo_leave()
   Limelight!
-  " quit
-endfunction
+  nmap [goyo]<C-g> :<C-u>Goyo<CR>
+endf
 
-let g:limelight_conceal_ctermfg = 'darkgray'
-let g:limelight_conceal_guifg = 'darkgray'
+let g:limelight_conceal_ctermfg = 'DarkGray'
 let g:limelight_default_coefficient = 0.7
 let g:limelight_paragraph_span = 1
 let g:limelight_priority = -1
 
-autocmd MyAutoCmd User GoyoEnter nested call <SID>goyo_enter()
-autocmd MyAutoCmd User GoyoLeave nested call <SID>goyo_leave()
-" autocmd MyAutoCmd BufNewFile,BufRead * call goyo#execute(0,80)
+autocmd MyAutoCmd User GoyoEnter nested call s:goyo_enter()
+autocmd MyAutoCmd User GoyoLeave nested call s:goyo_leave()
+
+nmap [goyo]<C-g> :<C-u>Goyo<CR>
+nmap <C-g> [goyo]

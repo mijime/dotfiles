@@ -19,32 +19,32 @@ let g:netrw_list_hide = 'CVS,\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_altv = 1
 let g:netrw_alto = 1
 
-cmap <C-A> <HOME>
-cmap <C-B> <LEFT>
-cmap <C-D> <DEL>
-cmap <C-E> <END>
-cmap <C-F> <RIGHT>
-cmap <C-K> <ESC>
-cmap <C-N> <DOWN>
-cmap <C-P> <UP>
+cmap <C-a> <HOME>
+cmap <C-b> <LEFT>
+cmap <C-d> <DEL>
+cmap <C-e> <END>
+cmap <C-f> <RIGHT>
+cmap <C-k> <ESC>
+cmap <C-n> <DOWN>
+cmap <C-p> <UP>
 
-imap <C-A> <HOME>
-imap <C-B> <LEFT>
-imap <C-D> <DEL>
-imap <C-E> <END>
-imap <C-F> <RIGHT>
-imap <C-K> <ESC>
+imap <C-a> <HOME>
+imap <C-b> <LEFT>
+imap <C-d> <DEL>
+imap <C-e> <END>
+imap <C-f> <RIGHT>
+imap <C-k> <ESC>
 " imap <C-N> <DOWN>
 " imap <C-P> <UP>
 
-nmap <C-A> <HOME>
-nmap <C-B> <LEFT>
-nmap <C-D> <DEL>
-nmap <C-E> <END>
-nmap <C-F> <RIGHT>
-nmap <C-K> <ESC>
-nmap <C-N> <DOWN>
-nmap <C-P> <UP>
+nmap <C-a> <HOME>
+nmap <C-b> <LEFT>
+nmap <C-d> <DEL>
+nmap <C-e> <END>
+nmap <C-f> <RIGHT>
+nmap <C-k> <ESC>
+nmap <C-n> <DOWN>
+nmap <C-p> <UP>
 
 nmap j gj
 nmap k gk
@@ -57,7 +57,8 @@ if isdirectory($HOME.'/.vim-backup')
     set backupdir=~/.vim-backup
 endif
 
-nmap <silent> <Space>. :<C-u>source $MYVIMRC<CR>
+nmap <C-c> [mycommand]
+nmap [mycommand]. :<C-u>source<Space>%<CR>:<C-u>echo<Space>"[reloaded]"<Space>expand("%")<CR>
 
 setlocal formatoptions-=r
 setlocal formatoptions-=o
