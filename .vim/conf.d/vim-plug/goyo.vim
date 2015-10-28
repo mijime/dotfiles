@@ -8,7 +8,7 @@ endf
 
 func! s:goyo_leave()
   Limelight!
-  nmap [goyo]<C-g> :<C-u>Goyo<CR>
+  nmap [goyo]<C-g> :<C-u>Goyo<Space>80%x80%<CR>
 endf
 
 let g:limelight_conceal_ctermfg = 'DarkGray'
@@ -19,5 +19,5 @@ let g:limelight_priority = -1
 autocmd MyAutoCmd User GoyoEnter nested call s:goyo_enter()
 autocmd MyAutoCmd User GoyoLeave nested call s:goyo_leave()
 
-nmap [goyo]<C-g> :<C-u>Goyo<CR>
+nmap [goyo]<C-g> :<C-u>Goyo<Space>80%x80%<CR>
 nmap <C-g> [goyo]

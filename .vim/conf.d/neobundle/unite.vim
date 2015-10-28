@@ -17,3 +17,8 @@ func! s:unite_my_settings()"{{{
   nmap <buffer> <ESC> <Plug>(unite_exit)
   nmap <buffer> <C-c> <Plug>(unite_exit)
 endf"}}}
+
+NeoBundleLazy 'Shougo/vimfiler',{'depends':['Shougo/unite.vim']}
+if neobundle#tap('vimfiler')
+  nmap <silent> [unite]d :VimFiler -split -simple -winwidth=30 -no-quit<CR>
+endif

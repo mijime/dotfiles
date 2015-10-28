@@ -59,6 +59,7 @@ endif
 
 nmap <C-c> [mycommand]
 nmap [mycommand]. :<C-u>source<Space>%<CR>:<C-u>echo<Space>"[reloaded]"<Space>expand("%")<CR>
+nmap [mycommand]<C-r> :<C-u>!%:h/%<CR>
 
 setlocal formatoptions-=r
 setlocal formatoptions-=o
