@@ -1,0 +1,42 @@
+#!/bin/env ruby
+require "optparse"
+
+opts = ARGV.getopts "m:n:w", "bl:", "br:",
+  "max:100", "num:4", "overwrite",
+  "bracket-left:[", "bracket-right:]",
+  "box:=", "box-half:-", "box-empty: "
+
+max_s = opts["m"]  || opts["max"]
+num_s = opts["n"]  || opts["num"]
+over  = opts["w"]  || opts["overwrite"]
+brt_l = opts["bl"] || opts["bracket-left"]
+brt_r = opts["br"] || opts["bracket-right"]
+box   = opts["box"]
+b_hlf = opts["box-half"]
+b_emp = opts["box-empty"]
+
+max = max_s.to_i
+num = num_s.to_i
+
+multi_val = false
+
+while line = gets
+  val = line.to_i
+
+  if max < val
+    if over
+      max = val
+    else
+      val = max
+    end
+  end
+
+  unt = 1.0 * max / num
+  cur = (val / unt).floor
+  hlf = (val - cur * unt) > unt / 2 ? 1 : 0
+  emp = num - cur - hlf
+
+  print "\r" if multi_val
+  print "#{brt_l}#{box * cur}#{b_hlf * hlf}#{b_emp * emp}#{brt_r}"
+  multi_val = true
+end
