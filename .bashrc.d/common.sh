@@ -28,6 +28,7 @@ __git_info_ps1(){
   git status --porcelain --branch 2>/dev/null |
     awk '/^##/{branch=$2}END{if(NR>0){print" ("branch,NR-1")"}}'
 }
+__user_info_ps1="\[\e[36m\]\u\[\e[0m\]@\[\e[34m\]\h"
 
 custom_prompt(){
   __shell_result=$?
@@ -39,7 +40,8 @@ custom_prompt(){
   } || {
     unset __git_ps1
   }
-  PS1="\[\e]0;\w\a\]\n\[\e[36m\]\u\[\e[0m\]@\[\e[34m\]\h \[\e[35m\]$(date +%H:%M:%S) \[\e[33m\]\w ${__shell_result_ps1}${__git_ps1}\n\[\e[0m\]\$ "
+  __user_date_ps1="\[\e[35m\]$(date +%H:%M:%S)"
+  PS1="\[\e]0;\w\a\]${__user_info_ps1} ${__user_date_ps1} \[\e[33m\]\W${__git_ps1} ${__shell_result_ps1}\n\[\e[0m\]\$ "
 }
 
 PROMPT_COMMAND='custom_prompt'
