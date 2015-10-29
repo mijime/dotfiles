@@ -1,42 +1,54 @@
 #!/bin/env ruby
 require "optparse"
 
-opts = ARGV.getopts "m:n:w", "bl:", "br:",
-  "max:100", "num:4", "overwrite",
-  "bracket-left:[", "bracket-right:]",
-  "box:=", "box-half:-", "box-empty: "
+opts = ARGV.getopts "m:l:b:w:p:s:t:n",
+  "max:100",   "length:4",
+  "boxes: -=", "box-width:1",
+  "prefix:",   "suffix:",
+  "trends:0",  "no-same-line"
 
-max_s = opts["m"]  || opts["max"]
-num_s = opts["n"]  || opts["num"]
-over  = opts["w"]  || opts["overwrite"]
-brt_l = opts["bl"] || opts["bracket-left"]
-brt_r = opts["br"] || opts["bracket-right"]
-box   = opts["box"]
-b_hlf = opts["box-half"]
-b_emp = opts["box-empty"]
+max     = (opts["m"] || opts["max"]).to_i
+length  = (opts["l"] || opts["length"]).to_i
+trends  = (opts["t"] || opts["trends"]).to_i
+width   = (opts["w"] || opts["box-width"]).to_i
+boxes   = (opts["b"] || opts["boxes"]).scan /.{1,#{width}}/
+prefix  = opts["p"]  || opts["prefix"]
+suffix  = opts["s"]  || opts["suffix"]
+no_same = opts["n"]  || opts["no-same-line"]
 
-max = max_s.to_i
-num = num_s.to_i
-
-multi_val = false
+cache_values = []
 
 while line = gets
-  val = line.to_i
+  raw_value = line.to_i
 
-  if max < val
-    if over
-      max = val
-    else
-      val = max
+  value = if max < raw_value then max else raw_value end
+
+  period      = 1.0 * max / length
+  full_boxes  = (value / period).floor
+  last_value  = value - full_boxes * period
+  last_state  = (last_value * (boxes.length - 1) / period).floor
+  empty_boxes = length - full_boxes - (last_value > 0 ? 1 : 0)
+
+  res = []
+  res << "\r" if !no_same and cache_values.length > 0
+  res << prefix                 if prefix
+  res << boxes[0] * empty_boxes if empty_boxes > 0
+  res << boxes[last_state]      if last_value  > 0
+  res << boxes[-1] * full_boxes if full_boxes  > 0
+  res << suffix                 if suffix
+  print res.join ""
+
+  puts if no_same
+
+  cache_values << raw_value if trends > 0 or cache_values.length < 1
+  if trends > 0
+    if max < raw_value
+      max = raw_value
+    end
+
+    if cache_values.length > trends
+      max = cache_values.reduce do |crr, nxt| if crr < nxt then nxt else crr end end
+      cache_values.shift
     end
   end
-
-  unt = 1.0 * max / num
-  cur = (val / unt).floor
-  hlf = (val - cur * unt) > unt / 2 ? 1 : 0
-  emp = num - cur - hlf
-
-  print "\r" if multi_val
-  print "#{brt_l}#{box * cur}#{b_hlf * hlf}#{b_emp * emp}#{brt_r}"
-  multi_val = true
 end
