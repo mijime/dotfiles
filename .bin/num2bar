@@ -2,7 +2,7 @@
 require "optparse"
 
 opts = ARGV.getopts "m:l:b:w:p:s:t:n",
-  "max:100",   "length:4",
+  "max:100",   "length:5",
   "boxes: -=", "box-width:1",
   "prefix:",   "suffix:",
   "trends:0",  "no-same-line"
@@ -19,11 +19,11 @@ no_same = opts["n"]  || opts["no-same-line"]
 cache_values = []
 
 while line = gets
-  raw_value = line.to_i
+  raw_value = line.to_f
 
   value = if max < raw_value then max else raw_value end
 
-  period      = 1.0 * max / length
+  period      = max.to_f / length
   full_boxes  = (value / period).floor
   last_value  = value - full_boxes * period
   last_state  = (last_value * (boxes.length - 1) / period).floor
@@ -52,3 +52,4 @@ while line = gets
     end
   end
 end
+puts
