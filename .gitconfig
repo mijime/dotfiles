@@ -7,7 +7,7 @@
     ignore   = update-index --assume-unchanged
     unignore = update-index --no-assume-unchanged
     ignored  = !git ls-files -v | grep "^h"
-    st       = status --short
+    st       = status --short --branch
 [include]
     path = ~/.gitconfig.local
 [push]

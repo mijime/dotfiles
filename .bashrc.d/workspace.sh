@@ -1,23 +1,23 @@
 #!/bin/bash
 
-function echoR {
-    echo -e "\e[31m$*\e[m"
+echoR(){
+    echo -e "\e[31m$@\e[m"
 }
 
-function echoG {
-    echo -e "\e[32m$*\e[m"
+echoG(){
+    echo -e "\e[32m$@\e[m"
 }
 
-function echoY {
-    echo -e "\e[33m$*\e[m"
+echoY(){
+    echo -e "\e[33m$@\e[m"
 }
 
-function render_template {
+render_template(){
     eval "echo \"`cat $1`\""
 }
 
-function render_templates {
-    for tmpl in `find $* -type f -name *.tmpl`
+render_templates(){
+    find $@ -type f -name '*.tmpl' | while read tmpl
     do
         tmpl_result=${tmpl%.tmpl}
         [[ -f $tmpl_result ]] &&

@@ -24,22 +24,22 @@ case ${SHELL} in
 esac
 
 # [prompt]
-__git_status_ps1(){
-  git status --short 2>/dev/null |
-    awk -v FS='' 'BEGIN{d=0;}$1~/^[AMDR]$/&&$2==" "{d++}END{printf "%s/%s",d,NR}'
+__git_info_ps1(){
+  git status --porcelain --branch 2>/dev/null |
+    awk '/^##/{branch=$2}END{if(NR>0){print" ("branch,NR-1")"}}'
 }
 
 custom_prompt(){
   __shell_result=$?
-  [[ 0 -eq ${__shell_result} ]] && __shell_result_ps1="\[\e[0;32m\][${__shell_result}]" || __shell_result_ps1="\[\e[0;31m\][${__shell_result}]"
+  [[ 0 -eq ${__shell_result} ]] &&
+    __shell_result_ps1="\[\e[0;32m\][${__shell_result}]" ||
+    __shell_result_ps1="\[\e[0;31m\][${__shell_result}]"
   [[ -z ${__no_git_prompt} ]] && {
-    __git_branch_ps1=$(git branch --no-color 2>/dev/null | grep '^*' | cut -d ' ' -f 2)
-    [[ -z ${__git_branch_ps1} ]] && __git_ps1= || __git_ps1="\[\e[31m\](${__git_branch_ps1} $(__git_status_ps1)) "
+    __git_ps1="\[\e[0;31m\]$(__git_info_ps1)"
   } || {
-    unset __git_branch_ps1
     unset __git_ps1
   }
-  PS1="\[\e]0;\w\a\]\n\[\e[36m\]\u\[\e[0m\]@\[\e[34m\]\h \[\e[35m\]$(date +%H:%M:%S) \[\e[33m\]\w ${__shell_result_ps1}\n${__git_ps1}\[\e[0m\]\$ "
+  PS1="\[\e]0;\w\a\]\n\[\e[36m\]\u\[\e[0m\]@\[\e[34m\]\h \[\e[35m\]$(date +%H:%M:%S) \[\e[33m\]\w ${__shell_result_ps1}${__git_ps1}\n\[\e[0m\]\$ "
 }
 
 PROMPT_COMMAND='custom_prompt'

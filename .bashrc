@@ -11,7 +11,7 @@ case ${TERM} in
 screen|cygwin|xterm*)
     for bashrc_d in ${HOME}/.bashrc.d
         do [ -d ${bashrc_d}/ ] && \
-            for bashrc in $(find ${bashrc_d}/ -type f)
+            for bashrc in $(find ${bashrc_d}/ -type f -name '*.sh')
                 do
                   if [[ -z ${BASH_DEBUG} ]]
                   then source ${bashrc} || echo Loading Error: ${bashrc} >&2
