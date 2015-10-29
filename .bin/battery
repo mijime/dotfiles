@@ -1,7 +1,0 @@
-#!/bin/bash
-if hash pmset 2>/dev/null
-then
-  pmset -g ps | awk '/InternalBattery/{print$2}' | sed -e 's/[^0-9]//g'
-else
-  echo 100
-fi

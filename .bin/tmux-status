@@ -1,0 +1,21 @@
+#!/bin/bash
+
+battery(){
+  if hash pmset 2>/dev/null
+  then
+    pmset -g ps | awk '/InternalBattery/{print$2}' | sed -e 's/[^0-9]//g'
+  else
+    echo 100
+  fi
+}
+
+spec(){
+  if hash uptime 2>/dev/null
+  then
+    uptime | awk '{print$(NF)}'
+  else
+    cat /proc/loadavg | awk '{print$1}'
+  fi
+}
+
+echo "[$(battery|dat2bar)] | $(spec)"

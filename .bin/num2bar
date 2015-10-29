@@ -1,19 +1,16 @@
-#!/bin/env ruby
+#!/usr/bin/env ruby
 require "optparse"
 
-opts = ARGV.getopts "m:l:b:w:p:s:t:n",
-  "max:100",   "length:5",
+opts = ARGV.getopts "m:s:b:t:w:n",
+  "max:100",   "size:5",
   "boxes: -=", "box-width:1",
-  "prefix:",   "suffix:",
   "trends:0",  "no-same-line"
 
 max     = (opts["m"] || opts["max"]).to_i
-length  = (opts["l"] || opts["length"]).to_i
-trends  = (opts["t"] || opts["trends"]).to_i
+size    = (opts["s"] || opts["size"]).to_i
 width   = (opts["w"] || opts["box-width"]).to_i
 boxes   = (opts["b"] || opts["boxes"]).scan /.{1,#{width}}/
-prefix  = opts["p"]  || opts["prefix"]
-suffix  = opts["s"]  || opts["suffix"]
+trends  = (opts["t"] || opts["trends"]).to_i
 no_same = opts["n"]  || opts["no-same-line"]
 
 cache_values = []
@@ -23,30 +20,28 @@ while line = gets
 
   value = if max < raw_value then max else raw_value end
 
-  period      = max.to_f / length
+  period      = max.to_f / size
   full_boxes  = (value / period).floor
   last_value  = value - full_boxes * period
-  last_state  = (last_value * (boxes.length - 1) / period).floor
-  empty_boxes = length - full_boxes - (last_value > 0 ? 1 : 0)
+  last_state  = (last_value * (boxes.size - 1) / period).floor
+  empty_boxes = size - full_boxes - (last_value > 0 ? 1 : 0)
 
   res = []
-  res << "\r" if !no_same and cache_values.length > 0
-  res << prefix                 if prefix
-  res << boxes[0] * empty_boxes if empty_boxes > 0
-  res << boxes[last_state]      if last_value  > 0
+  res << "\r" if !no_same and cache_values.size > 0
   res << boxes[-1] * full_boxes if full_boxes  > 0
-  res << suffix                 if suffix
+  res << boxes[last_state]      if last_value  > 0
+  res << boxes[0] * empty_boxes if empty_boxes > 0
   print res.join ""
 
   puts if no_same
 
-  cache_values << raw_value if trends > 0 or cache_values.length < 1
+  cache_values << raw_value if trends > 0 or cache_values.size < 1
   if trends > 0
     if max < raw_value
       max = raw_value
     end
 
-    if cache_values.length > trends
+    if cache_values.size > trends
       max = cache_values.reduce do |crr, nxt| if crr < nxt then nxt else crr end end
       cache_values.shift
     end
