@@ -1,14 +1,16 @@
 #!/usr/bin/env ruby
 require "optparse"
 
-opts = ARGV.getopts "m:s:w:b:",
+opts = ARGV.getopts "m:s:w:b:f:",
   "max:100",   "size:5",
-  "boxes: -=", "box-width:1"
+  "boxes: -=", "box-width:1",
+  "format:%s"
 
 max     = (opts["m"] || opts["max"]).to_i
 size    = (opts["s"] || opts["size"]).to_i
 width   = (opts["w"] || opts["box-width"]).to_i
 boxes   = (opts["b"] || opts["boxes"]).scan /.{1,#{width}}/
+format  = (opts["f"] || opts["format"])
 
 first = true
 prev_text = ""
@@ -25,15 +27,18 @@ while line = gets
   empty_boxes = size - full_boxes - (last_value > 0 ? 1 : 0)
 
   res = []
-  res << "\r" unless first
   res << boxes[-1] * full_boxes if full_boxes  > 0
   res << boxes[last_state]      if last_value  > 0
   res << boxes[0] * empty_boxes if empty_boxes > 0
   text = res.join ""
-  first = false if first
-
   next if prev_text == text
-  print text
+
+  if first
+    first = false
+  else
+    print "\r"
+  end
+  print format % text
   prev_text = text
 end
 puts
