@@ -40,8 +40,7 @@ custom_prompt(){
   } || {
     unset __git_ps1
   }
-  __user_date_ps1="\[\e[35m\]$(date +%H:%M:%S)"
-  PS1="\[\e]0;\w\a\]${__user_info_ps1} ${__user_date_ps1} \[\e[33m\][\w]${__git_ps1} ${__shell_result_ps1}\n\[\e[0m\]\$ "
+  PS1="\[\e]0;\w\a\]${__user_info_ps1} \[\e[33m\]\w ${__shell_result_ps1}${__git_ps1}\n\[\e[0m\]\$ "
 }
 
 PROMPT_COMMAND='custom_prompt'

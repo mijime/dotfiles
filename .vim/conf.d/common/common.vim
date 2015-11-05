@@ -19,32 +19,30 @@ let g:netrw_list_hide = 'CVS,\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_altv = 1
 let g:netrw_alto = 1
 
-cmap <C-a> <HOME>
-cmap <C-b> <LEFT>
-cmap <C-d> <DEL>
-cmap <C-e> <END>
-cmap <C-f> <RIGHT>
-cmap <C-k> <ESC>
-cmap <C-n> <DOWN>
-cmap <C-p> <UP>
+imap <C-a> <Home>
+imap <C-b> <Left>
+imap <C-d> <Del>
+imap <C-e> <End>
+imap <C-f> <Right>
+imap <C-k> <Esc>
 
-imap <C-a> <HOME>
-imap <C-b> <LEFT>
-imap <C-d> <DEL>
-imap <C-e> <END>
-imap <C-f> <RIGHT>
-imap <C-k> <ESC>
-" imap <C-N> <DOWN>
-" imap <C-P> <UP>
+nmap <C-a> <Home>
+nmap <C-b> <Left>
+nmap <C-d> <Del>
+nmap <C-e> <End>
+nmap <C-f> <Right>
+nmap <C-k> <Esc>
+nmap <C-n> <Down>
+nmap <C-p> <Up>
 
-nmap <C-a> <HOME>
-nmap <C-b> <LEFT>
-nmap <C-d> <DEL>
-nmap <C-e> <END>
-nmap <C-f> <RIGHT>
-nmap <C-k> <ESC>
-nmap <C-n> <DOWN>
-nmap <C-p> <UP>
+cmap <C-a> <Home>
+cmap <C-b> <Left>
+cmap <C-d> <Del>
+cmap <C-e> <End>
+cmap <C-f> <Right>
+cmap <C-k> <Esc>
+cmap <C-n> <Down>
+cmap <C-p> <Up>
 
 nmap j gj
 nmap k gk
@@ -52,12 +50,13 @@ nmap k gk
 vnoremap < <gv
 vnoremap > >gv
 
-if isdirectory($HOME.'/.vim-backup')
-    set backup
-    set backupdir=~/.vim-backup
+if !isdirectory(expand('~/.vim/backup'))
+  call system('mkdir -p ~/.vim/backup')
 endif
+set backup
+set backupdir=~/.vim/backup
 
-nmap <C-c> [mycommand]
+nmap <C-x> [mycommand]
 nmap [mycommand]. :<C-u>source<Space>%<CR>:<C-u>echo<Space>"[reloaded]"<Space>expand("%")<CR>
 nmap [mycommand]<C-r> :<C-u>!%:h/%<CR>
 

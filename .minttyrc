@@ -29,3 +29,4 @@ BoldAsColour=yes
 AllowBlinking=yes
 Scrollbar=none
 OpaqueWhenFocused=no
+FontSmoothing=default
