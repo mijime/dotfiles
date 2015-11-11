@@ -1,4 +1,5 @@
 ansible
 awscli
 docker-compose
-wheel
+pip
+pip-tools
