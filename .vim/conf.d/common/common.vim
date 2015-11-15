@@ -52,7 +52,7 @@ vnoremap > >gv
 
 if !isdirectory(expand('~/.vim/backup'))
   call system('mkdir -p ~/.vim/backup')
-endif
+end
 set backup
 set backupdir=~/.vim/backup
 

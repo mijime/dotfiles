@@ -15,6 +15,6 @@ if has("syntax")
     autocmd MyAutoCmd BufNew,BufRead * call SOLSpaceHilight()
     autocmd MyAutoCmd BufNew,BufRead * call JISX0208SpaceHilight()
   augroup END
-endif
+end
 
 autocmd MyAutoCmd BufWritePre * :%s/\s\+$//ge
