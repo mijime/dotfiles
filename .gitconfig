@@ -12,3 +12,6 @@
     path = ~/.gitconfig.local
 [push]
     default = simple
+[user]
+    name = mijime
+    email = 07cc0110+gthb@gmail.com
