@@ -1,3 +1,3 @@
-Plug 'plasticboy/vim-markdown'
-Plug 'kannokanno/previm'
-Plug 'tyru/open-browser.vim'
+Plug 'plasticboy/vim-markdown', {'for': ['markdown']}
+Plug 'kannokanno/previm',       {'on':  ['PrevimOpen']}
+Plug 'tyru/open-browser.vim',   {'on':  ['PrevimOpen']}
