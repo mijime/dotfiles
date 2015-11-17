@@ -1,6 +1,9 @@
 set nocompatible
 
 if has('vim_starting')
+  set rtp+=~/.vim/conf.d
+
+  set rtp+=~/.vim/bundle/plugged/vim-plug
   if !isdirectory(expand('~/.vim/bundle/plugged/vim-plug'))
     echo 'install vim-plug...'
     call system('mkdir -p ~/.vim/bundle/plugged/vim-plug')
@@ -8,9 +11,6 @@ if has('vim_starting')
   end
 endif
 
-set rtp+=~/.vim/conf.d
-
-set rtp+=~/.vim/bundle/plugged/vim-plug
 call plug#begin('~/.vim/bundle/plugged')
   Plug 'junegunn/vim-plug',
         \ {'dir': '~/.vim/bundle/plugged/vim-plug/autoload'}
