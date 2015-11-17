@@ -7,3 +7,4 @@ local
 *.lock
 *.log
 .DS_Store
+*.bk

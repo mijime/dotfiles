@@ -17,8 +17,8 @@ let g:limelight_default_coefficient = 0.7
 let g:limelight_paragraph_span = 1
 let g:limelight_priority = -1
 
-autocmd MyAutoCmd User GoyoEnter nested call <SID>goyo_enter()
-autocmd MyAutoCmd User GoyoLeave nested call <SID>goyo_leave()
+autocmd User GoyoEnter nested call <SID>goyo_enter()
+autocmd User GoyoLeave nested call <SID>goyo_leave()
 
 nmap [goyo]<C-G> :<C-U>Goyo<CR>
 nmap [goyo]<C-L> :<C-U>Limelight!!<CR>

@@ -1,3 +1,4 @@
+
 func! SOLSpaceHilight()
   syntax match SOLSpace "^\s\+$" display containedin=ALL
   highlight SOLSpace term=underline ctermbg=LightGray
@@ -12,9 +13,9 @@ if has("syntax")
   syntax on
   augroup invisible
     autocmd! invisible
-    autocmd MyAutoCmd BufNew,BufRead * call SOLSpaceHilight()
-    autocmd MyAutoCmd BufNew,BufRead * call JISX0208SpaceHilight()
+    autocmd BufNew,BufRead * call SOLSpaceHilight()
+    autocmd BufNew,BufRead * call JISX0208SpaceHilight()
   augroup END
 end
 
-autocmd MyAutoCmd BufWritePre * :%s/\s\+$//ge
+autocmd BufWritePre * :%s/\s\+$//ge
