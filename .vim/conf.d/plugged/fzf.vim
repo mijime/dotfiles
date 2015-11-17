@@ -9,7 +9,7 @@ func! <SID>buffer_list()
 endf
 
 func! <SID>buffer_open(e)
-  exec 'buffer' matchstr(a:e, '^[ 0-9]*')
+  exe 'buffer' matchstr(a:e, '^[ 0-9]*')
 endf
 
 func! <SID>mruall_list()
@@ -21,9 +21,13 @@ endf
 
 func! <SID>line_handler(l)
   let keys = split(a:l, ':\t')
-  exec 'buf' keys[0]
-  exec keys[1]
+  exe 'buf' keys[0]
+  exe keys[1]
   normal! ^zz
+endf
+
+func! <SID>cmd_handler(l)
+  let @" = a:l
 endf
 
 func! <SID>buffer_lines()
@@ -35,31 +39,37 @@ func! <SID>buffer_lines()
   return res
 endf
 
-command! FZFBuffer call fzf#run({
-      \ 'source': reverse(<SID>buffer_list()),
+command! FZFBuf call fzf#run({
+      \ 'source': <SID>buffer_list(),
       \ 'sink': function('<SID>buffer_open'),
       \ 'options': '+m',
       \ 'down': len(<SID>buffer_list()) + 2
       \ })
 
-command! FZFLines call fzf#run({
-      \ 'source': reverse(<SID>buffer_lines()),
+command! FZFLine call fzf#run({
+      \ 'source': <SID>buffer_lines(),
       \ 'sink': function('<SID>line_handler'),
       \ 'options': '--extended --nth=3..',
       \ 'down': '60%'
       \ })
 
 command! FZFMru call fzf#run({
-      \ 'source': reverse(<SID>mruall_list()),
+      \ 'source': <SID>mruall_list(),
       \ 'sink': 'e',
       \ 'options': '-m -x +s',
       \ 'down': '40%'
       \ })
 
-command! FZFColo call fzf#run({
-      \ 'source': map(split(globpath(&rtp, "colors/*.vim"), "\n"),
-      \ "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"),
-      \ 'sink': 'colo',
+command! -nargs=* -bang -complete=shellcmd FZFCmd call fzf#run({
+      \ 'source': printf('%s', <q-args>),
+      \ 'sink': function('<SID>cmd_handler'),
       \ 'options': '+m',
-      \ 'left': '20%'
+      \ 'down': '50%'
       \ })
+
+nmap F [fzf]
+nmap [fzf]f :<C-U>FZF<CR>
+nmap [fzf]b :<C-U>FZFBuf<CR>
+nmap [fzf]l :<C-U>FZFLine<CR>
+nmap [fzf]m :<C-U>FZFMru<CR>
+nmap [fzf]c :<C-U>FZFCmd<Space>
