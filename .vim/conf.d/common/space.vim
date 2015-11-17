@@ -11,11 +11,10 @@ endf
 
 if has("syntax")
   syntax on
-  augroup invisible
-    autocmd! invisible
+  augroup InvisibleUser
+    autocmd!
     autocmd BufNew,BufRead * call SOLSpaceHilight()
     autocmd BufNew,BufRead * call JISX0208SpaceHilight()
+    autocmd BufWritePre    * :%s/\s\+$//ge
   augroup END
 end
-
-autocmd BufWritePre * :%s/\s\+$//ge
