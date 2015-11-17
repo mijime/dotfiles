@@ -1,0 +1,41 @@
+#!/bin/bash
+
+tmuxCommand="cat"
+
+while true
+do
+  case $1 in
+  --quit|-q)
+    isQuit=1
+    shift || break
+    ;;
+  --less)
+    tmuxCommand="less +%F"
+    shift || break
+    ;;
+  --sleep|-s)
+    isQuit=1
+    sleepNum=$2
+    shift 2 || break
+    ;;
+  --command|-C)
+    tmuxCommand=$2
+    shift 2 || break
+    ;;
+  *)
+    tmuxArgs=(${tmuxArgs[@]} $1)
+    shift || break
+  ;;
+  esac
+done
+
+logfile=${TMP}/tmux.log.$$
+pidfile=${TMP}/tmux.pid.$$
+touch ${logfile} ${pidfile}
+
+tmux split-window -p25 -c $(pwd) ${tmuxArgs[@]} "echo \$\$ > ${pidfile} && tail -f ${logfile} | ${tmuxCommand}"
+cat > ${logfile}
+
+[[ ${sleepNum} ]] && sleep ${sleepNum}
+[[ ${isQuit} ]] && cat ${pidfile} | xargs kill
+rm ${logfile} ${pidfile}
