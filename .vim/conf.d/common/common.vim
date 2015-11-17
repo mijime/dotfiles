@@ -63,7 +63,6 @@ set backupdir=~/.vim/backup
 nmap <C-X> [mycommand]
 nmap [mycommand]. :<C-U>source %<CR>:<C-U>echo "[reloaded]" expand("%")<CR>
 nmap [mycommand]<C-R> :<C-U>!%:h/%<CR>
-nmap <ESC><ESC> :<C-U>noh<CR>
 
 setlocal formatoptions-=r
 setlocal formatoptions-=o
