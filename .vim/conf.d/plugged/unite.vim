@@ -1,10 +1,7 @@
-let b:dependsVimfiler = ['VimFilerCurrentDir', 'VimFilerBufferDir']
-let b:dependsUnite    = b:dependsVimfiler + ['Unite']
-
-Plug 'Shougo/vimfiler',  {'on': b:dependsVimfiler}
-Plug 'Shougo/unite.vim', {'on': b:dependsUnite, 'for': ['unite']}
-
-unlet b:dependsUnite b:dependsVimfiler
+let b:commandDepends = ['Unite', 'VimFilerCurrentDir', 'VimFilerBufferDir']
+Plug 'Shougo/unite.vim', {'on': b:commandDepends, 'for': ['unite']}
+      \ | Plug 'Shougo/vimfiler', {'on': b:commandDepends}
+unlet b:commandDepends
 
 let g:unite_enable_start_insert = 1
 let g:unite_source_history_yank_enable = 1
