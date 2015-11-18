@@ -12,6 +12,14 @@ set autoindent
 set smartindent
 set cindent
 set tabstop=2 shiftwidth=2 softtabstop=0
+set laststatus=2
+set ruler
+set title
+set nocursorline
+set nocursorcolumn
+set ignorecase
+set smartcase
+set smarttab
 
 " netrw
 let g:netrw_liststyle = 3
@@ -19,34 +27,26 @@ let g:netrw_list_hide = 'CVS,\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_altv = 1
 let g:netrw_alto = 1
 
-imap <C-A> <HOME>
-cmap <C-A> <HOME>
-nmap <C-A> <HOME>
-vmap <C-A> <HOME>
-imap <C-B> <LEFT>
-cmap <C-B> <LEFT>
-nmap <C-B> <LEFT>
-vmap <C-B> <LEFT>
-imap <C-D> <DEL>
-cmap <C-D> <DEL>
-nmap <C-D> <DEL>
-vmap <C-D> <DEL>
-imap <C-E> <END>
-cmap <C-E> <END>
-nmap <C-E> <END>
-vmap <C-E> <END>
-imap <C-F> <RIGHT>
-cmap <C-F> <RIGHT>
-nmap <C-F> <RIGHT>
-vmap <C-F> <RIGHT>
-imap <C-K> <ESC>
-cmap <C-K> <ESC>
-nmap <C-K> <ESC>
-vmap <C-K> <ESC>
-cmap <C-N> <DOWN>
-nmap <C-N> <DOWN>
-cmap <C-P> <UP>
-nmap <C-P> <UP>
+imap <C-A> <Home>
+cmap <C-A> <Home>
+nmap <C-A> <Home>
+imap <C-E> <End>
+cmap <C-E> <End>
+nmap <C-E> <End>
+imap <C-B> <Left>
+cmap <C-B> <Left>
+imap <C-F> <Right>
+cmap <C-F> <Right>
+imap <C-D> <Del>
+cmap <C-D> <Del>
+imap <C-K> <Esc>
+cmap <C-K> <Esc>
+nmap <C-K> <Esc>
+vmap <C-K> <Esc>
+cmap <C-N> <Down>
+nmap <C-N> <Down>
+cmap <C-P> <Up>
+nmap <C-P> <Up>
 
 nmap j gj
 nmap k gk
@@ -60,9 +60,15 @@ end
 set backup
 set backupdir=~/.vim/backup
 
-nmap <C-X> [mycommand]
-nmap [mycommand]. :<C-U>source %<CR>:<C-U>echo "[reloaded]" expand("%")<CR>
-nmap [mycommand]<C-R> :<C-U>!%:h/%<CR>
-
 setlocal formatoptions-=r
 setlocal formatoptions-=o
+
+func! <SID>vimrc_my_settings()"{{{
+  nmap <C-X> [vimrc]
+  nmap [vimrc]. :<C-U>source %<CR>:<C-U>echo "[reloaded]" expand("%")<CR>
+endf"}}}
+
+augroup VimrcUser
+  autocmd!
+  autocmd FileType vim call <SID>vimrc_my_settings()
+augroup END
