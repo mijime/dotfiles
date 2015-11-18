@@ -33,7 +33,7 @@ logfile=${TMP}/tmux.log.$$
 pidfile=${TMP}/tmux.pid.$$
 touch ${logfile} ${pidfile}
 
-tmux split-window -p25 -c $(pwd) ${tmuxArgs[@]} "echo \$\$ > ${pidfile} && tail -f ${logfile} | ${tmuxCommand}"
+tmux split-window -p25 -d -c $(pwd) ${tmuxArgs[@]} "echo \$\$ > ${pidfile} && tail -f ${logfile} | ${tmuxCommand}"
 cat > ${logfile}
 
 [[ ${sleepNum} ]] && sleep ${sleepNum}
