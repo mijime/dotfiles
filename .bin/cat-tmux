@@ -29,8 +29,8 @@ do
   esac
 done
 
-logfile=${TMP}/tmux.log.$$
-pidfile=${TMP}/tmux.pid.$$
+logfile=/tmp/tmux.log.$$
+pidfile=/tmp/tmux.pid.$$
 touch ${logfile} ${pidfile}
 
 tmux split-window -p25 -d -c $(pwd) ${tmuxArgs[@]} "echo \$\$ > ${pidfile} && tail -f ${logfile} | ${tmuxCommand}"
