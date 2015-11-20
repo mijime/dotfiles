@@ -1,5 +1,4 @@
-Plug 'junegunn/fzf', {'on': ['FZF'],
-      \ 'dir': '~/.fzf', 'do': './install --all'}
+Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 
 func! <SID>buffer_list()
   redir => ls
