@@ -30,12 +30,6 @@ set swapfile directory=$cache/swap,$cache,/var/tmp/vim,/var/tmp
 set nobackup backupdir=$cache/backup,$cache,/var/tmp/vim,/var/tmp
 set undofile undolevels=1000 undodir=$cache/undo,$cache,/var/tmp/vim,/var/tmp
 
-" netrw
-let g:netrw_liststyle = 3
-let g:netrw_list_hide = 'CVS,\(^\|\s\s\)\zs\.\S\+'
-let g:netrw_altv = 1
-let g:netrw_alto = 1
-
 imap <C-A> <Home>
 cmap <C-A> <Home>
 nmap <C-A> <Home>
@@ -59,9 +53,14 @@ nmap <C-P> <Up>
 
 nmap j gj
 nmap k gk
-
 vmap < <gv
 vmap > >gv
+
+nmap <Space> <Leader>
+vmap <Space> <Leader>
+
+imap <C-L> <C-X><C-O>
+setlocal omnifunc=syntaxcomplete#Complete
 
 func! <SID>vimrc_my_settings()"{{{
   nmap <C-X> [vimrc]
