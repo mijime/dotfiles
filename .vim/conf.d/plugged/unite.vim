@@ -1,6 +1,5 @@
-let b:commandDepends = {'for': ['unite'],
-      \ 'on': ['Unite', 'UniteWithBufferDir',
-      \ 'VimFilerCurrentDir', 'VimFilerBufferDir']}
+let b:commandDepends = {'for': ['unite'], 'on': [
+      \ 'Unite', 'VimFilerCurrentDir', 'VimFilerBufferDir']}
 Plug 'Shougo/unite.vim', b:commandDepends
       \ | Plug 'Shougo/vimfiler', b:commandDepends
 unlet b:commandDepends
@@ -32,3 +31,4 @@ nmap [unite]t :<C-U>Unite tab<CR>
 nmap [unite]m :<C-U>Unite mapping<CR>
 nmap [unite]d :<C-U>VimFilerCurrentDir -explorer<CR>
 nmap [unite]f :<C-U>VimFilerBufferDir  -explorer<CR>
+nmap [unite]u :<C-U>Unite buffer bookmark file<CR>
