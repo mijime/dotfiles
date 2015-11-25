@@ -18,7 +18,7 @@ darwin*)
 
 msys*)
   # stty -ixon -ixoff
-  eval $(dircolors ${HOME}/.dir_colors)
+  # eval $(dircolors ${HOME}/.dir_colors)
   alias ls='ls --color'
   alias rm='mv --backup=numbered --target-directory=${HOME}/.Trash'
 
@@ -28,7 +28,7 @@ msys*)
 
 cygwin*)
   # stty -ixon -ixoff
-  eval $(dircolors ${HOME}/.dir_colors)
+  # eval $(dircolors ${HOME}/.dir_colors)
   alias ls='ls --color'
   alias rm='mv --backup=numbered --target-directory=${HOME}/.Trash'
 
