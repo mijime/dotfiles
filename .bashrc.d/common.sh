@@ -48,8 +48,8 @@ __interactiveGrep(){
     hash ${cmd} 1>/dev/null 2>/dev/null || continue
 
     case ${cmd} in
-      fzf)
-        fzf --query="$1"
+      fzf|peco)
+        ${cmd} --query="$1"
         return
         ;;
       *)
@@ -61,20 +61,11 @@ __interactiveGrep(){
 }
 
 __cdFunc(){
-  [[ $# -eq 0 ]] && popd > /dev/null
+  [[ $# -eq 0 ]] && { pushd || pushd $HOME; } 1>/dev/null 2>/dev/null
 
   while [[ $# -gt 0 ]]
   do
     case "$1" in
-      --load)
-        dirs -c
-        eval $(cat $2|grep "^pushd")
-        break
-        ;;
-      -s|--save)
-        dirs -v -l | awk '!nl[$2]{print;nl[$2]=1}' | sed -e 's/^ *[0-9]\+ */pushd -n "/' -e 's/$/";/g'
-        break
-        ;;
       -c|--clear)
         dirs -c
         break
