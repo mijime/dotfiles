@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 tmuxCommand="cat"
 
@@ -29,8 +29,9 @@ do
   esac
 done
 
-logfile=/tmp/tmux.log.$$
-pidfile=/tmp/tmux.pid.$$
+logfile=/tmp/$(basename $0)-$$.log
+pidfile=/tmp/$(basename $0)-$$.pid
+
 touch ${logfile} ${pidfile}
 
 tmux split-window -p25 -d -c $(pwd) ${tmuxArgs[@]} "echo \$\$ > ${pidfile} && tail -f ${logfile} | ${tmuxCommand}"
@@ -38,4 +39,5 @@ cat > ${logfile}
 
 [[ ${sleepNum} ]] && sleep ${sleepNum}
 [[ ${isQuit} ]] && cat ${pidfile} | xargs kill
+
 rm ${logfile} ${pidfile}
