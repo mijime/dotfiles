@@ -21,7 +21,7 @@ set updatetime=300 timeout timeoutlen=500 ttimeout ttimeoutlen=50 ttyfast nolazy
 " Search
 set wrapscan ignorecase smartcase incsearch hlsearch magic
 
-" cache files
+" Cache
 let $cache = expand('~/.vim/cache')
 if !isdirectory($cache) | call mkdir($cache, 'p') | end
 set history=1000 viminfo='10,/100,:1000,<10,@10,s10,h,n$cache/.viminfo
@@ -30,26 +30,31 @@ set swapfile directory=$cache/swap,$cache,/var/tmp/vim,/var/tmp
 set nobackup backupdir=$cache/backup,$cache,/var/tmp/vim,/var/tmp
 set undofile undolevels=1000 undodir=$cache/undo,$cache,/var/tmp/vim,/var/tmp
 
-imap <C-A> <Home>
+" Movement
 cmap <C-A> <Home>
-nmap <C-A> <Home>
-imap <C-E> <End>
-cmap <C-E> <End>
-nmap <C-E> <End>
-imap <C-B> <Left>
 cmap <C-B> <Left>
-imap <C-F> <Right>
-cmap <C-F> <Right>
-imap <C-D> <Del>
 cmap <C-D> <Del>
-imap <C-K> <Esc>
+cmap <C-E> <End>
+cmap <C-F> <Right>
 cmap <C-K> <Esc>
-nmap <C-K> <Esc>
-vmap <C-K> <Esc>
 cmap <C-N> <Down>
-nmap <C-N> <Down>
 cmap <C-P> <Up>
+imap <C-A> <Home>
+imap <C-B> <Left>
+imap <C-D> <Del>
+imap <C-E> <End>
+imap <C-F> <Right>
+imap <C-K> <Esc>
+nmap <C-A> <Home>
+nmap <C-E> <End>
+nmap <C-K> <Esc>
+nmap <C-N> <Down>
 nmap <C-P> <Up>
+vmap <C-A> <Home>
+vmap <C-E> <End>
+vmap <C-K> <Esc>
+vmap <C-N> <Down>
+vmap <C-P> <Up>
 
 nmap j gj
 nmap k gk
@@ -63,8 +68,9 @@ imap <C-L> <C-X><C-O>
 setlocal omnifunc=syntaxcomplete#Complete
 
 func! <SID>vimrc_my_settings()"{{{
-  nmap <C-X> [vimrc]
+  nmap <Leader>v [vimrc]
   nmap [vimrc]. :<C-U>source %<CR>:<C-U>echo "[reloaded]" expand("%")<CR>
+  nmap [vimrc]o :<C-U>tabedit $MYVIMRC<CR>
 endf"}}}
 
 augroup vimrc
