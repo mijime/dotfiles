@@ -1,3 +1,46 @@
 #!/bin/bash
 
-time rm -rvf /tmp/*
+cmd=rm
+prefixCmd=
+
+while [[ $# -gt 0 ]]
+do
+  case "$1" in
+    -v|--verbose)
+      options=(${options[@]} -v)
+      shift || break
+      ;;
+    -l|--list)
+      cmd=find
+      shift || break
+      ;;
+    --debug)
+      prefixCmd=echo
+      shift || break
+      ;;
+    -d|--du|--disk-usage)
+      cmd=du
+      shift || break
+      ;;
+    -t|--time)
+      prefixCmd=time
+      shift || break
+      ;;
+    *)
+      shift || break
+      ;;
+  esac
+done
+
+case ${cmd} in
+  rm)
+    ${prefixCmd} rm -rf ${options[@]} ${HOME}/.Trash
+    ${prefixCmd} mkdir -p ${HOME}/.Trash
+    ;;
+  find)
+    ${prefixCmd} find ${HOME}/.Trash
+    ;;
+  du)
+    ${prefixCmd} du ${HOME}/.Trash
+    ;;
+esac
