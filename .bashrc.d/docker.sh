@@ -4,49 +4,8 @@
 # Docker alias and function
 # ------------------------------------
 
-alias dbuild='docker build'
-
-alias dexec='docker exec'
-
-alias dexeci='docker exec --interactive --tty'
-
-alias dimages='docker images'
-
-alias dkill='docker kill'
-
-alias dlogs='docker logs'
-
-alias dps='docker ps'
-
-alias dpull='docker pull'
-
-alias dpush='docker push'
-
-alias drm='docker rm'
-
-alias drmi='docker rmi'
-
-alias drun='docker run'
-
-alias druni='docker run --interactive --tty --rm'
-
-alias drund='docker run --detach'
-
-alias dstart='docker start'
-
-alias dstop='docker stop'
-
-alias drestart='docker restart'
-
-alias dtag='docker tag'
-
-alias dtop='docker top'
-
-alias dip='docker ps -q | xargs --no-run-if-empty docker inspect --format "{{.Id}} {{.NetworkSettings.IPAddress}}"'
-
-alias dcompose='docker-compose'
-
 alias dmachine='docker-machine'
+alias dcompose='docker-compose'
 
 dclean(){
   xargs_opt=--no-run-if-empty
@@ -54,6 +13,49 @@ dclean(){
   docker images | awk '/<none>/{print$3}' | xargs ${xargs_opt} docker rmi 2>/dev/null
 }
 
-dlt(){
-  echo "localhost:5000/${USER}/$(pwd|xargs basename):$(date +%F)"
-}
+alias dattach='docker attach'
+alias dbuild='docker build'
+alias dcommit='docker commit'
+alias dcp='docker cp'
+alias dcreate='docker create'
+alias ddiff='docker diff'
+alias devents='docker events'
+alias dexec='docker exec'
+alias dexecd='docker exec --detach'
+alias dexeci='docker exec --interactive --tty'
+alias dexport='docker export'
+alias dhistory='docker history'
+alias dimages='docker images'
+alias dimport='docker import'
+alias dinfo='docker info'
+alias dinspect='docker inspect'
+alias dip='docker inspect --format "{{.Name}} {{.Config.Image}} {{.NetworkSettings.IPAddress}}/{{.NetworkSettings.IPPrefixLen}}"'
+alias dkill='docker kill'
+alias dload='docker load'
+alias dlogin='docker login'
+alias dlogout='docker logout'
+alias dlogs='docker logs'
+alias dnetwork='docker network'
+alias dpause='docker pause'
+alias dport='docker port'
+alias dps='docker ps'
+alias dpull='docker pull'
+alias dpush='docker push'
+alias drename='docker rename'
+alias drestart='docker restart'
+alias drm='docker rm'
+alias drmi='docker rmi'
+alias drun='docker run'
+alias drund='docker run --detach'
+alias druni='docker run --interactive --tty --rm'
+alias dsave='docker save'
+alias dsearch='docker search'
+alias dstart='docker start'
+alias dstats='docker stats'
+alias dstop='docker stop'
+alias dtag='docker tag'
+alias dtop='docker top'
+alias dunpause='docker unpause'
+alias dversion='docker version'
+alias dvolume='docker volume'
+alias dwait='docker wait'
