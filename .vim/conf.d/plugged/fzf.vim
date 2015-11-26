@@ -66,9 +66,9 @@ command! -nargs=* -bang -complete=shellcmd FZFCmd call fzf#run({
       \ 'down': '50%'
       \ })
 
-nmap <Leader>f [fzf]
-nmap [fzf]  :<C-U>FZF<CR>
-nmap [fzf]b :<C-U>FZFBuf<CR>
-nmap [fzf]l :<C-U>FZFLine<CR>
-nmap [fzf]m :<C-U>FZFMru<CR>
-nmap [fzf]c :<C-U>FZFCmd<Space>
+nnoremap <Leader>f [fzf]
+nnoremap [fzf]  :<C-U>FZF<CR>
+nnoremap [fzf]b :<C-U>FZFBuf<CR>
+nnoremap [fzf]l :<C-U>FZFLine<CR>
+nnoremap [fzf]m :<C-U>FZFMru<CR>
+nnoremap [fzf]c :<C-U>FZFCmd<Space>

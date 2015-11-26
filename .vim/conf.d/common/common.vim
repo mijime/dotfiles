@@ -22,7 +22,7 @@ set updatetime=300 timeout timeoutlen=500 ttimeout ttimeoutlen=50 ttyfast nolazy
 set wrapscan ignorecase smartcase incsearch hlsearch magic
 
 " Cache
-let $cache = expand('~/.vim/cache')
+let $cache = expand('~/.vim/cache/backup')
 if !isdirectory($cache) | call mkdir($cache, 'p') | end
 set history=1000 viminfo='10,/100,:1000,<10,@10,s10,h,n$cache/.viminfo
 set nospell  spellfile=$cache/en.utf-8.add
@@ -31,50 +31,49 @@ set nobackup backupdir=$cache/backup,$cache,/var/tmp/vim,/var/tmp
 set undofile undolevels=1000 undodir=$cache/undo,$cache,/var/tmp/vim,/var/tmp
 
 " Movement
-cmap <C-A> <Home>
-cmap <C-B> <Left>
-cmap <C-D> <Del>
-cmap <C-E> <End>
-cmap <C-F> <Right>
-cmap <C-K> <Esc>
-cmap <C-N> <Down>
-cmap <C-P> <Up>
-imap <C-A> <Home>
-imap <C-B> <Left>
-imap <C-D> <Del>
-imap <C-E> <End>
-imap <C-F> <Right>
-imap <C-K> <Esc>
-nmap <C-A> <Home>
-nmap <C-E> <End>
-nmap <C-K> <Esc>
-nmap <C-N> <Down>
-nmap <C-P> <Up>
-vmap <C-A> <Home>
-vmap <C-E> <End>
-vmap <C-K> <Esc>
-vmap <C-N> <Down>
-vmap <C-P> <Up>
+cnoremap <C-A> <Home>
+cnoremap <C-B> <Left>
+cnoremap <C-D> <Del>
+cnoremap <C-E> <End>
+cnoremap <C-F> <Right>
+cnoremap <C-K> <Esc>
+cnoremap <C-N> <Down>
+cnoremap <C-P> <Up>
+inoremap <C-A> <Home>
+inoremap <C-B> <Left>
+inoremap <C-D> <Del>
+inoremap <C-E> <End>
+inoremap <C-F> <Right>
+inoremap <C-K> <Esc>
+nnoremap <C-A> <Home>
+nnoremap <C-E> <End>
+nnoremap <C-K> <Esc>
+nnoremap <C-N> <Down>
+nnoremap <C-P> <Up>
+vnoremap <C-A> <Home>
+vnoremap <C-E> <End>
+vnoremap <C-K> <Esc>
+vnoremap <C-N> <Down>
+vnoremap <C-P> <Up>
 
-nmap j gj
-nmap k gk
-vmap < <gv
-vmap > >gv
+nnoremap j gj
+nnoremap k gk
+vnoremap < <gv
+vnoremap > >gv
 
-nmap <Space> <Leader>
-vmap <Space> <Leader>
+nnoremap <Space> <Leader>
+vnoremap <Space> <Leader>
 
-imap <C-L> <C-X><C-O>
-setlocal omnifunc=syntaxcomplete#Complete
+inoremap <C-L> <C-X><C-O>
 
 func! <SID>vimrc_my_settings()"{{{
-  nmap <Leader>v [vimrc]
-  nmap [vimrc]. :<C-U>source %<CR>:<C-U>echo "[reloaded]" expand("%")<CR>
-  nmap [vimrc]o :<C-U>tabedit $MYVIMRC<CR>
+  nnoremap <Leader>v [vimrc]
+  nnoremap [vimrc]. :<C-U>source %<CR>:<C-U>echo "[reloaded]" expand("%")<CR>
+  nnoremap [vimrc]o :<C-U>tabedit $MYVIMRC<CR>
 endf"}}}
 
 augroup vimrc
   autocmd!
   autocmd FileType vim call <SID>vimrc_my_settings()
-  autocmd FileType *   setlocal formatoptions-=ro
+  autocmd FileType *   setlocal formatoptions-=ro omnifunc=syntaxcomplete#Complete
 augroup END

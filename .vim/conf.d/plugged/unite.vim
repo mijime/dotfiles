@@ -13,7 +13,7 @@ func! <SID>unite_my_settings()"{{{
 endf"}}}
 
 func! <SID>vimfiler_my_settings()"{{{
-  nmap <buffer> <C-K> q
+  nnoremap <buffer> <C-K> q
 endf"}}}
 
 augroup UniteUser
@@ -22,13 +22,13 @@ augroup UniteUser
   autocmd FileType vimfiler call <SID>vimfiler_my_settings()
 augroup END
 
-nmap <Leader>u [unite]
-nmap [unite]  :<C-U>Unite<Space>
-nmap [unite]a :<C-U>Unite<CR>
-nmap [unite]b :<C-U>Unite buffer<CR>
-nmap [unite]r :<C-U>Unite register<CR>
-nmap [unite]t :<C-U>Unite tab<CR>
-nmap [unite]m :<C-U>Unite mapping<CR>
-nmap [unite]d :<C-U>VimFilerCurrentDir -explorer<CR>
-nmap [unite]f :<C-U>VimFilerBufferDir  -explorer<CR>
-nmap [unite]u :<C-U>Unite buffer bookmark file<CR>
+nnoremap <Leader>u [unite]
+nnoremap [unite]  :<C-U>Unite<Space>
+nnoremap [unite]a :<C-U>Unite<CR>
+nnoremap [unite]b :<C-U>Unite buffer<CR>
+nnoremap [unite]r :<C-U>Unite register<CR>
+nnoremap [unite]t :<C-U>Unite tab<CR>
+nnoremap [unite]m :<C-U>Unite mapping<CR>
+nnoremap [unite]d :<C-U>VimFilerCurrentDir -explorer<CR>
+nnoremap [unite]f :<C-U>VimFilerBufferDir  -explorer<CR>
+nnoremap [unite]u :<C-U>Unite buffer bookmark file<CR>
