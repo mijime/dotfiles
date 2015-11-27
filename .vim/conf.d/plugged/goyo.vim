@@ -20,6 +20,6 @@ let g:limelight_priority = -1
 autocmd User GoyoEnter nested call <SID>goyo_enter()
 autocmd User GoyoLeave nested call <SID>goyo_leave()
 
-nnoremap <Leader>g [goyo]
-nnoremap <Leader>gg :<C-U>Goyo<CR>
-nnoremap <Leader>gl :<C-U>Limelight!!<CR>
+nmap <Leader>g [goyo]
+nmap <Leader>gg :<C-U>Goyo<CR>
+nmap <Leader>gl :<C-U>Limelight!!<CR>

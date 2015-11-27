@@ -36,7 +36,6 @@ cnoremap <C-B> <Left>
 cnoremap <C-D> <Del>
 cnoremap <C-E> <End>
 cnoremap <C-F> <Right>
-cnoremap <C-K> <Esc>
 cnoremap <C-N> <Down>
 cnoremap <C-P> <Up>
 inoremap <C-A> <Home>
@@ -44,15 +43,12 @@ inoremap <C-B> <Left>
 inoremap <C-D> <Del>
 inoremap <C-E> <End>
 inoremap <C-F> <Right>
-inoremap <C-K> <Esc>
 nnoremap <C-A> <Home>
 nnoremap <C-E> <End>
-nnoremap <C-K> <Esc>
 nnoremap <C-N> <Down>
 nnoremap <C-P> <Up>
 vnoremap <C-A> <Home>
 vnoremap <C-E> <End>
-vnoremap <C-K> <Esc>
 vnoremap <C-N> <Down>
 vnoremap <C-P> <Up>
 
@@ -61,8 +57,8 @@ nnoremap k gk
 vnoremap < <gv
 vnoremap > >gv
 
-nnoremap <Space> <Leader>
-vnoremap <Space> <Leader>
+nmap <Space> <Leader>
+vmap <Space> <Leader>
 
 inoremap <C-L> <C-X><C-O>
 

@@ -9,11 +9,11 @@ let g:unite_source_history_yank_enable = 1
 
 func! <SID>unite_my_settings()"{{{
   nmap <buffer> <Esc> <Plug>(unite_exit)
-  nmap <buffer> <C-K> <Plug>(unite_exit)
+  nmap <buffer> <C-C> <Plug>(unite_exit)
 endf"}}}
 
 func! <SID>vimfiler_my_settings()"{{{
-  nnoremap <buffer> <C-K> q
+  nmap <buffer> <C-C> q
 endf"}}}
 
 augroup UniteUser
@@ -22,13 +22,13 @@ augroup UniteUser
   autocmd FileType vimfiler call <SID>vimfiler_my_settings()
 augroup END
 
-nnoremap <Leader>u [unite]
-nnoremap [unite]  :<C-U>Unite<Space>
-nnoremap [unite]a :<C-U>Unite<CR>
-nnoremap [unite]b :<C-U>Unite buffer<CR>
-nnoremap [unite]r :<C-U>Unite register<CR>
-nnoremap [unite]t :<C-U>Unite tab<CR>
-nnoremap [unite]m :<C-U>Unite mapping<CR>
-nnoremap [unite]d :<C-U>VimFilerCurrentDir -explorer<CR>
-nnoremap [unite]f :<C-U>VimFilerBufferDir  -explorer<CR>
-nnoremap [unite]u :<C-U>Unite buffer bookmark file<CR>
+nmap <Leader>u [unite]
+nmap [unite]  :<C-U>Unite<Space>
+nmap [unite]a :<C-U>Unite<CR>
+nmap [unite]b :<C-U>Unite buffer<CR>
+nmap [unite]r :<C-U>Unite register<CR>
+nmap [unite]t :<C-U>Unite tab<CR>
+nmap [unite]m :<C-U>Unite mapping<CR>
+nmap [unite]d :<C-U>VimFilerCurrentDir -explorer<CR>
+nmap [unite]f :<C-U>VimFilerBufferDir  -explorer<CR>
+nmap [unite]u :<C-U>Unite buffer bookmark file<CR>
