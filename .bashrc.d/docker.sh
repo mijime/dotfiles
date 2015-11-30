@@ -8,7 +8,7 @@ alias dmachine='docker-machine'
 alias dcompose='docker-compose'
 
 dclean(){
-  xargs_opt=--no-run-if-empty
+  # xargs_opt=--no-run-if-empty
   docker ps -aq | xargs ${xargs_opt} docker rm 2>/dev/null
   docker images | awk '/<none>/{print$3}' | xargs ${xargs_opt} docker rmi 2>/dev/null
 }
