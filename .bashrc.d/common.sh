@@ -55,7 +55,7 @@ mysh:cd(){
         break
         ;;
       -l|--list|--history)
-        dirs -v | awk '!nl[$2]{print;nl[$2]=1}'
+        dirs -l -v | awk '!nl[$2]{print;nl[$2]=1}'
         break
         ;;
       [-+][0-9]*)
