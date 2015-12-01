@@ -1,0 +1,40 @@
+#!/bin/bash -e
+
+ps=0
+psmax=16
+files=()
+
+while true
+do
+  case "$1" in
+  --max*|-m)
+    psmax=$2
+    shift 2 || break
+    ;;
+
+  --comm*|-c)
+    commands=(${commands[@]} $2)
+    shift 2 || break
+    ;;
+
+  *)
+    files=(${files[@]} $1)
+    shift || break
+    ;;
+  esac
+done
+
+if [ -z ${files[@]} ]; then
+  cat <&0
+else
+  cat ${files[@]}
+fi | while read line
+  do
+    {
+      echo "[${ps}::start] ${commands[@]} ${line}" >&2
+      ${commands[@]} ${line}
+      echo "[${ps}::ended] ${commands[@]} ${line}" >&2
+    } &
+    ps=$((${ps} + 1))
+    [[ $((${ps} % ${psmax})) -eq 0 ]] && wait && ps=0
+  done | cat
