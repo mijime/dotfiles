@@ -35,7 +35,7 @@ mysh:filter(){
         ${cmd} --extended --query="$1"
         return ;;
       peco)
-        ${cmd} --query="$1"
+        ${cmd} --layout bottom-up --query="$1"
         return ;;
       *)
         ${cmd} "$1"
