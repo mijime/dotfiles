@@ -67,7 +67,7 @@ mysh:cd(){
         break
         ;;
       *)
-        [[ -d "$1" ]] && targetDir="$1" || targetDir=$(find . -type d|mysh:filter "$1"|head -1||break)
+        [[ -d "$1" ]] && targetDir="$1" || targetDir=$(find . -type d -or -type l|mysh:filter "$1"|head -1||break)
         pushd "${targetDir}" > /dev/null
         shift || break
         ;;
