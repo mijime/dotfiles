@@ -27,7 +27,8 @@ do
       shift || break
       ;;
     *)
-      shift || break
+      echo '[ERROR] not match arguments'
+      exit 2
       ;;
   esac
 done
