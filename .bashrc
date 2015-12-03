@@ -24,3 +24,5 @@ screen|cygwin|xterm*)
 esac
 
 export PATH=${PATH}:node_modules/.bin:${HOME}/.bin
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
