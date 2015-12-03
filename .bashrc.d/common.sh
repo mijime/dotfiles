@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mysh::color::prefix::bash(){
-echo "\033[3${1}m"
+echo "\[\e[0;3${1}m\]"
 }
 
 mysh::color::prefix::zsh(){
@@ -31,8 +31,7 @@ SAVEHIST=9999
 
 mysh::prompt::update::bash(){
 
-PS1="${__myshPromptInfoBash}
-${__myshPromptGit}${__myshPromptCodeColor}$\033[00m "
+PS1="${__myshPromptInfoBash}\n${__myshPromptGit}${__myshPromptCodeColor}$\[\e[0;00m\] "
 }
 
 mysh::prompt::update::zsh(){
