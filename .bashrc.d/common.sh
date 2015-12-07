@@ -24,6 +24,8 @@ mysh::prompt::zsh(){
 __myshPromptInfoZsh="${__myshColo[6]}%n${__myshColo[7]}@${__myshColo[4]}%m ${__myshColo[3]}[%~]"
 precmd_functions=(mysh::prompt::update)
 setopt hist_ignore_dups
+bindkey "^P" history-beginning-search-backward
+bindkey "^N" history-beginning-search-forward
 HISTFILE=~/.zsh_history
 HISTSIZE=9999
 SAVEHIST=9999
