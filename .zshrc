@@ -7,7 +7,6 @@
 source ~/.zplug/zplug
 
 zplug "b4b4r07/zplug"
-zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "mijime/dotfiles", of:".bashrc.d/*.sh"
 
