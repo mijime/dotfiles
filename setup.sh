@@ -1,34 +1,55 @@
 #!/bin/bash
 
-cd ${0%/*}
+declare -a dotfiles=()
+declare basedir=${0%/*}
 
 dotfiles=(
-    .bash_profile
-    .bashrc
-    .bashrc.d
-    .bin
-    .dir_colors
-    .gemrc
-    .gitconfig
-    .gitignore
-    .inputrc
-    .Makefile
-    .tmux.conf
-    .tmux
-    .vim
-    .vimrc
+  .bash_profile
+  .bashrc
+  .bashrc.d
+  .bin
+  .dir_colors
+  .gemrc
+  .gitconfig
+  .inputrc
+  .tmux
+  .tmux.conf
+  .vim
+  .vimrc
+  .zshrc
+  .zshrc.d
 )
 
-init_gitmodules(){
-    git submodule init
-    git submodule update
+main() {
+  validation
+  install_dotfiles
 }
 
-link_dotfiles(){
-    dir=$(pwd | sed -e "s%$HOME/%%g")
-    ln -s $(echo ${dotfiles[@]} | sed -e "s%^%$dir/%g" -e "s% % $dir/%g") ~
-    . ~/.bash_profile
+validation() {
+  if [[ ! "${basedir}" =~ / ]]
+  then
+    err 1 "Please run an absolute path: ${0}"
+  fi
 }
 
-link_dotfiles
-init_gitmodules
+install_dotfiles() {
+  for dotfile in "${dotfiles[@]}"
+  do
+    echo ${dotfile}
+  done \
+    | sed -e "s@^@${basedir}/@g" -e "s@${HOME}/@@g" \
+    | while read dotfile
+      do
+        ln -sfb "${dotfile}" "${HOME}/"
+      done
+}
+
+err() {
+  local ret=$1
+
+  shift
+  echo $@ >&2
+  exit ${ret}
+}
+
+main $@
