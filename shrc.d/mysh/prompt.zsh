@@ -25,8 +25,8 @@ mysh_prompt() {
   precmd_functions=(mysh_prompt_update)
   setopt hist_ignore_dups
   bindkey -e
-  bindkey "^P" history-beginning-search-backward
-  bindkey "^N" history-beginning-search-forward
+  bindkey "^P" history-beginning-search-forward
+  bindkey "^N" history-beginning-search-backward
   HISTFILE=~/.zsh_history
   HISTSIZE=9999
   SAVEHIST=9999
