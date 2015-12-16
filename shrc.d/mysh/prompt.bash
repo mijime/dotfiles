@@ -13,9 +13,7 @@ mysh_prompt_ps1() {
 }
 
 mysh_prompt() {
-  declare -g -a MYSH_COLO
   MYSH_COLO=("" $(seq 0 7|while read n; do mysh_color ${n}; done))
-  export MYSH_COLO
 
   alias cd='mysh_cd'
   alias pd='popd'
@@ -27,5 +25,8 @@ mysh_prompt() {
   HISTIGNORE='l[sla]:history*:pwd:exit:cd:[bf]g:jobs'
   HISTCONTROL='ignoredups:ignorespace:erasedups'
 }
+
+declare -a MYSH_COLO=()
+export MYSH_COLO
 
 mysh_prompt $@
