@@ -1,28 +1,12 @@
-for bashrc in /etc/bash_completion
-    do
-      if [[ -z ${BASH_DEBUG} ]]
-      then [ ! -f ${bashrc} ] || source ${bashrc} || echo Loading Error: ${bashrc} >&2
-      else echo source ${bashrc} >&2
-      [ ! -f ${bashrc} ] || time source ${bashrc} || echo Loading Error: ${bashrc} >&2
-      fi
-done
+export DOTFILES=~/.dotfiles
 
 case ${TERM} in
-screen|cygwin|xterm*)
-    for bashrc_d in ${HOME}/.bashrc.d
-        do [ -d ${bashrc_d}/ ] && \
-            for bashrc in $(find ${bashrc_d}/ -type f -name '*.sh')
-                do
-                  if [[ -z ${BASH_DEBUG} ]]
-                  then source ${bashrc} || echo Loading Error: ${bashrc} >&2
-                  else echo source ${bashrc} >&2
-                  time source ${bashrc} || echo Loading Error: ${bashrc} >&2
-                  fi
-            done
+  screen|cygwin|xterm*)
+    bashrcd=$(ls -1pd ${DOTFILES}/{.bashrc.d/*.sh,shrc.d/*/*.{sh,bash}})
+    for bashrc in ${bashrcd[@]}
+    do source "${bashrc}" || echo Loading Error: ${bashrc} >&2
     done
     ;;
 esac
 
-export PATH=${PATH}:node_modules/.bin:${HOME}/.bin
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export PATH="${PATH}:node_modules/.bin:${DOTFILES}/.bin"
