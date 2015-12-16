@@ -76,6 +76,10 @@ mysh_cd() {
         pushd "${1}" > /dev/null
         shift || break
         ;;
+      -)
+        pushd $(dirs -l -v | awk '!nl[$2]{print;nl[$2]=1}' | mysh_filter | sed -e 's/^\w\+\s\+//g')  > /dev/null
+        shift || break
+        ;;
       -*)
         pushd $@
         break
