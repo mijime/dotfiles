@@ -63,6 +63,15 @@ mysh_cd() {
         dirs -l -v | awk '!nl[$2]{print;nl[$2]=1}'
         break
         ;;
+      -e|--export)
+        dirs -l -v | sed -e 's/^\w\+\s\+//g' | awk '!nl[$0]{print;nl[$0]=1}'
+        break
+        ;;
+      -i|--import)
+        shift
+        eval $(cat "$@" | awk '{print"pushd","\""$0"\";"}') > /dev/null
+        break
+        ;;
       [-+][0-9]*)
         pushd "${1}" > /dev/null
         shift || break
