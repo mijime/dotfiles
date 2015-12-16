@@ -27,6 +27,5 @@ mysh_prompt() {
 }
 
 declare -a MYSH_COLO=()
-export MYSH_COLO
 
 mysh_prompt $@
