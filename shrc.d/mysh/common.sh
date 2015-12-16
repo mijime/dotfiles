@@ -64,7 +64,7 @@ mysh_cd() {
         break
         ;;
       -e|--export)
-        dirs -l -v | sed -e 's/^\w\+\s\+//g' | awk '!nl[$0]{print;nl[$0]=1}'
+        dirs -l -v | sed -e 's/^\s*\w\+\s\+//g' | awk '!nl[$0]{print;nl[$0]=1}'
         break
         ;;
       -i|--import)
@@ -77,7 +77,7 @@ mysh_cd() {
         shift || break
         ;;
       -)
-        pushd $(dirs -l -v | awk '!nl[$2]{print;nl[$2]=1}' | mysh_filter | sed -e 's/^\w\+\s\+//g')  > /dev/null
+        pushd $(dirs -l -v | awk '!nl[$2]{print;nl[$2]=1}' | mysh_filter | sed -e 's/^\s*\w\+\s\+//g')  > /dev/null
         shift || break
         ;;
       -*)
