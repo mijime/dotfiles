@@ -23,12 +23,15 @@ mysh_prompt() {
   alias pd='popd'
 
   precmd_functions=(mysh_prompt_update)
+  setopt EXTENDED_HISTORY
   setopt hist_ignore_dups
+  setopt share_history
   bindkey -e
-  bindkey "^P" history-beginning-search-forward
   bindkey "^N" history-beginning-search-backward
-  HISTSIZE=9999
-  SAVEHIST=9999
+  bindkey "^P" history-beginning-search-forward
+  HISTFILE=${HOME}/.zsh_history
+  HISTSIZE=1000
+  SAVEHIST=100000
 }
 
 mysh_prompt $@

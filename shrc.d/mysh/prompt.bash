@@ -20,7 +20,7 @@ mysh_prompt() {
 
   PROMPT_COMMAND=mysh_prompt_update
   shopt -u histappend
-  HISTSIZE=9999
+  HISTSIZE=100000
   HISTTIMEFORMAT='[%y/%m/%d %H:%M:%S]  '
   HISTIGNORE='l[sla]:history*:pwd:exit:cd:[bf]g:jobs'
   HISTCONTROL='ignoredups:ignorespace:erasedups'
