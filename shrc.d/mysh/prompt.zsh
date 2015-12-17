@@ -27,7 +27,6 @@ mysh_prompt() {
   bindkey -e
   bindkey "^P" history-beginning-search-forward
   bindkey "^N" history-beginning-search-backward
-  HISTFILE=~/.zsh_history
   HISTSIZE=9999
   SAVEHIST=9999
 }
