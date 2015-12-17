@@ -1,22 +1,10 @@
-[[ -d ~/.zplug ]] || {
-  curl -fLo ~/.zplug/zplug --create-dirs git.io/zplug
-  source ~/.zplug/zplug
-  zplug update --self
-}
+[[ -d ~/.deplug ]] || git clone https://github.com/mijime/deplug ~/.deplug
 
-source ~/.zplug/zplug
+source ~/.deplug/deplug.zsh
 
-zplug "b4b4r07/zplug"
-zplug "zsh-users/zsh-history-substring-search"
-zplug "mijime/dotfiles", of:".bashrc.d/*.sh"
+deplug "zsh-users/zsh-history-substring-search" of:"*.zsh"
+deplug "mijime/dotfiles" of:".shrc.d/*.sh shrc.d/*/*.{sh,zsh}"
+deplug install --verbose
+deplug load    --verbose
 
-if ! zplug check --verbose; then
-  printf "Install? [y/N]: "
-  if read -q; then
-    echo; zplug install
-  fi
-fi
-
-zplug load --verbose
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[[ ! -f ~/.zshrc.local ]] || source ~/.zshrc.local

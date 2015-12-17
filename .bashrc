@@ -1,4 +1,4 @@
-export DOTFILES=~/.dotfiles
+export DOTFILES=${DOTFILES:-~/.dotfiles}
 
 case ${TERM} in
   screen|cygwin|xterm*)
@@ -10,3 +10,5 @@ case ${TERM} in
 esac
 
 export PATH="${PATH}:node_modules/.bin:${DOTFILES}/.bin"
+
+[[ ! -f ~/.bashrc.local ]] || source ~/.bashrc.local
