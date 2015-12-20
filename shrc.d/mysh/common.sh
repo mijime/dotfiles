@@ -6,17 +6,19 @@
 ###
 
 mysh_prompt_update() {
+  local -a __colo=()
+  mysh_color
   local ret=$?
   local prompt_git= prompt_status=
 
   if [[ 0 -eq ${ret} ]]
   then
-    prompt_status="${MYSH_COLO[7]}"
+    prompt_status="${__colo[7]}"
   else
-    prompt_status="${MYSH_COLO[2]}"
+    prompt_status="${__colo[2]}"
   fi
 
-  prompt_git="${MYSH_COLO[2]}$(mysh_prompt_git)"
+  prompt_git="${__colo[2]}$(mysh_prompt_git)"
 
   mysh_prompt_ps1
 }
