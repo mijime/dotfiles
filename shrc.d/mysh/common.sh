@@ -5,12 +5,12 @@
 #
 ###
 
-mysh_prompt_update() {
-  local -a __colo=()
-  mysh_color
+__mysh__prompt_update() {
   local ret=$?
+  local -a __colo=()
   local prompt_git= prompt_status=
 
+  __mysh__color
   if [[ 0 -eq ${ret} ]]
   then
     prompt_status="${__colo[7]}"
@@ -18,41 +18,39 @@ mysh_prompt_update() {
     prompt_status="${__colo[2]}"
   fi
 
-  prompt_git="${__colo[2]}$(mysh_prompt_git)"
+  prompt_git="${__colo[2]}$(__mysh__prompt_git)"
 
-  mysh_prompt_ps1
+  __mysh__prompt_ps1
 }
 
-mysh_prompt_git() {
+__mysh__prompt_git() {
   git status --porcelain --branch 2>/dev/null \
-  | awk '/^##/{branch=$2}END{if(NR>0){print"("branch,NR-1") "}}'
+    | awk '/^##/{branch=$2}END{if(NR>0){print"("branch,NR-1") "}}'
 }
 
-mysh_filter() {
-  local filter_commands=($(echo ${MYSH_FILTER:-fzf:grep}|sed 's/:/ /g'))
+__mysh__select() {
+  local select_commands=($(echo ${MYSH_FILTER:-fzf:grep}|sed 's/:/ /g'))
 
-  for filter_command in ${filter_commands[@]}
+  for select_command in ${select_commands[@]}
   do
-    hash ${filter_command} 1>/dev/null 2>/dev/null || continue
+    hash ${select_command} 1>/dev/null 2>/dev/null || continue
 
-    case ${filter_command} in
+    case ${select_command} in
       fzf)
-        ${filter_command} --extended --query="${1}"
+        ${select_command} --extended --query="${@}"
         return ;;
       peco)
-        ${filter_command} --layout bottom-up --query="${1}"
+        ${select_command} --layout bottom-up --query="${@}"
         return ;;
       *)
-        ${filter_command} "${1}" | head -n 1
+        ${select_command} "${@}" | head -n 1
         return ;;
     esac
   done
 }
 
-mysh_cd() {
-  local target_dir=
-
-  [[ $# -eq 0 ]] && { pushd || pushd ${HOME}; } 1>/dev/null 2>/dev/null
+__mysh__cd() {
+  [[ $# -eq 0 ]] && pushd "${HOME}" > /dev/null
 
   while [[ $# -gt 0 ]]
   do
@@ -61,7 +59,7 @@ mysh_cd() {
         dirs -c
         break
         ;;
-      -l|--list|--history)
+      -l|--list)
         dirs -l -v | awk '!nl[$2]{print;nl[$2]=1}'
         break
         ;;
@@ -78,29 +76,53 @@ mysh_cd() {
         pushd "${1}" > /dev/null
         shift || break
         ;;
+      --*)
+        local cd_plugin=${1#--}
+        shift
+        "__mysh__cd_${cd_plugin}" "$@"
+        return
+        ;;
       -)
-        pushd "$(dirs -l -v | awk '!nl[$2]{print;nl[$2]=1}' | mysh_filter | sed -e 's/^[[:cntrl:]0-9 ]*//g')" > /dev/null
+        pushd > /dev/null
         shift || break
         ;;
       -*)
         pushd $@
-        break
+        return
         ;;
       *)
         if [[ -d "${1}" ]]
         then
-          target_dir="${1}"
+          pushd "${1}" > /dev/null
+          shift || break
         else
-          target_dir=$(find . -type d -or -type l | mysh_filter "${1}")
-
-          if [[ -z "${target_dir}" ]]
-          then
-            return 1
-          fi
+          __mysh__cd_missed "$@"
+          return
         fi
-        pushd "${target_dir}" > /dev/null
-        shift || break
         ;;
     esac
   done
 }
+
+__mysh__cd_select() {
+  local target_dir="$(dirs -l -v | awk '!nl[$2]{print;nl[$2]=1}' | __mysh__select "${@}" | sed -e 's/^[[:cntrl:]0-9 ]*//g')"
+  if [[ -z "${target_dir}" ]]
+  then
+    return 1
+  fi
+
+  cd "${target_dir}"
+}
+
+__mysh__cd_missed() {
+  local target_dir="$({ dirs -l -v | awk '!nl[$2]{print;nl[$2]=1}' | sed -e 's/^[[:cntrl:]0-9 ]*//g'; find -type d; } | __mysh__select "${@}")"
+
+  if [[ -z "${target_dir}" ]]
+  then
+    return 1
+  fi
+
+  cd "${target_dir}"
+}
+
+alias cd='__mysh__cd'

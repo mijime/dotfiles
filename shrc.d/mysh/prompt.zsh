@@ -4,20 +4,17 @@
 # zsh
 ###
 
-mysh_color() {
+__mysh__color() {
   __colo=($(seq 0 7|while read n; do echo "%F{${n}}"; done))
 }
 
-mysh_prompt_ps1() {
+__mysh__prompt_ps1() {
   PROMPT="${prompt_status}$%f "
   RPROMPT="${prompt_git}${__colo[7]}%n${__colo[8]}@${__colo[5]}%m ${__colo[4]}[%~]"
 }
 
-mysh_prompt() {
-  alias cd='mysh_cd'
-  alias pd='popd'
-
-  precmd_functions=(mysh_prompt_update)
+__mysh__prompt() {
+  precmd_functions=(__mysh__prompt_update)
   setopt EXTENDED_HISTORY
   setopt hist_expand
   setopt hist_ignore_all_dups
@@ -37,4 +34,4 @@ mysh_prompt() {
   SAVEHIST=100000
 }
 
-mysh_prompt $@
+__mysh__prompt $@
