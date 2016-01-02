@@ -1,9 +1,8 @@
 if has('vim_starting')
   set rtp+=~/.vim/conf.d
 
-  if !isdirectory('~/.vim/bundle/plugged/vim-plug')
+  if !isdirectory(expand('~/.vim/bundle/plugged/vim-plug'))
     echo 'install vim-plug...'
-    call mkdir('~/.vim/bundle/plugged/vim-plug', 'p')
     call system('git clone https://github.com/junegunn/vim-plug.git ~/.vim/bundle/plugged/vim-plug/autoload')
   end
   set rtp+=~/.vim/bundle/plugged/vim-plug
