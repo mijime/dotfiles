@@ -129,7 +129,7 @@ __mysh__cd_export() {
 __mysh__cd_select() {
   local target_dir="$({
     dirs -l -v | awk '!nl[$2]{print;nl[$2]=1}' | sed -e 's/^/H/g'
-    find . -type d 2>/dev/null | sed -e 's/^/C /g'
+    find $(dirname "${@:-.}") -type d 2>/dev/null | sed -e 's/^/C /g'
   } | __mysh__select "${@}" | sed -e 's/^[CH][[:cntrl:]0-9 ]*//g')"
 
   if [[ -z "${target_dir}" ]]
