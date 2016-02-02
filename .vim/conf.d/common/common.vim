@@ -62,15 +62,7 @@ vmap <Space> <Leader>
 
 inoremap <C-L> <C-X><C-O>
 
-func! <SID>vimrc_my_settings()
-  nnoremap <Leader>v [vimrc]
-  nnoremap [vimrc]. :<C-U>source %<CR>:<C-U>echo "[reloaded]" expand("%")<CR>
-  nnoremap [vimrc]o :<C-U>tabedit $MYVIMRC<CR>
-endf
-
 augroup vimrc
   autocmd!
-  autocmd FileWritePost,BufWritePost *.vim,vimrc source %
-  autocmd FileType vim call <SID>vimrc_my_settings()
-  autocmd FileType *   setlocal formatoptions-=ro omnifunc=syntaxcomplete#Complete
+  autocmd FileType * setlocal formatoptions-=ro omnifunc=syntaxcomplete#Complete
 augroup END

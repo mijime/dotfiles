@@ -1,3 +1,5 @@
+if &compatible | set nocompatible | end
+
 if has('vim_starting')
   set rtp+=~/.vim/conf.d
 
@@ -15,6 +17,7 @@ let b:plugged = expand('~/.vim/bundle/plugged')
 call plug#begin(b:plugged)
   Plug 'junegunn/vim-plug',
         \ {'dir': expand(b:plugged .'/vim-plug/autoload')}
+  Plug 'tpope/vim-unimpaired'
   runt! plugged/*.vim
 call plug#end()
 unl b:plugged

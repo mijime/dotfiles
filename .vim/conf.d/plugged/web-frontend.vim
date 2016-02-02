@@ -1,11 +1,7 @@
 Plug 'kchmck/vim-coffee-script', {'for': ['coffee']}
-
 Plug 'vim-scripts/jade.vim', {'for': ['jade']}
-
 Plug 'leafgarland/typescript-vim', {'for': ['typescript']}
-
-Plug 'pangloss/vim-javascript', {'for': ['javascript']}
-      \ | Plug 'mxw/vim-jsx',   {'for': ['javascript']}
+Plug 'othree/yajs.vim', {'for': ['javascript']}
 
 augroup FrontendUser
   autocmd BufRead,BufNewFile,BufReadPre *.coffee set filetype=coffee
