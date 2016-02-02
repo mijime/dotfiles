@@ -32,6 +32,7 @@ __mysh__select() {
   local -a select_commands=($(echo ${MYSH_FILTER:-fzf:peco:grep}|sed 's/:/ /g'))
   local -a queries=()
   local column=0
+  local last=0
 
   while [[ $# -gt 0 ]]
   do
@@ -39,6 +40,10 @@ __mysh__select() {
       -c|--col*)
         column=$2
         shift 2 || break
+        ;;
+      --last)
+        last=1
+        shift || break
         ;;
       *)
         queries=("${queries[@]}" "$1")
@@ -53,16 +58,16 @@ __mysh__select() {
 
     case ${select_command} in
       fzf)
-        ${select_command} --extended --query="${queries[@]}" | awk -v column=${column} '{print$column}'
+        ${select_command} --extended --query="${queries[@]}"
         return ;;
       peco)
-        ${select_command} --layout bottom-up --query="${queries[@]}" | awk -v column=${column} '{print$column}'
+        ${select_command} --layout bottom-up --query="${queries[@]}"
         return ;;
       *)
-        ${select_command} "${queries[@]}" | head -n 1 | awk -v column=${column} '{print$column}'
+        ${select_command} "${queries[@]}" | head -n 1
         return ;;
     esac
-  done
+  done | awk -v "last=${last}" -v "column=${column}" 'last==0{print$column}last==1{print$NF}'
 }
 
 __mysh__cd() {
