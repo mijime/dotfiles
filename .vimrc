@@ -3,14 +3,11 @@ if &compatible | set nocompatible | end
 if has('vim_starting')
   set rtp+=~/.vim/conf.d
 
-  set rtp+=~/.vim/bundle/plugged/vim-plug
-  let s:vimplug = expand('~/.vim/bundle/plugged/vim-plug')
-  if !isdirectory(s:vimplug)
+  if !isdirectory(expand('~/.vim/bundle/plugged/vim-plug'))
     echo 'install vim-plug...'
-    call mkdir(s:vimplug, 'p')
-    call system('git clone https://github.com/junegunn/vim-plug.git', s:vimplug)
+    call system('git clone https://github.com/junegunn/vim-plug.git ~/.vim/bundle/plugged/vim-plug/autoload')
   end
-  unl s:vimplug
+  set rtp+=~/.vim/bundle/plugged/vim-plug
 end
 
 let b:plugged = expand('~/.vim/bundle/plugged')

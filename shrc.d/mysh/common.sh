@@ -29,7 +29,23 @@ __mysh__prompt_git() {
 }
 
 __mysh__select() {
-  local select_commands=($(echo ${MYSH_FILTER:-fzf:grep}|sed 's/:/ /g'))
+  local -a select_commands=($(echo ${MYSH_FILTER:-fzf:peco:grep}|sed 's/:/ /g'))
+  local -a queries=()
+  local column=0
+
+  while [[ $# -gt 0 ]]
+  do
+    case $1 in
+      -c|--col*)
+        column=$2
+        shift 2 || break
+        ;;
+      *)
+        queries=("${queries[@]}" "$1")
+        shift || break
+        ;;
+    esac
+  done
 
   for select_command in ${select_commands[@]}
   do
@@ -37,13 +53,13 @@ __mysh__select() {
 
     case ${select_command} in
       fzf)
-        ${select_command} --extended --query="${@}"
+        ${select_command} --extended --query="${queries[@]}" | awk -v column=${column} '{print$column}'
         return ;;
       peco)
-        ${select_command} --layout bottom-up --query="${@}"
+        ${select_command} --layout bottom-up --query="${queries[@]}" | awk -v column=${column} '{print$column}'
         return ;;
       *)
-        ${select_command} "${@}" | head -n 1
+        ${select_command} "${queries[@]}" | head -n 1 | awk -v column=${column} '{print$column}'
         return ;;
     esac
   done
@@ -51,6 +67,7 @@ __mysh__select() {
 
 __mysh__cd() {
   [[ $# -eq 0 ]] && pushd "${HOME}" > /dev/null
+  local action=
 
   while [[ $# -gt 0 ]]
   do
@@ -61,15 +78,6 @@ __mysh__cd() {
         ;;
       -l|--list)
         dirs -l -v | awk '!nl[$2]{print;nl[$2]=1}'
-        break
-        ;;
-      -e|--export)
-        dirs -l -v | sed -e 's/^[[:cntrl:]0-9 ]*//g' | awk '!nl[$0]{print;nl[$0]=1}'
-        break
-        ;;
-      -i|--import)
-        shift
-        eval $(cat "$@" | awk '{print"pushd","\""$0"\";"}') > /dev/null
         break
         ;;
       [-+][0-9]*)
@@ -96,26 +104,33 @@ __mysh__cd() {
           pushd "${1}" > /dev/null
           shift || break
         else
-          __mysh__cd_missed "$@"
+          for action in ${__mysh__cd_missed[@]}
+          do ${action} "${@}" && return
+          done
           return
         fi
         ;;
     esac
   done
+
+  for action in ${__mysh__cd_posted[@]}
+  do ${action}
+  done
+}
+
+__mysh__cd_import() {
+  eval $(cat "$@" | awk '{print"pushd","\""$0"\";"}') > /dev/null
+}
+
+__mysh__cd_export() {
+  dirs -l -v | sed -e 's/^[[:cntrl:]0-9 ]*//g' | awk '!nl[$0]{print;nl[$0]=1}'
 }
 
 __mysh__cd_select() {
-  local target_dir="$(dirs -l -v | awk '!nl[$2]{print;nl[$2]=1}' | __mysh__select "${@}" | sed -e 's/^[[:cntrl:]0-9 ]*//g')"
-  if [[ -z "${target_dir}" ]]
-  then
-    return 1
-  fi
-
-  cd "${target_dir}"
-}
-
-__mysh__cd_missed() {
-  local target_dir="$({ dirs -l -v | awk '!nl[$2]{print;nl[$2]=1}' | sed -e 's/^[[:cntrl:]0-9 ]*//g'; find -type d; } | __mysh__select "${@}")"
+  local target_dir="$({
+    dirs -l -v | awk '!nl[$2]{print;nl[$2]=1}' | sed -e 's/^/H/g'
+    find $(dirname "${@:-.}") -type d 2>/dev/null | sed -e 's/^/C /g'
+  } | __mysh__select "${@}" | sed -e 's/^[CH][[:cntrl:]0-9 ]*//g')"
 
   if [[ -z "${target_dir}" ]]
   then
@@ -125,4 +140,7 @@ __mysh__cd_missed() {
   cd "${target_dir}"
 }
 
+__mysh__cd_missed=(__mysh__cd_select)
+__mysh__cd_posted=()
 alias cd='__mysh__cd'
+alias filter='__mysh__select'
