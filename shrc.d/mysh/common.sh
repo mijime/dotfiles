@@ -31,13 +31,13 @@ __mysh__prompt_git() {
 __mysh__select() {
   local -a select_commands=($(echo ${MYSH_FILTER:-fzf:peco:grep}|sed 's/:/ /g'))
   local -a queries=()
-  local record=0
+  local column=0
 
   while [[ $# -gt 0 ]]
   do
     case $1 in
-      -r|--record)
-        record=$2
+      -c|--col*)
+        column=$2
         shift 2 || break
         ;;
       *)
@@ -53,13 +53,13 @@ __mysh__select() {
 
     case ${select_command} in
       fzf)
-        ${select_command} --extended --query="${queries[@]}" | awk -v record=${record} '{print$record}'
+        ${select_command} --extended --query="${queries[@]}" | awk -v column=${column} '{print$column}'
         return ;;
       peco)
-        ${select_command} --layout bottom-up --query="${queries[@]}" | awk -v record=${record} '{print$record}'
+        ${select_command} --layout bottom-up --query="${queries[@]}" | awk -v column=${column} '{print$column}'
         return ;;
       *)
-        ${select_command} "${queries[@]}" | head -n 1 | awk -v record=${record} '{print$record}'
+        ${select_command} "${queries[@]}" | head -n 1 | awk -v column=${column} '{print$column}'
         return ;;
     esac
   done
