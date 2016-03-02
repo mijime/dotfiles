@@ -24,8 +24,10 @@ __mysh__prompt_update() {
 }
 
 __mysh__prompt_git() {
-  git status --porcelain --branch 2>/dev/null \
-    | awk '/^##/{branch=$2}END{if(NR>0){print"("branch,NR-1") "}}'
+  if [[ -z "${PROMPT_NO_GIT}" ]]
+  then git status --porcelain --branch 2>/dev/null | awk 'NR==1{b=$2}END{if(NR>0)print"("b,NR-1") "}'
+  else git describe --all --tags --always 2>/dev/null | awk '{print"("$0") "}'
+  fi
 }
 
 __mysh__select() {
