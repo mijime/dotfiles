@@ -8,6 +8,8 @@
     unignore = update-index --no-assume-unchanged
     ignored  = !git ls-files -v | grep "^h"
     s        = status --short --branch
+    d        = diff
+    ds       = diff --staged
     l        = log --graph --all --date=relative --abbrev-commit --pretty='%C(red)%h %C(reset)%s%C(yellow)%d %C(green)(%cr) %C(blue)<%an>'
     ll       = log --graph --all --date=relative --abbrev-commit --pretty=full --stat
 [include]
