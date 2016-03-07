@@ -1,69 +1,90 @@
 #!/bin/bash
 
+__usage(){
+  cat <<EOF >&2
+  ex) $0 create role --name path/to/role
+  ex) $0 create project --name path/to/project
+  ex) $0 play path/to/playbook
+EOF
+  return ${@:-0}
+}
+
 __create(){
+  declare name=
+  declare task=
+
   while true
   do
     case $1 in
-    --name|-n)
-      name=$2
-      shift 2 || break
-      ;;
-    role*)
-      tasks=(${tasks} $1)
-      shift || break
-      ;;
-    *)
-      break
-      ;;
+      --name|-n)
+        name=$2
+        shift 2 || break
+        ;;
+      r*|role)
+        task=role
+        shift || break
+        ;;
+      p*|project)
+        task=project
+        shift || break
+        ;;
+      *)
+        shift || break
+        break
+        ;;
     esac
   done
 
-  for task in ${tasks[@]}
-  do
-    case ${task} in
-    role*)
-      [[ -z ${name} ]] && exit 1
+  case ${task} in
+    role)
+      [[ -z ${name} ]] && return $(__usage 1)
       mkdir -p ${name}/{tasks,defaults,handlers,meta,templates,files,vars}
       echo created: ${name}/{tasks,defaults,handlers,meta,templates,files,vars}
       ;;
-    *)
-      break
+    project)
+      [[ -z ${name} ]] && return $(__usage 1)
+      mkdir -p ${name}/{group_vars,host_vars,roles,inventories,library,{filter,callback}_plugins}
+      echo created: ${name}/{group_vars,host_vars,roles,inventories,library,{filter,callback}_plugins}
       ;;
-    esac
-  done
+  esac
 }
 
 __main(){
   while true
   do
     case $1 in
-    c|create)
-      shift || break
-      __create $@
-      ;;
+      c*|create)
+        shift || break
+        __create $@
+        return
+        ;;
 
-    p|play)
-      shift || break
-      while [[ ! -z $1 ]]
-      do
-        case $1 in
-        -F)
-          export ANSIBLE_SSH_ARGS="-F $2"
-          shift 2 || break
-          ;;
-        *)
-          args="${args} $1"
-          shift || break
-          ;;
-        esac
-      done
-      ansible-playbook -c ssh ${args}
-      break
-      ;;
+      p*|play)
+        shift || break
+        while [[ ! -z $1 ]]
+        do
+          case $1 in
+            -F)
+              export ANSIBLE_SSH_ARGS="-F $2"
+              shift 2 || break
+              ;;
+            -X)
+              export ANSIBLE_SSH_ARGS="$2"
+              shift 2 || break
+              ;;
+            *)
+              args="${args} $1"
+              shift || break
+              ;;
+          esac
+        done
+        LANG=C ansible-playbook -c ssh ${args}
+        return 0
+        ;;
 
-    *)
-      break
-      ;;
+      *)
+        return $(__usage 1)
+        ;;
     esac
   done
 }

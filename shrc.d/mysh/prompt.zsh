@@ -9,8 +9,8 @@ __mysh__color() {
 }
 
 __mysh__prompt_ps1() {
-  PROMPT="${prompt_status}$%f "
-  RPROMPT="${prompt_git}${__colo[7]}%n${__colo[8]}@${__colo[5]}%m ${__colo[4]}[%~]"
+  PROMPT="${prompt_git}${prompt_status}$%f "
+  RPROMPT="${__colo[7]}%n${__colo[8]}@${__colo[5]}%m ${__colo[4]}[%~] ${__colo[3]}%*"
 }
 
 __mysh__prompt() {

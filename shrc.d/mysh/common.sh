@@ -24,8 +24,10 @@ __mysh__prompt_update() {
 }
 
 __mysh__prompt_git() {
-  git status --porcelain --branch 2>/dev/null \
-    | awk '/^##/{branch=$2}END{if(NR>0){print"("branch,NR-1") "}}'
+  if [[ -z "${PROMPT_NO_GIT}" ]]
+  then git status --porcelain --branch 2>/dev/null | awk 'NR==1{b=$2}END{if(NR>0)print"("b,NR-1") "}'
+  else git describe --all --tags --always 2>/dev/null | awk '{print"("$0") "}'
+  fi
 }
 
 __mysh__select() {
@@ -134,7 +136,7 @@ __mysh__cd_export() {
 __mysh__cd_select() {
   local target_dir="$({
     dirs -l -v | awk '!nl[$2]{print;nl[$2]=1}' | sed -e 's/^/H/g'
-    find $(dirname "${@:-.}") -type d 2>/dev/null | sed -e 's/^/C /g'
+    find $(dirname "${@:-.}") -type d -maxdepth 3 2>/dev/null | grep -v '/\.\|node_modules' | sed -e 's/^/C /g'
   } | __mysh__select "${@}" | sed -e 's/^[CH][[:cntrl:]0-9 ]*//g')"
 
   if [[ -z "${target_dir}" ]]

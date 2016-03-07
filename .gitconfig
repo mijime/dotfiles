@@ -7,11 +7,12 @@
     ignore   = update-index --assume-unchanged
     unignore = update-index --no-assume-unchanged
     ignored  = !git ls-files -v | grep "^h"
-    st       = status --short --branch
+    s        = status --short --branch
+    d        = diff
+    ds       = diff --staged
+    l        = log --graph --all --date=relative --abbrev-commit --pretty='%C(red)%h %C(reset)%s%C(yellow)%d %C(green)(%cr) %C(blue)<%an>'
+    ll       = log --graph --all --date=relative --abbrev-commit --pretty=full --stat
 [include]
     path = ~/.gitconfig.local
 [push]
     default = simple
-[user]
-    name = mijime
-    email = 07cc0110+gthb@gmail.com
