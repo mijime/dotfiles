@@ -12,6 +12,12 @@ __mysh__prompt_ps1() {
   PS1="${__colo[7]}\\u${__colo[8]}@${__colo[5]}\\h ${__colo[4]}[\\w] ${__colo[3]}\t\n${prompt_git}${prompt_status}$\[\e[0;00m\] "
 }
 
+__msyh__share_history(){
+  history -a
+  history -c
+  history -r
+}
+
 __mysh__prompt() {
   PROMPT_COMMAND=__mysh__prompt_update
   shopt -u histappend

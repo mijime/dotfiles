@@ -20,6 +20,7 @@ __mysh__prompt_update() {
 
   prompt_git="${__colo[2]}$(__mysh__prompt_git)"
 
+  __msyh__share_history
   __mysh__prompt_ps1
 }
 

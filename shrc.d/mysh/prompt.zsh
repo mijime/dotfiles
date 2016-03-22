@@ -13,6 +13,9 @@ __mysh__prompt_ps1() {
   RPROMPT="${__colo[7]}%n${__colo[8]}@${__colo[5]}%m ${__colo[4]}[%~] ${__colo[3]}%*"
 }
 
+__msyh__share_history(){
+}
+
 __mysh__prompt() {
   precmd_functions=(__mysh__prompt_update)
   setopt EXTENDED_HISTORY
