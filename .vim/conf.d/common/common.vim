@@ -12,14 +12,11 @@ if &encoding !=? 'utf-8' | let &termencoding = &encoding | end
 set encoding=utf-8 fileencoding=utf-8 fileformats=unix,mac,dos
 set fileencodings=utf-8,iso-2022-jp-3,euc-jisx0213,cp932,euc-jp,sjis,jis,latin,iso-2022-jp
 
-" Clipboard
-set clipboard=unnamed,unnamedplus
-
 " Performance
 set updatetime=300 timeout timeoutlen=500 ttimeout ttimeoutlen=50 ttyfast nolazyredraw
 
 " Search
-set wrapscan ignorecase smartcase incsearch hlsearch magic
+set wrapscan incsearch hlsearch magic
 
 " Cache
 let $cache = expand('~/.vim/cache/backup')
