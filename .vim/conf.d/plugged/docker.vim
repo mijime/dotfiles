@@ -1,1 +1,1 @@
-Plug 'mijime/dockercp.vim'
+Plug 'mijime/vim-metarw-docker.vim'
