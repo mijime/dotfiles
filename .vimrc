@@ -15,7 +15,6 @@ call plug#begin(b:plugged)
   Plug 'junegunn/vim-plug',
         \ {'dir': expand(b:plugged .'/vim-plug/autoload')}
   Plug 'tpope/vim-unimpaired'
-  Plug 'kana/vim-metarw'
   runt! plugged/*.vim
 call plug#end()
 unl b:plugged
