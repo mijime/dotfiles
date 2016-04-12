@@ -11,6 +11,7 @@ sham 'benbc/cloud-formation-viz' use:'cfviz'
 sham 'simonwhitaker/gibo' use:'gibo' of:'*.bash'
 sham 'zquestz/s' use:'s'
 sham 'mijime/merje' use:'merje'
+sham 'mijime/.tools' use:'*'
 sham load
 
 [[ ! -f ~/.bashrc.local ]] || source ~/.bashrc.local
