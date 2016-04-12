@@ -13,14 +13,14 @@ case ${OSTYPE} in
 darwin*)
   # eval $(dircolors ${HOME}/.dir_colors)
   alias ls='ls --color'
-  alias rm='mv --backup=numbered --target-directory=${HOME}/.Trash'
+  alias rm='mv --backup=numbered --target-directory="${TRASH_DIR}"'
   ;;
 
 msys*)
   # stty -ixon -ixoff
   # eval $(dircolors ${HOME}/.dir_colors)
   alias ls='ls --color'
-  alias rm='mv --backup=numbered --target-directory=${HOME}/.Trash'
+  alias rm='mv --backup=numbered --target-directory="${TRASH_DIR}"'
 
   export MSYS='winsymlinks'
   alias open=start
@@ -30,7 +30,7 @@ cygwin*)
   # stty -ixon -ixoff
   # eval $(dircolors ${HOME}/.dir_colors)
   alias ls='ls --color'
-  alias rm='mv --backup=numbered --target-directory=${HOME}/.Trash'
+  alias rm='mv --backup=numbered --target-directory="${TRASH_DIR}"'
 
   export CYGWIN='nodosfilewarning winsymlinks'
   alias open=cygstart
@@ -52,7 +52,10 @@ alias whence='type -a'    # where, of a sort
 # alias dirs='dirs -v'
 # alias ansible-playbook='ANSIBLE_SSH_ARGS='-F ${HOME}/.ssh/config' ansible-playbook -c ssh'
 # alias lmake='make -f ${HOME}/.Makefile'
-alias clean_trash='time \rm -rfv ${HOME}/.Trash && mkdir -p ${HOME}/.Trash'
+
+export TRASH_DIR=${HOME}/.Trash/$(date +%F)
+mkdir -p "${TRASH_DIR}"
+alias clean_trash='time \rm -rfv "${TRASH_DIR}" && mkdir -p "${TRASH_DIR}"'
 
 aliasf(){ alias | sed -e 's/^\([^=]*\)=\(.*\)/\1 => \2/' -e "s/'//g" | grep --color $@; }
 alias uuid="date +%s | md5sum | cut -c 1-4"

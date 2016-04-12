@@ -1,47 +1,49 @@
 #!/bin/bash
 
-cmd=rm
-prefixCmd=
+__clean__cmd=rm
+__clean__prefix_cmd=
+__clean__op=()
+TRASH_DIR=~/.Trash
 
 while [[ $# -gt 0 ]]
 do
-  case "$1" in
+  case $1 in
     -v|--verbose)
-      options=(${options[@]} -v)
+      __clean__op=(${__clean__op[@]} -v)
       shift || break
       ;;
     -l|--list)
-      cmd=find
+      __clean__cmd=find
       shift || break
       ;;
     --debug)
-      prefixCmd=echo
+      __clean__prefix_cmd=echo
       shift || break
       ;;
     -d|--du|--disk-usage)
-      cmd=du
+      __clean__cmd=du
       shift || break
       ;;
     -t|--time)
-      prefixCmd=time
+      __clean__prefix_cmd=time
       shift || break
       ;;
     *)
-      echo '[ERROR] not match arguments'
+      echo "[ERROR] not match arguments: $1" 1>&2
       exit 2
       ;;
   esac
 done
 
-case ${cmd} in
+case ${__clean__cmd} in
   rm)
-    ${prefixCmd} rm -rf ${options[@]} ${HOME}/.Trash
-    ${prefixCmd} mkdir -p ${HOME}/.Trash
+    ${__clean__prefix_cmd} rm -rf ${__clean__op[@]} "${TRASH_DIR}"
+    ${__clean__prefix_cmd} mkdir -p "${TRASH_DIR}"
     ;;
   find)
-    ${prefixCmd} find ${HOME}/.Trash
+    ${__clean__prefix_cmd} find "${TRASH_DIR}"
     ;;
   du)
-    ${prefixCmd} du ${HOME}/.Trash
+    ${__clean__prefix_cmd} du "${TRASH_DIR}"
     ;;
 esac
