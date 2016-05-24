@@ -58,4 +58,3 @@ mkdir -p "${TRASH_DIR}"
 alias clean_trash='time \rm -rfv "${TRASH_DIR}" && mkdir -p "${TRASH_DIR}"'
 
 aliasf(){ alias | sed -e 's/^\([^=]*\)=\(.*\)/\1 => \2/' -e "s/'//g" | grep --color $@; }
-alias uuid="date +%s | md5sum | cut -c 1-4"
