@@ -6,6 +6,7 @@ set autoindent smartindent cindent
 set tabstop=2 shiftwidth=2 softtabstop=0 expandtab smarttab
 set number ruler title laststatus=2
 set nocursorline nocursorcolumn
+set nowrap
 
 " Encoding
 if &encoding !=? 'utf-8' | let &termencoding = &encoding | end
