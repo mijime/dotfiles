@@ -40,7 +40,7 @@ esac
 
 alias l='ls -CF'          #
 alias la='ls -A'          # all but . and ..
-alias ll='ls -l'
+alias ll='ls -l -N --time-style +%Y-%m-%d\ %H:%M --human-readable'
 alias df='df -h'
 alias du='du -h'
 alias grep='grep --color' # show differences in colour
