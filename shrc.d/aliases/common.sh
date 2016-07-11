@@ -58,3 +58,8 @@ mkdir -p "${TRASH_DIR}"
 alias clean_trash='time \rm -rfv "${TRASH_DIR}" && mkdir -p "${TRASH_DIR}"'
 
 aliasf(){ alias | sed -e 's/^\([^=]*\)=\(.*\)/\1 => \2/' -e "s/'//g" | grep --color $@; }
+
+alias vim='vim --startuptime ${TEMP:-"/tmp"}/vim-`date +%F`.log'
+vimhealth() {
+  awk 'BEGIN{t=$1;a="";fmt="%.2f\t%04d %s\n"}/--- VIM STARTING ---/,/--- VIM STARTED ---/{d=$1-t;printf fmt,d,NR,a;t=$1;a=$0}END{printf fmt,d,NR,a}' "$@"
+}
