@@ -9,10 +9,10 @@ alias dcompose='docker-compose'
 
 dclean(){
   # xargs_opt=--no-run-if-empty
-  docker ps -aq | xargs ${xargs_opt} docker rm 2>/dev/null
-  docker images | awk '/<none>/{print$3}' | xargs ${xargs_opt} docker rmi 2>/dev/null
-  docker volume ls -q | xargs ${xargs_opt} docker volume rm 2>/dev/null
-  docker network ls -q | xargs ${xargs_opt} docker network rm 2>/dev/null
+  docker ps -aq | xargs ${xargs_opt} docker rm 2>/dev/null | sed 's/^/container: /g'
+  docker images | awk '/<none>/{print$3}' | xargs ${xargs_opt} docker rmi 2>/dev/null | sed 's/^/image: /g'
+  docker volume ls -q | xargs ${xargs_opt} docker volume rm 2>/dev/null | sed 's/^/volume: /g'
+  docker network ls -q | xargs ${xargs_opt} docker network rm 2>/dev/null | sed 's/^/network: /g'
 }
 
 alias dattach='docker attach'
