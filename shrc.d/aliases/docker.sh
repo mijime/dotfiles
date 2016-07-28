@@ -15,7 +15,8 @@ dclean(){
   docker network ls -q | xargs ${xargs_opt} docker network rm 2>/dev/null | sed 's/^/network: /g'
 }
 
-alias dip='docker inspect --format "{{.Name}} {{.Config.Image}} {{.NetworkSettings.IPAddress}}/{{.NetworkSettings.IPPrefixLen}}"'
+alias dexecd='docker exec --detach'
+alias dexeci='docker exec --interactive --tty'
 alias drund='docker run --detach'
 alias druni='docker run --interactive --tty --rm'
 alias dattach="docker attach"
