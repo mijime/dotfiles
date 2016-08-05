@@ -1,8 +1,70 @@
-#!/usr/bin/env ruby
+#!/bin/bash
+set -ue
 
-require 'webrick'
+declare \
+  __LANG="" \
+  __DIR="." \
+  __PORT="3000" \
+  __BIND="127.0.0.1"
 
-docRoot = unless ARGV.empty? then ARGV.shift else '.' end
-port = unless ARGV.empty? then ARGV.shift else 3000 end
+while [[ $# -gt 0 ]]
+do
+  case $1 in
+    --lang|-l)
+      __LANG=$2
+      shift 2 || exit 2
+      ;;
 
-WEBrick::HTTPServer.new({:DocumentRoot => docRoot, :Port => port}).start
+    --dir|-d)
+      __DIR=$2
+      shift 2 || exit 2
+      ;;
+
+    --port|-p)
+      __PORT=$2
+      shift 2 || exit 2
+      ;;
+
+    --bind|-b)
+      __BIND=$2
+      shift 2 || exit 2
+      ;;
+
+    --all|-A)
+      __BIND="0.0.0.0"
+      shift || exit 2
+      ;;
+
+    *)
+      __DIR=$1
+      shift || exit 2
+      ;;
+  esac
+done
+
+if [[ -z "${__LANG}" ]]
+then
+  if type python >/dev/null 2>/dev/null
+  then
+    PYTHON_MAJER_VERSION="$(python --version 2>&1 | awk '{print$2}' | awk -v FS="." '{print$1}')"
+    __LANG="python${PYTHON_MAJER_VERSION}"
+  elif type ruby >/dev/null 2>/dev/null
+  then __LANG=ruby
+  fi
+fi
+
+case "${__LANG}" in
+  p*3|python3)
+    cd "${__DIR}" || exit 1
+    python -m http.server "${__PORT}" --bind "${__BIND}"
+    ;;
+
+  p*2|python2)
+    cd "${__DIR}" || exit 1
+    python -m SimpleHTTPServer "${__PORT}" --bind "${__BIND}"
+    ;;
+
+  r*|ruby)
+    ruby -run -e httpd "${__DIR}" --port "${__PORT}" --bind "${__BIND}"
+    ;;
+esac
