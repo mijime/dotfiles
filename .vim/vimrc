@@ -1,0 +1,26 @@
+if &compatible | set nocompatible | end
+
+let b:plugged = expand('~/.vim/bundle/plugged')
+if has('vim_starting')
+  set rtp+=~/.vim/conf.d
+
+  if !isdirectory(b:plugged . '/vim-plug')
+    echo 'install.. vim-plug'
+    call system(join([
+          \ 'git', 'clone', '--depth 1',
+          \ 'https://github.com/junegunn/vim-plug.git',
+          \ b:plugged . '/vim-plug/autoload'], ' '))
+    echo 'installed vim-plug'
+  end
+  set rtp+=~/.vim/bundle/plugged/vim-plug
+end
+
+runt! plugged/_pre/*.vim
+
+call plug#begin(b:plugged)
+Plug 'junegunn/vim-plug', {'dir': b:plugged . '/vim-plug/autoload'}
+runt! plugged/*.vim
+call plug#end()
+
+runt! plugged/_post/*.vim
+unl b:plugged

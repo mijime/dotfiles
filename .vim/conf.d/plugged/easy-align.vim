@@ -1,2 +1,2 @@
-Plug 'junegunn/vim-easy-align', {'on': ['<Plug>(EasyAlign)']}
-vmap <Leader>a <Plug>(EasyAlign)
+Plug 'junegunn/vim-easy-align', {'on': ['EasyAlign']}
+vmap <Leader>a EasyAlign
