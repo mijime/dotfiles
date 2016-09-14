@@ -17,3 +17,5 @@
     path = ~/.gitconfig.local
 [push]
     default = simple
+[ghq]
+    root = ~/.go
