@@ -1,15 +1,15 @@
-[[ -d ~/.sham ]] || git clone https://github.com/mijime/sham ~/.sham
+#!/usr/bin/zsh
 
-source ~/.sham/sham.zsh
+[[ -d ~/.fzf ]] || git clone --depth 1 https://github.com/junegunn/fzf ~/.fzf
+[[ -d ~/.dotfiles ]] || git clone --depth 1 https://github.com/mijime/dotfiles ~/.dotfiles
 
-export SHAM_HOME=~/.sham/tmp/zsh
-
-sham 'mijime/sham'     dir: ~/.sham
-sham 'mijime/dotfiles' dir: ~/.dotfiles of:'shrc.d/*/*.{sh,zsh} .shrc.d/*.sh'
-sham 'junegunn/fzf'    dir: ~/.fzf      of:'shell/*.zsh' use:'bin/*' do:'./install --bin'
-sham 'zsh-users/zsh-history-substring-search' of:'*.zsh'
-
-sham list 2>/dev/null || sham install --verbose
-sham load --verbose
-
-[[ ! -f ~/.zshrc.local ]] || source ~/.zshrc.local
+for shrc in \
+  ~/.dotfiles/shrc.d/*/*.sh \
+  ~/.dotfiles/shrc.d/*/*.zsh \
+  ~/.fzf/shell/*.zsh \
+  ~/.zshrc.local
+do
+  if [[ -f ${shrc} ]]
+  then source "${shrc}"
+  fi
+done
