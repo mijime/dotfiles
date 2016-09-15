@@ -7,17 +7,16 @@ then
     {
       docker ps -a | awk 'NR>1{print"[C]",$1,$2,$NF}'
       docker images | awk 'NR>1{print"[I]",$3,$1":"$2}'
-    }
+    } 2>/dev/null
     )
   }
-
   _fzf_complete_docker_post() {
     awk '{print$2}'
   }
 
   _fzf_complete_docker-compose() {
     _fzf_complete '+m' "$@" < <(
-      docker-compose config --services
+      docker-compose config --services 2>/dev/null
     )
   }
 
@@ -27,7 +26,7 @@ then
       git status --short | awk '{print$2,$1}' | sed 's/^/[S] /g'
       git branch | awk '{print$2,$1}' | sed 's/^/[B] /g'
       git log --date=relative --abbrev-commit --oneline | sed 's/^/[L] /g'
-    }
+    } 2>/dev/null
     )
   }
   _fzf_complete_git_post() {
