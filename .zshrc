@@ -1,12 +1,15 @@
 #!/usr/bin/zsh
 
-[[ -d ~/.fzf ]] || git clone --depth 1 https://github.com/junegunn/fzf ~/.fzf
+[[ -d ~/.fzf ]] || { \
+  git clone --depth 1 https://github.com/junegunn/fzf ~/.fzf; \
+  ~/.fzf/install --bin; \
+}
 [[ -d ~/.dotfiles ]] || git clone --depth 1 https://github.com/mijime/dotfiles ~/.dotfiles
 
 for shrc in \
+  ~/.fzf/shell/*.zsh \
   ~/.dotfiles/shrc.d/*/*.sh \
   ~/.dotfiles/shrc.d/*/*.zsh \
-  ~/.fzf/shell/*.zsh \
   ~/.zshrc.local
 do
   if [[ -f ${shrc} ]]
