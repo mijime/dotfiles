@@ -29,15 +29,15 @@ set nobackup backupdir=$cache/backup,$cache,/var/tmp/vim,/var/tmp
 set undofile undolevels=1000 undodir=$cache/undo,$cache,/var/tmp/vim,/var/tmp
 
 " Movement
-inoremap <C-A> <Home>
-inoremap <C-B> <Left>
-inoremap <C-D> <Del>
-inoremap <C-E> <End>
-inoremap <C-F> <Right>
-nnoremap <C-A> <Home>
-nnoremap <C-E> <End>
-nnoremap <C-N> <Down>
-nnoremap <C-P> <Up>
+cnoremap <C-A> <Home>
+cnoremap <C-B> <Left>
+cnoremap <C-D> <Del>
+cnoremap <C-E> <End>
+cnoremap <C-F> <Right>
+vnoremap <C-A> <Home>
+vnoremap <C-E> <End>
+vnoremap <C-N> <Down>
+vnoremap <C-P> <Up>
 
 nnoremap j gj
 nnoremap k gk
