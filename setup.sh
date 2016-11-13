@@ -10,7 +10,6 @@ dotfiles=(
   .gemrc
   .gitconfig
   .inputrc
-  .shrc.d
   .tmux
   .tmux.conf
   .vim
