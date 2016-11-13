@@ -47,9 +47,7 @@ vnoremap > >gv
 nmap <Space> <Leader>
 vmap <Space> <Leader>
 
-inoremap <C-L> <C-X><C-O>
-
 augroup vimrc
   autocmd!
-  autocmd FileType * setlocal formatoptions-=ro omnifunc=syntaxcomplete#Complete
+  autocmd FileType gitconfig setlocal noexpandtab
 augroup END

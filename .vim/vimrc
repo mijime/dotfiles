@@ -19,6 +19,12 @@ runt! plugged/_pre/*.vim
 
 call plug#begin(b:plugged)
 Plug 'junegunn/vim-plug', {'dir': b:plugged . '/vim-plug/autoload'}
+Plug 'Raimondi/delimitMate'
+Plug 'Yggdroot/indentLine'
+Plug 'scrooloose/syntastic'
+Plug 'sheerun/vim-polyglot'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim', {'on': ['Buffers','Lines','Files']}
 runt! plugged/*.vim
 call plug#end()
 
