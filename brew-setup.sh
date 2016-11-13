@@ -1,9 +1,12 @@
 #!/bin/bash
 
+set -ue
+
 if ! type brew
 then curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install \
   | ruby
 fi
+
 brew update
 brew upgrade
 brew cleanup
@@ -19,5 +22,5 @@ git
 go
 nodebrew
 tmux
-vim
+vim --with-lua
 EOF
