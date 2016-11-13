@@ -7,13 +7,13 @@
 	ignore   = update-index --assume-unchanged
 	unignore = update-index --no-assume-unchanged
 	ignored  = !git ls-files -v | grep "^h"
+	c        = commit -v
 	s        = status --short --branch
 	d        = diff
 	ds       = diff --staged
 	l        = log --graph --date=relative --abbrev-commit --all --pretty='%C(red)%h %C(reset)%s%C(yellow)%d %C(green)(%cr) %C(blue)<%an>'
 	ll       = log --graph --date=relative --abbrev-commit --pretty=full --stat
 	push-branch = !git push --set-upstream origin $(git branch | awk '/^*/{print$2}')
-	commit = -v
 [include]
 	path = ~/.gitconfig.local
 [push]
