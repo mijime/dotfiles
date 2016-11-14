@@ -13,4 +13,9 @@ sham 'sstephenson/bats' use:'bin/*'
 sham 'mijime/.tools' use:'*'
 sham load
 
-[[ ! -f ~/.bashrc.local ]] || source ~/.bashrc.local
+if [[ -f ~/.dockerc ]]
+then source ~/.dockerc
+fi
+if [[ -f ~/.bashrc.local ]]
+then source ~/.bashrc.local
+fi
