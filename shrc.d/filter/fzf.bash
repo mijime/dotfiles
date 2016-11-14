@@ -29,4 +29,4 @@ _fzf_complete_git() {
 _fzf_complete_git_post() {
   awk '$1=="[S]"||$1=="[B]"{print$NF}$1=="[L]"{print$2}'
 }
-complete -F _fzf_complete_docker-compose git
+complete -F _fzf_complete_git git
