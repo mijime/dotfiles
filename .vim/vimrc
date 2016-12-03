@@ -1,32 +1,47 @@
-if &compatible | set nocompatible | end
+set bs=2
+set list listchars=tab:>\ ,trail:-,nbsp:%,extends:>,precedes:<
+set autoindent smartindent cindent
+set tabstop=2 shiftwidth=2 softtabstop=0 expandtab smarttab
+set number ruler title laststatus=2
+set nocursorline nocursorcolumn
+set nowrap
+set scrolloff=999
 
-let b:plugged = expand('~/.vim/bundle/plugged')
-if has('vim_starting')
-  set rtp+=~/.vim/conf.d
+" Encoding
+if &encoding !=? 'utf-8' | let &termencoding = &encoding | end
+set encoding=utf-8 fileencoding=utf-8 fileformats=unix,mac,dos
+set fileencodings=utf-8,iso-2022-jp-3,euc-jisx0213,cp932,euc-jp,sjis,jis,latin,iso-2022-jp
 
-  if !isdirectory(b:plugged . '/vim-plug')
-    echo 'install.. vim-plug'
-    call system(join([
-          \ 'git', 'clone', '--depth', '999',
-          \ 'https://github.com/junegunn/vim-plug.git',
-          \ b:plugged . '/vim-plug/autoload'], ' '))
-    echo 'installed vim-plug'
-  end
-  set rtp+=~/.vim/bundle/plugged/vim-plug
-end
+" Performance
+set updatetime=300 timeout timeoutlen=500 ttimeout ttimeoutlen=50 ttyfast nolazyredraw
 
-runt! plugged/_pre/*.vim
+" Search
+set wrapscan incsearch hlsearch magic
 
-call plug#begin(b:plugged)
-Plug 'junegunn/vim-plug', {'dir': b:plugged . '/vim-plug/autoload'}
-Plug 'Raimondi/delimitMate'
-Plug 'Yggdroot/indentLine'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim', {'on': ['Buffers','Lines','Files']}
-Plug 'haya14busa/vim-auto-programming'
-set completefunc=autoprogramming#complete
-runt! plugged/*.vim
-call plug#end()
+" Cache
+let $cache = expand('~/.vim/cache/backup')
+if !isdirectory($cache) | call mkdir($cache, 'p') | end
+set history=1000 viminfo='10,/100,:1000,<10,@10,s10,h,n$cache/.viminfo
+set nospell  spellfile=$cache/en.utf-8.add
+set swapfile directory=$cache/swap,$cache,/var/tmp/vim,/var/tmp
+set nobackup backupdir=$cache/backup,$cache,/var/tmp/vim,/var/tmp
+set undofile undolevels=1000 undodir=$cache/undo,$cache,/var/tmp/vim,/var/tmp
 
-runt! plugged/_post/*.vim
-unl b:plugged
+" Movement
+cnoremap <C-A> <Home>
+cnoremap <C-B> <Left>
+cnoremap <C-D> <Del>
+cnoremap <C-E> <End>
+cnoremap <C-F> <Right>
+vnoremap <C-A> <Home>
+vnoremap <C-E> <End>
+vnoremap <C-N> <Down>
+vnoremap <C-P> <Up>
+
+nnoremap j gj
+nnoremap k gk
+vnoremap < <gv
+vnoremap > >gv
+
+nmap <Space> <Leader>
+vmap <Space> <Leader>
