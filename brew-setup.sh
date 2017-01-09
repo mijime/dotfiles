@@ -9,18 +9,33 @@ fi
 
 brew update
 brew upgrade
-brew cleanup
 
 while read package
 do brew install ${package[@]}
 done <<EOF
+autoconf
+automake
+awscli
 bash
 binutils
 coreutils
 findutils
+docker
+docker-compose
+docker-machine
+ffmpeg
 git
 go
-nodebrew
+lua
+nkf
+node
+reattach-to-user-namespace
+ruby
+swift
 tmux
 vim --with-lua
+yarn
+youtube-dl
 EOF
+
+brew cleanup
