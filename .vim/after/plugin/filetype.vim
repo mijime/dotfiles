@@ -12,4 +12,5 @@ augroup FileTypeUser
   autocmd BufRead,BufNewFile *.ex,*.exs set filetype=elixir
   autocmd FileType elixir setlocal sw=2 sts=2 ts=2 et
   autocmd FileType gitconfig setlocal noexpandtab
+  autocmd BufRead,BufNewFile Dockerfile.* set filetype=dockerfile
 augroup END

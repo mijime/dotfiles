@@ -8,8 +8,7 @@ let g:go_play_open_browser = 0
 
 let g:vim_markdown_folding_disabled = 1
 
-let g:seoul256_background = 239
-
+packadd netrw.vim
 let g:netrw_alto       = 1
 let g:netrw_altv       = 1
 let g:netrw_fastbrowse = 2
@@ -34,8 +33,9 @@ let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 vmap <Leader>a <Plug>(EasyAlign)
 
-" let g:goyo_width  = '80%'
-" let g:goyo_height = '80%'
+let g:goyo_width  = '85'
+let g:goyo_height = '80%'
+let g:goyo_linenr = 1
 let g:limelight_conceal_ctermfg = 'DarkGray'
 let g:limelight_default_coefficient = 0.7
 let g:limelight_paragraph_span = 1
@@ -49,3 +49,6 @@ augroup GoyoUser
         \ | set nowrap
   autocmd User GoyoLeave nested Limelight!
 augroup END
+
+packadd vim-metarw
+packadd vim-metarw-docker

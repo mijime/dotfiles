@@ -4,7 +4,6 @@ set autoindent smartindent cindent
 set tabstop=2 shiftwidth=2 softtabstop=0 expandtab smarttab
 set number ruler title laststatus=2
 set nocursorline nocursorcolumn
-set nowrap
 set scrolloff=999
 
 " Encoding

@@ -12,37 +12,38 @@ if has('vim_starting')
 end
 
 call plug#begin(b:plugged)
+Plug 'junegunn/vim-plug', {'dir': join([b:plugged, 'vim-plug/autoload'], '/')}
 Plug 'Quramy/tsuquyomi', {'for': ['typescript']}
-      \ | Plug 'Shougo/vimproc.vim', {'do': 'make'}
-Plug 'Raimondi/delimitMate'
-Plug 'Shougo/neocomplete.vim'
+Plug 'Raimondi/delimitMate', {'on': ['PlugAllLoad']}
+Plug 'Shougo/neocomplete.vim', {'on': ['PlugAllLoad']}
 Plug 'airblade/vim-gitgutter', {'on': ['GitGutterEnable']}
 Plug 'artur-shaik/vim-javacomplete2', {'for': ['java']}
-Plug 'editorconfig/editorconfig-vim'
+Plug 'editorconfig/editorconfig-vim', {'on': ['PlugAllLoad']}
 Plug 'elixir-lang/vim-elixir', {'for': ['elixir']}
-Plug 'haya14busa/vim-auto-programming'
-Plug 'itchyny/lightline.vim'
+Plug 'haya14busa/vim-auto-programming', {'on': ['PlugAllLoad']}
+Plug 'itchyny/lightline.vim', {'on': ['PlugAllLoad']}
 Plug 'jnwhiteh/vim-golang', {'for': ['go']}
-Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim', {'on': ['Buffers', 'Lines', 'Files']}
+      \ | Plug 'junegunn/fzf',
+      \ {'on': ['Buffers', 'Lines', 'Files'], 'do': './install --bin'}
 Plug 'junegunn/goyo.vim', {'on': ['Goyo']}
 Plug 'junegunn/gv.vim', {'on': ['GV']}
 Plug 'junegunn/limelight.vim', {'on': ['Limelight']}
-Plug 'junegunn/seoul256.vim'
+Plug 'junegunn/seoul256.vim', {'on': ['PlugAllLoad']}
 Plug 'junegunn/vim-easy-align', {'on': ['<Plug>(EasyAlign)', 'EasyAlign']}
-Plug 'junegunn/vim-plug', {'dir': join([b:plugged, 'vim-plug/autoload'], '/')}
-Plug 'kana/vim-metarw'
+Plug 'kana/vim-metarw', {'on': ['PlugAllLoad']}
 Plug 'kannokanno/previm', {'for': ['markdown']}
 Plug 'kchmck/vim-coffee-script', {'for': ['coffee']}
 Plug 'leafgarland/typescript-vim', {'for': ['typescript']}
 Plug 'mattn/emmet-vim', {'for': ['html', 'html5', 'jsx']}
-Plug 'mijime/vim-metarw-docker'
-Plug 'mijime/vim-tmux', {'on':['Tmux', 'TmuxVim']}
+Plug 'mijime/vim-metarw-docker', {'on': ['PlugAllLoad']}
+Plug 'mijime/vim-tmux', {'on': ['Tmux', 'TmuxVim']}
 Plug 'netrw.vim'
 Plug 'othree/yajs.vim', {'for': ['javascript']}
 Plug 'plasticboy/vim-markdown', {'for': ['markdown']}
-Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive', {'on': ['PlugAllLoad']}
 Plug 'tyru/open-browser.vim', {'for': ['markdown']}
 Plug 'vim-scripts/jade.vim', {'for': ['jade']}
+Plug 'keith/swift.vim', {'for': ['swift']}
 call plug#end()
 unl b:plugged
