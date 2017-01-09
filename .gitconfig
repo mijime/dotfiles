@@ -1,7 +1,7 @@
 [core]
 	editor = vim -c \"set fenc=utf-8\"
 	filemode = false
-	safecrlf = true
+	safecrlf = false
 	autocrlf = input
 [color]
 	ui = auto
