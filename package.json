@@ -6,6 +6,7 @@
   "dependencies": {
     "ios-deploy": "^1.9.0",
     "react-native-cli": "^2.0.1",
+    "react-native-create-library": "^1.0.4",
     "textlint": "^7.1.4",
     "textlint-rule-preset-ja-technical-writing": "^1.0.0",
     "textlint-rule-preset-japanese": "^1.3.3",
