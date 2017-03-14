@@ -9,6 +9,7 @@
 	ignore   = update-index --assume-unchanged
 	unignore = update-index --no-assume-unchanged
 	ignored  = !git ls-files -v | grep "^h"
+	b        = branch --all --verbose
 	c        = commit -v
 	s        = status --short --branch
 	d        = diff
@@ -22,3 +23,7 @@
 	default = simple
 [ghq]
 	root = ~/src
+[http "https://gopkg.in"]
+	followRedirects = true
+[commit]
+	verbose = true
