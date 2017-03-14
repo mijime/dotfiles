@@ -2,9 +2,11 @@ let g:use_emmet_complete_tag = 1
 let g:user_emmet_settings = {
       \ 'lang': 'ja',
       \ 'html': {'indentation': '  '}}
-let g:go_fmt_autosave      = 0
-let g:go_fmt_fail_silently = 1
-let g:go_play_open_browser = 0
+
+augroup GoUser
+  autocmd!
+  autocmd BufWritePre *.go GoFmt
+augroup END
 
 let g:vim_markdown_folding_disabled = 1
 

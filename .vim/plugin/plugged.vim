@@ -17,12 +17,11 @@ Plug 'Quramy/tsuquyomi', {'for': ['typescript']}
 Plug 'Raimondi/delimitMate', {'on': ['PlugAllLoad']}
 Plug 'Shougo/neocomplete.vim', {'on': ['PlugAllLoad']}
 Plug 'airblade/vim-gitgutter', {'on': ['GitGutterEnable']}
-Plug 'artur-shaik/vim-javacomplete2', {'for': ['java']}
 Plug 'editorconfig/editorconfig-vim', {'on': ['PlugAllLoad']}
 Plug 'elixir-lang/vim-elixir', {'for': ['elixir']}
 Plug 'haya14busa/vim-auto-programming', {'on': ['PlugAllLoad']}
 Plug 'itchyny/lightline.vim', {'on': ['PlugAllLoad']}
-Plug 'jnwhiteh/vim-golang', {'for': ['go']}
+Plug 'fatih/vim-go', {'for': ['go']}
 Plug 'junegunn/fzf.vim', {'on': ['Buffers', 'Lines', 'Files']}
       \ | Plug 'junegunn/fzf',
       \ {'on': ['Buffers', 'Lines', 'Files'], 'do': './install --bin'}
