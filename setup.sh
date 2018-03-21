@@ -6,14 +6,10 @@ declare basedir=${0%/*}
 dotfiles=(
   .bash_profile
   .bashrc
-  .dir_colors
-  .gemrc
   .gitconfig
   .inputrc
-  .tmux
   .tmux.conf
   .vim
-  .zshrc
 )
 
 main() {
