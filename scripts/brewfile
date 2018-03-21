@@ -1,0 +1,31 @@
+# core tools
+coreutils
+findutils
+
+# shell
+bash
+zsh
+tmux
+fzf
+reattach-to-user-namespace
+cmake
+gawk
+
+# pyenv
+pyenv
+pyenv-virtualenv
+
+# git
+git
+gibo
+tig
+
+# tools
+awscli
+vim --with-lua --with-python3
+
+# lang
+go
+node
+yarn
+rust

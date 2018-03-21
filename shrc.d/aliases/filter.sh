@@ -1,7 +1,0 @@
-alias fgs='git status --short|filter --column 2'
-alias fgb='git branch|filter --last'
-alias fgl='git log --oneline|filter --column 1'
-alias fgr='git reflog --oneline|filter --column 1'
-alias fdc='docker ps --all|filter --column 1'
-alias fdi='docker images|filter --column 3'
-alias fdit='docker images|filter|awk "{print\$1\":\"\$2}"'

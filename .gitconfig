@@ -14,7 +14,7 @@
 	s        = status --short --branch
 	d        = diff
 	ds       = diff --staged
-	l        = log --graph --date=relative --abbrev-commit --all --pretty='%C(red)%h %C(reset)%s%C(yellow)%d %C(green)(%cr) %C(blue)<%an>'
+	l        = log --graph --date=relative --abbrev-commit --pretty='%C(red)%h %C(reset)%s%C(yellow)%d %C(green)(%cr) %C(blue)<%an>'
 	ll       = log --graph --date=relative --abbrev-commit --pretty=full --stat
 	push-branch = !git push --set-upstream origin $(git branch | awk '/^*/{print$2}')
 [include]
@@ -27,3 +27,7 @@
 	followRedirects = true
 [commit]
 	verbose = true
+[merge]
+	ff = false
+[pull]
+	ff = only

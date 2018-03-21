@@ -8,6 +8,6 @@ if has('syntax')
   augroup InvisibleUser
     autocmd!
     autocmd BufNew,BufRead * call JISX0208SpaceHilight()
-    autocmd BufWritePre    * :%s/\s\+$//ge
+    " autocmd BufWritePre    * :%s/\s\+$//ge
   augroup END
 end
