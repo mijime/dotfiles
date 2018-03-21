@@ -23,6 +23,7 @@ tig
 # tools
 awscli
 vim --with-lua --with-python3
+w3c
 
 # lang
 go
