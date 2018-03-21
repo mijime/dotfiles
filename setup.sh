@@ -32,7 +32,7 @@ install_dotfiles() {
     | sed -e "s@^@${basedir}/@g" -e "s@${HOME}/@@g" \
     | while read dotfile
       do
-        ln -sfb "${dotfile}" "${HOME}/"
+        ln -sf "${dotfile}" "${HOME}/"
       done
 }
 
