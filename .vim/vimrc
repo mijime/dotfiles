@@ -85,7 +85,7 @@ call plug#begin('~/.cache/plugged')
   Plug 'itchyny/lightline.vim'
   let g:lightline={'colorscheme':'seoul256'}
 
-  Plug 'kannokanno/previm', {'for':['markdown']}
+  Plug 'previm/previm', {'for':['markdown']}
   augroup MyAutoCmd
     autocmd FileType markdown setlocal sw=4 sts=4 ts=4 et
   augroup END
@@ -95,15 +95,23 @@ call plug#begin('~/.cache/plugged')
 
   Plug 'tpope/vim-dispatch'
   Plug 'scrooloose/nerdtree'
-  augroup MyAutoCmd
-    autocmd StdinReadPre * let s:std_in=1
-    autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-  augroup END
+  Plug 'udalov/kotlin-vim', {'for':['kotlin']}
 
   Plug 'fatih/vim-go', {'for':['go']}
 
   Plug 'tpope/vim-speeddating', {'for':['org']}
   Plug 'jceb/vim-orgmode', {'for':['org']}
   let g:org_agenda_files=['~/org/*.org']
-call plug#end()
 
+  Plug 'OmniSharp/omnisharp-vim', {'for':['cs']}
+  let g:OmniSharp_selector_ui = 'fzf'
+
+  Plug 'thinca/vim-quickrun', {'on':['QuickRun']}
+  Plug 'digitaltoad/vim-pug', {'for':['pug']}
+  augroup MyAutoCmd
+    autocmd BufRead,BufNewFile *.pug set filetype=pug
+    autocmd BufRead,BufNewFile *.kt set filetype=kotlin
+  augroup END
+
+  Plug 'mijime/pomo.vim'
+call plug#end()

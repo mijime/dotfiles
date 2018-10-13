@@ -18,10 +18,10 @@ do brew install ${package}
 done
 brew upgrade
 brew prune
-brew cleanup
 
 cat $(dirname $0)/brewfile-cask | __noinstalled_package brew cask | while read package
 do brew cask install ${package}
 done
 brew cask upgrade
-brew cask cleanup
+
+brew cleanup

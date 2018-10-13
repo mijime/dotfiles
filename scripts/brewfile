@@ -24,6 +24,7 @@ tig
 awscli
 vim --with-lua --with-python3
 w3m
+jq
 
 # lang
 go

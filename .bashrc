@@ -5,21 +5,10 @@ do
   fi
 done
 
-if [[ -f ~/.fzf.bash ]]
-then source ~/.fzf.bash
-fi
-
-## Set path for pyenv
-export PYENV_ROOT="${HOME}/.pyenv"
-if [ -d "${PYENV_ROOT}" ]; then
-    export PATH=${PYENV_ROOT}/bin:$PATH
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-fi
-
 export PATH=${PATH}:~/bin
-export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
-export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}
+export PATH="/usr/local/opt/openssl/bin:${PATH}"
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
 
 alias ls='ls --color'
 alias ll='ls -l'
