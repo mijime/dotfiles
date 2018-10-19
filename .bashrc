@@ -1,4 +1,4 @@
-for bash_completion in /usr/local/etc/bash_completion.d/* ~/.dockerrc
+for bash_completion in /usr/local/etc/bash_completion.d/*
 do
   if [[ -f ${bash_completion} ]]
   then source ${bash_completion}
@@ -6,6 +6,7 @@ do
 done
 
 export PATH=${PATH}:~/bin
+export PATH="/usr/local/bin:${PATH}"
 export PATH="/usr/local/opt/openssl/bin:${PATH}"
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
@@ -69,8 +70,44 @@ __create__ssh_config() {
 }
 __create__ssh_config
 
+__create__ssh_public() {
+  host=localhost
+  algo=ecdsa
+  while [[ $# -gt 0 ]]
+  do
+    case $1 in
+      -t)
+        algo=$2
+        shift 2 || return 1
+        ;;
+      *)
+        host=$1
+        shift || return 1
+        ;;
+    esac
+  done
+  keyname=${HOME}/.ssh/projects/${host}/id_${algo}
+  if [[ ! -f ${keyname} ]]
+  then
+    mkdir -p "$(dirname ${keyname})"
+    ssh-keygen -t ${algo} -f ${keyname} -N ""
+    cat <<EOF > ${HOME}/.ssh/projects/${host}/ssh_config
+Host ${host}
+  IdentityFile ${keyname}
+EOF
+    __create__ssh_config
+  fi
+}
+
 shopt -u histappend
 HISTSIZE=100000
 HISTTIMEFORMAT='[%y/%m/%d %H:%M:%S]  '
 HISTIGNORE='l[sla]:history*:pwd:exit:cd:[bf]g:jobs'
 HISTCONTROL='ignoredups:ignorespace:erasedups'
+
+for localrc in ~/bashrc.local ~/.dockerrc
+do
+  if [[ -f ${localrc} ]]
+  then source ${localrc}
+  fi
+done
