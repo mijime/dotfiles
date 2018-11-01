@@ -61,21 +61,48 @@ __ret_ps1() {
   return ${ret}
 }
 
-__create__ssh_config() {
-  if [[ -d ${HOME}/.ssh/projects ]]
-  then
-    find ${HOME}/.ssh/projects -type f -name 'ssh_config' \
-      | xargs cat > ${HOME}/.ssh/config
-  fi
-}
-__create__ssh_config
+__create_ssh_config() {
+    local ssh_project=~/.ssh/projects
+    local ssh_config=~/.ssh/config
 
-__create__ssh_public() {
-  host=localhost
-  algo=ecdsa
+    while [[ $# -gt 0 ]]
+    do
+        case $1 in
+            --project|-p)
+                ssh_project=$2
+                shift 2 || return 2
+                ;;
+
+            --config|-c)
+                ssh_config=$2
+                shift 2 || return 2
+                ;;
+
+            *)
+                echo "[ERROR] $@" 1>&2
+                return 1
+                ;;
+        esac
+    done
+
+    find "${ssh_project}" -name ssh_config \
+        | sort \
+        | xargs cat > "${ssh_config}"
+}
+__create_ssh_config
+
+__create_ssh_private() {
+  local ssh_project=${SSH_PROJECT:-~/.ssh/projects}
+  local host=localhost
+  local algo=ed25519
+
   while [[ $# -gt 0 ]]
   do
     case $1 in
+      --project|-p)
+        ssh_project=$2
+        shift 2 || return 1
+        ;;
       -t)
         algo=$2
         shift 2 || return 1
@@ -86,16 +113,23 @@ __create__ssh_public() {
         ;;
     esac
   done
-  keyname=${HOME}/.ssh/projects/${host}/id_${algo}
+
+  dir="${ssh_project}/$(echo ${host}|awk -F. '{for(i=NF;i>0;i--)printf"%s%s",$i,i==1?"":"/"}'|sed -e 's|*|_|g')"
+  mkdir -p ${dir}
+
+  keyname=${dir}/id_${algo}
   if [[ ! -f ${keyname} ]]
   then
-    mkdir -p "$(dirname ${keyname})"
     ssh-keygen -t ${algo} -f ${keyname} -N ""
-    cat <<EOF > ${HOME}/.ssh/projects/${host}/ssh_config
+  fi
+
+  ssh_config=${dir}/ssh_config
+  if [[ ! -f ${ssh_config} ]]
+  then
+    cat <<EOF > ${ssh_config}
 Host ${host}
   IdentityFile ${keyname}
 EOF
-    __create__ssh_config
   fi
 }
 
