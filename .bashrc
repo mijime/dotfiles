@@ -139,7 +139,7 @@ HISTTIMEFORMAT='[%y/%m/%d %H:%M:%S]  '
 HISTIGNORE='l[sla]:history*:pwd:exit:cd:[bf]g:jobs'
 HISTCONTROL='ignoredups:ignorespace:erasedups'
 
-for localrc in ~/bashrc.local ~/.dockerrc
+for localrc in ~/.bashrc.local ~/.dockerrc
 do
   if [[ -f ${localrc} ]]
   then source ${localrc}
