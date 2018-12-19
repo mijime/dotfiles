@@ -114,4 +114,6 @@ call plug#begin('~/.cache/plugged')
   augroup END
 
   Plug 'mijime/pomo.vim'
+  Plug 'zah/nim.vim'
+  Plug 'w0rp/ale'
 call plug#end()

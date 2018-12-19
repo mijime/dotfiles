@@ -135,9 +135,16 @@ EOF
 
 shopt -u histappend
 HISTSIZE=100000
+HISTFILESIZE=100000
 HISTTIMEFORMAT='[%y/%m/%d %H:%M:%S]  '
 HISTIGNORE='l[sla]:history*:pwd:exit:cd:[bf]g:jobs'
 HISTCONTROL='ignoredups:ignorespace:erasedups'
+__prompt_cmd(){
+    history -a
+    history -c
+    history -r
+}
+PROMPT_COMMAND='__prompt_cmd'
 
 for localrc in ~/.bashrc.local ~/.dockerrc
 do

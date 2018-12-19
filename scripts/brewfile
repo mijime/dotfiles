@@ -4,16 +4,11 @@ findutils
 
 # shell
 bash
-zsh
 tmux
 fzf
 reattach-to-user-namespace
 cmake
 gawk
-
-# pyenv
-pyenv
-pyenv-virtualenv
 
 # git
 git
@@ -26,8 +21,10 @@ vim --with-lua --with-python3
 w3m
 jq
 
-# lang
+# lang & tools
 go
 node
 yarn
 rust
+python
+nim
