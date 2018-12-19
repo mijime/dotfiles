@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -xue
 
 declare -a dotfiles=()
 declare basedir=${0%/*}
@@ -15,6 +15,7 @@ dotfiles=(
 main() {
   validation
   install_dotfiles
+  install_config
 }
 
 validation() {
@@ -34,6 +35,11 @@ install_dotfiles() {
       do
         ln -sf "${dotfile}" "${HOME}/"
       done
+}
+
+install_config() {
+  mkdir -p ~/.config
+  ln -sf $(dirname ${0})/config/* ~/.config
 }
 
 err() {
