@@ -14,12 +14,15 @@ gawk
 git
 gibo
 tig
+hub
 
 # tools
 awscli
-vim --with-lua --with-python3
+vim
 w3m
 jq
+ghq
+azure-cli
 
 # lang & tools
 go

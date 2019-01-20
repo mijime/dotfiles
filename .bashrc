@@ -85,6 +85,7 @@ __create_ssh_config() {
         esac
     done
 
+    mkdir -p "${ssh_project}"
     find "${ssh_project}" -name ssh_config \
         | sort \
         | xargs cat > "${ssh_config}"
