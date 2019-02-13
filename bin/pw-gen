@@ -35,5 +35,5 @@ do
     esac
 done
 
-tr -c -d ${chars:-'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@$%'} </dev/urandom |
+tr -c -d ${chars:-'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@$%!?/'} </dev/urandom |
     dd bs=${length:-12} count=1 2>/dev/null
