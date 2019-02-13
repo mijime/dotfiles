@@ -9,6 +9,7 @@ fzf
 reattach-to-user-namespace
 cmake
 gawk
+shellcheck
 
 # git
 git
