@@ -123,7 +123,7 @@ __create_ssh_private() {
   keyname=${dir}/id_${algo}
   if [[ ! -f ${keyname} ]]
   then
-    ssh-keygen -t ${algo} -f ${keyname} -N ""
+    ssh-keygen -t ${algo} -f ${keyname} -N "" -C ""
   fi
 
   ssh_config=${dir}/ssh_config
