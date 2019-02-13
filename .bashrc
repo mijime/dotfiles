@@ -1,4 +1,6 @@
-for bash_completion in /usr/local/etc/bash_completion.d/*
+export homebrew_prefix=$(brew --prefix)
+
+for bash_completion in ${homebrew_prefix}/etc/bash_completion.d/*
 do
   if [[ -f ${bash_completion} ]]
   then source ${bash_completion}
@@ -6,10 +8,10 @@ do
 done
 
 export PATH=${PATH}:~/bin
-export PATH="/usr/local/bin:${PATH}"
-export PATH="/usr/local/opt/openssl/bin:${PATH}"
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
+export PATH="${homebrew_prefix}/bin:${PATH}"
+export PATH="${homebrew_prefix}/opt/openssl/bin:${PATH}"
+export PATH="${homebrew_prefix}/opt/coreutils/libexec/gnubin:${PATH}"
+export MANPATH="${homebrew_prefix}/opt/coreutils/libexec/gnuman:${MANPATH}"
 
 alias ls='ls --color'
 alias ll='ls -l'
