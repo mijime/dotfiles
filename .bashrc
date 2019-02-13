@@ -1,4 +1,6 @@
-export homebrew_prefix=$(brew --prefix)
+export PATH=${HOME}/.brew/bin:${PATH}
+export HOMEBREW_CASK_OPTS='--appdir=~/Applications --fontdir=/Library/Fonts'
+homebrew_prefix=$(brew --prefix)
 
 for bash_completion in ${homebrew_prefix}/etc/bash_completion.d/*
 do
@@ -7,7 +9,7 @@ do
   fi
 done
 
-export PATH=${PATH}:~/bin
+export PATH="${PATH}:${HOME}/bin"
 export PATH="${homebrew_prefix}/bin:${PATH}"
 export PATH="${homebrew_prefix}/opt/openssl/bin:${PATH}"
 export PATH="${homebrew_prefix}/opt/coreutils/libexec/gnubin:${PATH}"
