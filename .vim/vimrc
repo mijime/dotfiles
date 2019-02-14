@@ -90,7 +90,22 @@ call plug#begin('~/.cache/plugged')
   Plug 'tpope/vim-fugitive'
 
   Plug 'itchyny/lightline.vim'
-  let g:lightline={'colorscheme':'seoul256'}
+  let g:lightline={
+        \ 'colorscheme':'seoul256',
+        \ 'active': {'left':[['mode','paste'],['readonly','filepath','modified']]},
+        \ 'component_function': {
+        \ 'filepath': 'FilePathForLightline'
+        \ }
+        \ }
+  function! FilePathForLightline()
+    let path = expand('%')
+    let pathlen = len(path)
+    let winlen = winwidth(0)/3
+    if pathlen > winlen
+      return '...'.path[pathlen-winlen:pathlen]
+    endif
+    return path
+  endfunction
 
   Plug 'previm/previm', {'for':['markdown']}
   augroup MyAutoCmd
