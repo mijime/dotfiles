@@ -26,7 +26,6 @@ ghq
 azure-cli
 tree
 shellcheck
-postgresql
 
 # lang & tools
 go
