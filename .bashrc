@@ -1,3 +1,5 @@
+export PATH=${HOME}/.brew/bin:${PATH}
+
 if ! type brew 1>/dev/null 2>/dev/null
 then
   mkdir -p "${HOME}/.brew"
@@ -5,7 +7,6 @@ then
     | tar xz --strip-components=1 -C "${HOME}/.brew"
 fi
 
-export PATH=${HOME}/.brew/bin:${PATH}
 export HOMEBREW_CASK_OPTS='--appdir=~/Applications --fontdir=/Library/Fonts'
 homebrew_prefix=$(brew --prefix)
 
