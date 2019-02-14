@@ -37,14 +37,14 @@ export PS1='$(__ret_ps1)\u\e[0;00m@\e[0;34m\h\e[0;33m \w\e[0;31m$(__git_ps1)\e[0
 __cd() {
   if [[ $# -eq 0 ]]
   then
-    pushd ~
+    pushd ~ || return 1
     return
   fi
   while [[ $# -gt 0 ]]
   do
     case $1 in
       -)
-        popd 1>&2
+        popd 1>&2 || return 1
         shift
         ;;
       -c|--clear)
@@ -56,7 +56,7 @@ __cd() {
         shift
         ;;
       *)
-        pushd "$1" >/dev/null
+        pushd "$1" >/dev/null || return 1
         shift
         ;;
     esac
@@ -101,7 +101,7 @@ __create_ssh_config() {
         | sort \
         | xargs cat > "${ssh_config}"
 }
-__create_ssh_config
+__create_ssh_config "$@"
 
 __create_ssh_private() {
   local ssh_project=${SSH_PROJECT:-~/.ssh/projects}
@@ -126,19 +126,19 @@ __create_ssh_private() {
     esac
   done
 
-  dir="${ssh_project}/$(echo ${host}|awk -F. '{for(i=NF;i>0;i--)printf"%s%s",$i,i==1?"":"/"}'|sed -e 's|*|_|g')"
-  mkdir -p ${dir}
+  dir="${ssh_project}/$(echo "${host}"|awk -F. '{for(i=NF;i>0;i--)printf"%s%s",$i,i==1?"":"/"}'|sed -e 's|*|_|g')"
+  mkdir -p "${dir}"
 
   keyname=${dir}/id_${algo}
   if [[ ! -f ${keyname} ]]
   then
-    ssh-keygen -t ${algo} -f ${keyname} -N "" -C ""
+    ssh-keygen -t "${algo}" -f "${keyname}" -N "" -C ""
   fi
 
   ssh_config=${dir}/ssh_config
   if [[ ! -f ${ssh_config} ]]
   then
-    cat <<EOF > ${ssh_config}
+    cat <<EOF > "${ssh_config}"
 Host ${host}
   IdentityFile ${keyname}
 EOF
