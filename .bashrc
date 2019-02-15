@@ -4,7 +4,7 @@ export PATH=${HOME}/.brew/bin:${PATH}
 
 __install_brew(){
   mkdir -p "${HOME}/.brew"
-  curl -sSL https://github.com/Homebrew/brew/archive/master.tar.gz \
+  curl -L https://github.com/Homebrew/brew/archive/master.tar.gz \
     | tar xz --strip-components=1 -C "${HOME}/.brew"
 }
 if ! type brew 1>/dev/null 2>/dev/null
