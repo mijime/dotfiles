@@ -6,17 +6,10 @@ __install_brew(){
     | tar xz --strip-components=1 -C "${HOME}/.brew"
 }
 
-if ! type brew 1>/dev/null 2>/dev/null
-then __install_brew
-fi
-
 export PATH=${HOME}/.brew/bin:${PATH}
 
 if ! type brew 1>/dev/null 2>/dev/null
-then
-  mkdir -p "${HOME}/.brew"
-  curl -L https://github.com/Homebrew/brew/archive/master.tar.gz \
-    | tar xz --strip-components=1 -C "${HOME}/.brew"
+then __install_brew
 fi
 
 export HOMEBREW_CASK_OPTS='--appdir=~/Applications --fontdir=/Library/Fonts'
