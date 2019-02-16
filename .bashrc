@@ -37,7 +37,7 @@ then alias tmux='reattach-to-user-namespace tmux'
 fi
 
 export GOPATH=${HOME}
-export PS1='$(__ret_ps1)\u\e[0;00m@\e[0;34m\h\e[0;33m \w\e[0;31m$(__git_ps1)\e[0;35m $(date +%H:%M:%S)\e[0;00m\n$ '
+export PS1='$(__ret_ps1)\u\[\e[0;00m\]@\[\e[0;34m\]\h\[\e[0;33m\] \w\[\e[0;31m\]$(__git_ps1)\[\e[0;35m\] $(date +%H:%M:%S)\[\e[0;00m\]\n$ '
 
 __cd() {
   if [[ $# -eq 0 ]]
