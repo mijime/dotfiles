@@ -68,21 +68,7 @@ __cd() {
   done
 }
 
-icons=(
-  "\xe2\x99\x88"
-  "\xe2\x99\x89"
-  "\xe2\x99\x8a"
-  "\xe2\x99\x8b"
-  "\xe2\x99\x8c"
-  "\xe2\x99\x8d"
-  "\xe2\x99\x8e"
-  "\xe2\x99\x8f"
-  "\xe2\x99\x90"
-  "\xe2\x99\x91"
-  "\xe2\x99\x92"
-  "\xe2\x99\x93"
-)
-icon=${icons[$((16#$(whoami|md5sum -|cut -c -8)%12))]}
+icon=$(echo -ne $((127744 + 16#$(whoami|md5sum|cut -c-8)%512))|awk '{printf("%3c",$1)}')
 
 __ret_ps1() {
   ret=$?
