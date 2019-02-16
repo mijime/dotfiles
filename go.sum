@@ -1,6 +1,8 @@
 github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/ddollar/forego v0.16.1 h1:HbAl3XyEdU1lw17PvZzqMzcx7b8BKZshEsdb4+1TI3Y=
+github.com/ddollar/forego v0.16.1/go.mod h1:moJFK5OqWdZeLVEYHynQRJqoKImixOuxgQBFCtoe0bU=
 github.com/hashicorp/hcl v1.0.0 h1:0Anlzjpi4vEasTeNFn2mLJgTSwt0+6sfsiTG8qcWGx4=
 github.com/hashicorp/hcl v1.0.0/go.mod h1:E5yfLk+7swimpb2L/Alb/PJmXilQ/rhwaUYs4T20WEQ=
 github.com/sclevine/yj v0.0.0-20190123061816-e4c1437e1a06 h1:EcNamB91i7Zagg/z1bpmd4iBun45Q7TcToWViTHRUBY=
