@@ -70,6 +70,8 @@ __cd() {
 
 __ret_ps1() {
   ret=$?
+  name_hash=$(whoami|md5sum -|cut -c -2)
+  echo -ne "[\xE2\x98\x${name_hash}] "
   if [[ ${ret} -eq 0 ]]
   then printf '\e[0;32m'
   else printf '\e[0;31m'
@@ -95,7 +97,7 @@ __create_ssh_config() {
                 ;;
 
             *)
-                echo "[ERROR] $@" 1>&2
+                echo "[ERROR] $*" 1>&2
                 return 1
                 ;;
         esac
