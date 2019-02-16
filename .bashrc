@@ -172,3 +172,4 @@ do
   then source ${localrc}
   fi
 done
+alias cdg='cd ${GOPATH}/src/$(ghq list|fzf)'
