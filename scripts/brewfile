@@ -25,7 +25,6 @@ jq
 ghq
 azure-cli
 tree
-shellcheck
 
 # lang & tools
 go
