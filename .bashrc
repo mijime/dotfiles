@@ -68,10 +68,25 @@ __cd() {
   done
 }
 
+icons=(
+  "\xe2\x99\x88"
+  "\xe2\x99\x89"
+  "\xe2\x99\x8a"
+  "\xe2\x99\x8b"
+  "\xe2\x99\x8c"
+  "\xe2\x99\x8d"
+  "\xe2\x99\x8e"
+  "\xe2\x99\x8f"
+  "\xe2\x99\x90"
+  "\xe2\x99\x91"
+  "\xe2\x99\x92"
+  "\xe2\x99\x93"
+)
+icon=${icons[$((16#$(whoami|md5sum -|cut -c -8)%12))]}
+
 __ret_ps1() {
   ret=$?
-  name_hash=$(whoami|md5sum -|cut -c -2)
-  echo -ne "[\xE2\x98\x${name_hash}] "
+  echo -ne "${icon} "
   if [[ ${ret} -eq 0 ]]
   then printf '\e[0;32m'
   else printf '\e[0;31m'
