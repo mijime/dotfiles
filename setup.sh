@@ -10,6 +10,7 @@ dotfiles=(
   .inputrc
   .tmux.conf
   .vim
+  .textlintrc
 )
 
 main() {
