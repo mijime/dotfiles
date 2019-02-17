@@ -26,11 +26,13 @@ export PATH="${homebrew_prefix}/bin:${PATH}"
 export PATH="${homebrew_prefix}/opt/openssl/bin:${PATH}"
 export PATH="${homebrew_prefix}/opt/coreutils/libexec/gnubin:${PATH}"
 export MANPATH="${homebrew_prefix}/opt/coreutils/libexec/gnuman:${MANPATH}"
+export PATH="${PATH}:${HOME}/.dotfiles/bin:${HOME}/.dotfiles/node_modules/.bin"
 
 alias ls='ls --color'
 alias ll='ls -l'
 alias rm='mv -v --backup=numbered -t ~/.Trash'
 alias cd=__cd
+alias cdg='cd ${GOPATH}/src/$(ghq list|fzf)'
 
 if type reattach-to-user-namespace 1>/dev/null 2>/dev/null
 then alias tmux='reattach-to-user-namespace tmux'
@@ -172,4 +174,3 @@ do
   then source ${localrc}
   fi
 done
-alias cdg='cd ${GOPATH}/src/$(ghq list|fzf)'

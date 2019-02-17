@@ -135,6 +135,8 @@ call plug#begin('~/.cache/plugged')
   Plug 'zah/nim.vim'
   Plug 'w0rp/ale'
 
+  Plug 'glidenote/memolist.vim'
+
   Plug 'prabirshrestha/async.vim'
   Plug 'prabirshrestha/vim-lsp'
 
