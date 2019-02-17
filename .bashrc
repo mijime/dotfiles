@@ -168,7 +168,10 @@ __prompt_cmd(){
 }
 PROMPT_COMMAND='__prompt_cmd'
 
-for localrc in ~/.bashrc.local ~/.dockerrc
+for localrc in ~/.bashrc.local \
+  ~/.dockerrc \
+  ${homebrew_prefix}/opt/fzf/shell/completion.bash \
+  ${homebrew_prefix}/opt/fzf/shell/key-bindings.bash
 do
   if [[ -f ${localrc} ]]
   then source ${localrc}
