@@ -1,7 +1,6 @@
 ---
-Title: {{_title_}}
-==========
-
+Title: "{{_title_}}"
 Tags: [{{_tags_}}]
-Date: {{_date_}}
+Draft: true
+Date: "{{_date_}}"
 ---
