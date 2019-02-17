@@ -136,6 +136,7 @@ call plug#begin('~/.cache/plugged')
   Plug 'w0rp/ale'
 
   Plug 'glidenote/memolist.vim'
+  let g:memolist_memo_suffix = 'md'
 
   Plug 'prabirshrestha/async.vim'
   Plug 'prabirshrestha/vim-lsp'
