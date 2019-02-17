@@ -136,7 +136,11 @@ call plug#begin('~/.cache/plugged')
   Plug 'w0rp/ale'
 
   Plug 'glidenote/memolist.vim'
+  let g:memolist_path = '~/.memo/'
   let g:memolist_memo_suffix = 'md'
+  let g:memolist_template_dir_path = '~/.vim/templates/memo/'
+  let g:memolist_fzf = 1
+  let g:memolist_memo_date = "%Y-%m-%d %H:%M:%S%z"
 
   Plug 'prabirshrestha/async.vim'
   Plug 'prabirshrestha/vim-lsp'
