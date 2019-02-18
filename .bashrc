@@ -32,6 +32,7 @@ case "$(uname)" in
     alias ll='ls -l'
     alias rm='mv -v --backup=numbered -t ~/.Trash'
     alias cdg='cd ${GOPATH}/src/$(ghq list|fzf)'
+    alias cdh='cd $(dirs -v|awk "!a[\$NF]{print;a[\$NF]=1}"|fzf|awk "{print\$NF}"|sed -e "s|~|${HOME}|")'
 
     if type reattach-to-user-namespace 1>/dev/null 2>/dev/null
     then alias tmux='reattach-to-user-namespace tmux'
