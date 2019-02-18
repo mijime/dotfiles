@@ -25,6 +25,7 @@ jq
 ghq
 azure-cli
 tree
+circleci
 
 # lang & tools
 go
