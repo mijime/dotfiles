@@ -1,4 +1,6 @@
-#!/bin/bash -xue
+#!/usr/bin/env bash
+
+set -xue
 
 declare -a dotfiles=()
 declare basedir=${0%/*}
@@ -28,10 +30,10 @@ validation() {
 install_dotfiles() {
   for dotfile in "${dotfiles[@]}"
   do
-    echo ${dotfile}
+    echo "${dotfile}"
   done \
     | sed -e "s@^@${basedir}/@g" -e "s@${HOME}/@@g" \
-    | while read dotfile
+    | while read -r dotfile
       do
         ln -sf "${dotfile}" "${HOME}/"
       done
@@ -42,8 +44,8 @@ err() {
   local ret=$1
 
   shift
-  echo $@ >&2
-  exit ${ret}
+  echo "$*" >&2
+  exit "${ret}"
 }
 
-main $@
+main "$@"
