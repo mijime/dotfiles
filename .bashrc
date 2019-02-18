@@ -1,46 +1,53 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-export PATH=${HOME}/.brew/bin:${PATH}
+case "$(uname)" in
+  Darwin)
+    export PATH=${HOME}/.brew/bin:${PATH}
 
-__install_brew(){
-  mkdir -p "${HOME}/.brew"
-  curl -L https://github.com/Homebrew/brew/archive/master.tar.gz \
-    | tar xz --strip-components=1 -C "${HOME}/.brew"
-}
-if ! type brew 1>/dev/null 2>/dev/null
-then __install_brew
-fi
+    __install_brew(){
+      mkdir -p "${HOME}/.brew"
+      curl -L https://github.com/Homebrew/brew/archive/master.tar.gz \
+        | tar xz --strip-components=1 -C "${HOME}/.brew"
+      }
+    if ! type brew 1>/dev/null 2>/dev/null
+    then __install_brew
+    fi
 
-export HOMEBREW_CASK_OPTS='--appdir=~/Applications --fontdir=/Library/Fonts'
-homebrew_prefix=$(brew --prefix)
+    export HOMEBREW_CASK_OPTS='--appdir=~/Applications --fontdir=/Library/Fonts'
+    homebrew_prefix=$(brew --prefix)
 
-for bash_completion in "${homebrew_prefix}/etc/bash_completion.d/"*
-do
-  if [[ -f ${bash_completion} ]]
-  then source "${bash_completion}"
-  fi
-done
+    for bash_completion in "${homebrew_prefix}/etc/bash_completion.d/"*
+    do
+      if [[ -f ${bash_completion} ]]
+      then source "${bash_completion}"
+      fi
+    done
+
+    export PATH="${homebrew_prefix}/bin:${PATH}"
+    export PATH="${homebrew_prefix}/opt/openssl/bin:${PATH}"
+    export PATH="${homebrew_prefix}/opt/coreutils/libexec/gnubin:${PATH}"
+    export MANPATH="${homebrew_prefix}/opt/coreutils/libexec/gnuman:${MANPATH}"
+
+    alias ls='ls --color'
+    alias ll='ls -l'
+    alias rm='mv -v --backup=numbered -t ~/.Trash'
+    alias cdg='cd ${GOPATH}/src/$(ghq list|fzf)'
+
+    if type reattach-to-user-namespace 1>/dev/null 2>/dev/null
+    then alias tmux='reattach-to-user-namespace tmux'
+      fi
+      export PS1='$(__ret_ps1)\u\[\e[0;00m\]@\[\e[0;34m\]\h\[\e[0;33m\] \w\[\e[0;31m\]$(__git_ps1)\[\e[0;35m\] $(date +%H:%M:%S)\[\e[0;00m\]\n$ '
+    ;;
+
+  *)
+    ;;
+esac
 
 export PATH="${PATH}:${HOME}/bin"
-export PATH="${homebrew_prefix}/bin:${PATH}"
-export PATH="${homebrew_prefix}/opt/openssl/bin:${PATH}"
-export PATH="${homebrew_prefix}/opt/coreutils/libexec/gnubin:${PATH}"
-export MANPATH="${homebrew_prefix}/opt/coreutils/libexec/gnuman:${MANPATH}"
 export PATH="${PATH}:${HOME}/.dotfiles/bin:${HOME}/.dotfiles/node_modules/.bin"
-
-alias ls='ls --color'
-alias ll='ls -l'
-alias rm='mv -v --backup=numbered -t ~/.Trash'
-alias cd=__cd
-alias cdg='cd ${GOPATH}/src/$(ghq list|fzf)'
-
-if type reattach-to-user-namespace 1>/dev/null 2>/dev/null
-then alias tmux='reattach-to-user-namespace tmux'
-fi
-
 export GOPATH=${HOME}
-export PS1='$(__ret_ps1)\u\[\e[0;00m\]@\[\e[0;34m\]\h\[\e[0;33m\] \w\[\e[0;31m\]$(__git_ps1)\[\e[0;35m\] $(date +%H:%M:%S)\[\e[0;00m\]\n$ '
 
+alias cd=__cd
 __cd() {
   if [[ $# -eq 0 ]]
   then
@@ -71,7 +78,6 @@ __cd() {
 }
 
 icon=$(echo -ne $((127744 + 16#$(whoami|md5sum|cut -c-8)%512))|awk '{printf("%3c",$1)}')
-
 __ret_ps1() {
   ret=$?
   echo -ne "${icon} "
