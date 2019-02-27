@@ -150,6 +150,7 @@ call plug#begin('~/.cache/plugged')
   Plug 'natebosch/vim-lsc'
   let g:lsp_async_completion = 1
 
+  Plug 'rhysd/vim-goyacc', {'for':['goyacc']}
   Plug 'fatih/vim-go', {'for':['go']}
   if executable('golsp')
     augroup LspGo
