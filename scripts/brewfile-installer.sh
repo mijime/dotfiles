@@ -18,8 +18,15 @@ do brew install "${package}"
 done
 brew upgrade
 
-__noinstalled_package brew cask < "$(dirname "$0")/brewfile-cask" | while read -r package
-do brew cask install "${package}"
+for brewcaskfile in "$(dirname "$0")/brewfile-cask" "$(dirname "$0")/brewfile-cask.local"
+do
+  if [[ ! -f ${brewcaskfile} ]]
+  then continue
+  fi
+
+  __noinstalled_package brew cask < "${brewcaskfile}" | while read -r package
+  do brew cask install "${package}"
+  done
 done
 brew cask upgrade
 

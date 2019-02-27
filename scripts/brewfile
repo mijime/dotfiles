@@ -33,4 +33,5 @@ node
 yarn
 rust
 python
+pipenv
 nim
