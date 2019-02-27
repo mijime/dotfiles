@@ -151,16 +151,18 @@ call plug#begin('~/.cache/plugged')
   let g:lsp_async_completion = 1
 
   Plug 'rhysd/vim-goyacc', {'for':['goyacc']}
-  Plug 'fatih/vim-go', {'for':['go']}
-  if executable('golsp')
+  if executable('bingo')
     augroup LspGo
       au!
       autocmd User lsp_setup call lsp#register_server({
             \ 'name': 'go-lang',
-            \ 'cmd': {server_info->['golsp', '-mode', 'stdio']},
+            \ 'cmd': {server_info->['bingo', '-mode', 'stdio']},
             \ 'whitelist': ['go'],
             \ })
       autocmd FileType go setlocal omnifunc=lsp#complete
+      autocmd FileType go nmap <C-]> :LspDefinition<CR>
+      autocmd FileType go nmap K :LspHover<CR>
+      autocmd FileType go nmap ]] :LspDocumentSymbol<CR>
     augroup END
   endif
 
