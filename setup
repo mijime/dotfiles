@@ -3,7 +3,8 @@
 set -xue
 
 declare -a dotfiles=()
-declare basedir=${0%/*}
+declare basedir=
+basedir=$({ cd "$(dirname "$0")"; pwd; cd; })
 
 dotfiles=(
   .bash_profile
@@ -16,23 +17,15 @@ dotfiles=(
 )
 
 main() {
-  validation
   install_dotfiles
-}
-
-validation() {
-  if [[ ! "${basedir}" =~ / ]]
-  then
-    err 1 "Please run an absolute path: ${0}"
-  fi
 }
 
 install_dotfiles() {
   for dotfile in "${dotfiles[@]}"
   do
-    echo "${dotfile}"
+    echo "${basedir}/${dotfile}"
   done \
-    | sed -e "s@^@${basedir}/@g" -e "s@${HOME}/@@g" \
+    | sed -e "s@${HOME}/@@g" \
     | while read -r dotfile
       do
         ln -sf "${dotfile}" "${HOME}/"
