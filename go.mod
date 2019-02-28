@@ -2,7 +2,6 @@ module github.com/mijime/dotfiles
 
 require (
 	github.com/ddollar/forego v0.16.1 // indirect
-	github.com/dominikh/go-tools v0.0.0-20190215041234-466a0476246c // indirect
 	github.com/fatih/color v1.7.0 // indirect
 	github.com/mattn/go-runewidth v0.0.4 // indirect
 	github.com/mattn/memo v0.0.4 // indirect
