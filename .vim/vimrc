@@ -142,6 +142,9 @@ call plug#begin('~/.cache/plugged')
   let g:memolist_memo_date = "%Y-%m-%dT%H:%M:%S%z"
   let g:memolist_fzf = 1
 
+  Plug 'rhysd/vim-goyacc', {'for':['goyacc']}
+  autocmd FileType goyacc setlocal noexpandtab
+
   Plug 'prabirshrestha/async.vim'
   Plug 'prabirshrestha/vim-lsp'
 
@@ -149,8 +152,6 @@ call plug#begin('~/.cache/plugged')
   Plug 'prabirshrestha/asyncomplete-lsp.vim'
   Plug 'natebosch/vim-lsc'
   let g:lsp_async_completion = 1
-
-  Plug 'rhysd/vim-goyacc', {'for':['goyacc']}
   if executable('bingo')
     augroup LspGo
       au!
