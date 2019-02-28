@@ -10,4 +10,6 @@ gotools=(
    honnef.co/go/tools/staticcheck
 )
 
-GO111MODULE=on go install -v "${gotools[@]}"
+for t in "${gotools[@]}"
+do go get -v "${t}"
+done
