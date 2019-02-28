@@ -37,7 +37,25 @@ install_dotfiles() {
       do
         ln -sf "${dotfile}" "${HOME}/"
       done
-  touch ~/.tmux.conf.local
+
+  if [[ -f ~/.tmux.conf.local ]]
+  then return
+  fi
+
+  case "$(uname)" in
+  Darwin)
+    cat > ~/.tmux.conf.local <<EOS
+bind-key -T copy-mode-vi Enter             send-keys -X copy-selection-and-cancel
+bind-key -T copy-mode-vi C-j               send-keys -X copy-selection-and-cancel
+bind-key -T copy-mode-vi D                 send-keys -X copy-end-of-line
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-selection-and-cancel
+bind-key -T copy-mode-vi A                 send-keys -X append-selection-and-cancel
+EOS
+    ;;
+  *)
+    touch ~/.tmux.conf.local
+    ;;
+  esac
 }
 
 err() {
