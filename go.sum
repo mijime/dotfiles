@@ -4,8 +4,6 @@ github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/ddollar/forego v0.16.1 h1:HbAl3XyEdU1lw17PvZzqMzcx7b8BKZshEsdb4+1TI3Y=
 github.com/ddollar/forego v0.16.1/go.mod h1:moJFK5OqWdZeLVEYHynQRJqoKImixOuxgQBFCtoe0bU=
-github.com/dominikh/go-tools v0.0.0-20190215041234-466a0476246c h1:eKN2IlDdAzFrLK0lREFiyZBOUG57Qp4BhAQdm7JcvQo=
-github.com/dominikh/go-tools v0.0.0-20190215041234-466a0476246c/go.mod h1:qBNLV2EQXN9hMDGPA+nlUNDKcPCtmEvCC8iVgA6uBic=
 github.com/fatih/color v1.7.0 h1:DkWD4oS2D8LGGgTQ6IvwJJXSL5Vp2ffcQg58nFV38Ys=
 github.com/fatih/color v1.7.0/go.mod h1:Zm6kSWBoL9eyXnKyktHP6abPY2pDugNf5KwzbycvMj4=
 github.com/fsnotify/fsevents v0.1.1 h1:/125uxJvvoSDDBPen6yUZbil8J9ydKZnnl3TWWmvnkw=
