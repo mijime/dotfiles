@@ -3,6 +3,7 @@
 set -xue
 gotools=(
    github.com/ddollar/forego
+   github.com/motemen/gore
    github.com/mattn/memo
    github.com/saibing/bingo
    github.com/sclevine/yj
