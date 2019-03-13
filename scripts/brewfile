@@ -26,6 +26,8 @@ ghq
 azure-cli
 tree
 circleci
+graphviz
+terraform
 
 # lang & tools
 go

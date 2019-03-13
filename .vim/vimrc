@@ -162,6 +162,8 @@ call plug#begin('~/.cache/plugged')
       autocmd FileType go nmap K :LspHover<CR>
       autocmd FileType go nmap ]] :LspDocumentSymbol<CR>
       autocmd BufWritePre *.go LspDocumentFormatSync
+
+      let g:lsp_diagnostics_enabled = 0
     augroup END
   endif
 

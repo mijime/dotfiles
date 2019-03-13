@@ -31,6 +31,7 @@ case "$(uname)" in
     alias ls='ls --color'
     alias ll='ls -l'
     alias rm='mv -v --backup=numbered -t ~/.Trash'
+    alias vi='vim -u NONE -c '\''set syntax=on|set nu'\'''
     alias cdg='cd ${GOPATH}/src/$(ghq list|fzf)'
     alias cdh='cd $(dirs -v|awk "!a[\$NF]{print;a[\$NF]=1}"|fzf|awk "{print\$NF}"|sed -e "s|~|${HOME}|")'
 
