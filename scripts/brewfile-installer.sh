@@ -13,8 +13,15 @@ __noinstalled_package() {
     | sed -e 's/brewfile//'
 }
 
-__noinstalled_package < "$(dirname "$0")/brewfile" | while read -r package
-do brew install "${package}"
+for brewfile in "$(dirname "$0")/brewfile" "$(dirname "$0")/brewfile.local"
+do
+  if [[ ! -f ${brewfile} ]]
+  then continue
+  fi
+
+  __noinstalled_package brew < "${brewfile}" | while read -r package
+  do brew install "${package}"
+  done
 done
 brew upgrade
 

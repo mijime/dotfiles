@@ -5,11 +5,12 @@ findutils
 # shell
 bash
 tmux
-fzf
 reattach-to-user-namespace
 cmake
 gawk
 shellcheck
+fzf
+fzy
 
 # git
 git
