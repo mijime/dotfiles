@@ -4,7 +4,7 @@ set -xue
 gotools=(
    github.com/ddollar/forego
    github.com/motemen/gore/cmd/gore
-   github.com/mattn/memo
+   github.com/mattn/memo@master
    github.com/saibing/bingo
    github.com/sclevine/yj
    golang.org/x/tools/cmd/goyacc
@@ -12,5 +12,5 @@ gotools=(
 )
 
 for t in "${gotools[@]}"
-do go get -v "${t}"
+do GO111MODULE=on go get -v "${t}"
 done
