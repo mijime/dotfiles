@@ -7,7 +7,6 @@ gotools=(
    github.com/mattn/memo@master
    github.com/saibing/bingo
    github.com/sclevine/yj
-   github.com/pulumi/pulumi
    golang.org/x/tools/cmd/goyacc
    honnef.co/go/tools/staticcheck
 )
