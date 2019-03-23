@@ -8,9 +8,10 @@ gotools=(
    github.com/saibing/bingo
    github.com/sclevine/yj
    golang.org/x/tools/cmd/goyacc
-   honnef.co/go/tools/staticcheck
+   github.com/dominikh/go-tools/cmd/staticcheck
 )
 
+cd "$(dirname "$0")"
 for t in "${gotools[@]}"
 do GO111MODULE=on go get -v "${t[@]}"
 done
