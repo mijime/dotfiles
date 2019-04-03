@@ -11,10 +11,10 @@ require (
 	github.com/microcosm-cc/bluemonday v1.0.2 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/motemen/go-quickfix v0.0.0-20160413151302-5c522febc679 // indirect
-	github.com/motemen/gore v0.4.0 // indirect
+	github.com/motemen/gore v0.4.1 // indirect
 	github.com/peterh/liner v1.1.0 // indirect
 	github.com/pkg/browser v0.0.0-20180916011732-0a3d74bf9ce4 // indirect
-	github.com/saibing/bingo v0.0.0-20190323025244-59847abde9d1 // indirect
+	github.com/saibing/bingo v0.0.0-20190331051950-76bcd777316d // indirect
 	github.com/sclevine/yj v0.0.0-20190123061816-e4c1437e1a06 // indirect
 	github.com/sergi/go-diff v1.0.0 // indirect
 	github.com/shurcooL/github_flavored_markdown v0.0.0-20181002035957-2122de532470 // indirect
@@ -25,6 +25,6 @@ require (
 	github.com/sourcegraph/annotate v0.0.0-20160123013949-f4cad6c6324d // indirect
 	github.com/sourcegraph/syntaxhighlight v0.0.0-20170531221838-bd320f5d308e // indirect
 	github.com/urfave/cli v1.20.0 // indirect
-	golang.org/x/tools v0.0.0-20190322203728-c1a832b0ad89 // indirect
+	golang.org/x/tools v0.0.0-20190401205534-4c644d7e323d // indirect
 	honnef.co/go/tools v0.0.0-20190319011948-d116c56a00f3 // indirect
 )

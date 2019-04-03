@@ -114,7 +114,7 @@ call plug#begin('~/.cache/plugged')
   Plug 'tyru/open-browser.vim'
 
   Plug 'tpope/vim-dispatch'
-  Plug 'scrooloose/nerdtree'
+  " Plug 'scrooloose/nerdtree'
   Plug 'udalov/kotlin-vim', {'for':['kotlin']}
 
   Plug 'tpope/vim-speeddating', {'for':['org']}
