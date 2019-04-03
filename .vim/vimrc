@@ -115,6 +115,7 @@ call plug#begin('~/.cache/plugged')
 
   Plug 'tpope/vim-dispatch'
   " Plug 'scrooloose/nerdtree'
+  let g:netrw_liststyle = 3
   Plug 'udalov/kotlin-vim', {'for':['kotlin']}
 
   Plug 'tpope/vim-speeddating', {'for':['org']}
