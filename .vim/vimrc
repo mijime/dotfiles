@@ -144,17 +144,18 @@ call plug#begin('~/.cache/plugged')
   let g:memolist_fzf = 1
 
   " Plug 'fatih/vim-go', {'for':['go']}
+  Plug 'buoto/gotests-vim', {'for':['go']}
   Plug 'rhysd/vim-goyacc', {'for':['goyacc']}
   autocmd FileType goyacc setlocal noexpandtab
 
   Plug 'prabirshrestha/async.vim'
   Plug 'prabirshrestha/vim-lsp'
-  if executable('bingo')
+  if executable('gopls')
     augroup LspGo
       au!
       autocmd User lsp_setup call lsp#register_server({
             \ 'name': 'go-lang',
-            \ 'cmd': {server_info->['bingo', '-mode', 'stdio']},
+            \ 'cmd': {server_info->['gopls', '-mode', 'stdio']},
             \ 'whitelist': ['go'],
             \ })
       autocmd FileType go setlocal noexpandtab
