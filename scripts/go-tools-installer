@@ -2,13 +2,13 @@
 
 set -xue
 gotools=(
+   github.com/cweill/gotests/gotests@master
    github.com/ddollar/forego
-   github.com/motemen/gore/cmd/gore
-   github.com/mattn/memo@master
-   github.com/saibing/bingo
-   github.com/sclevine/yj
-   golang.org/x/tools/cmd/goyacc
    github.com/dominikh/go-tools/cmd/staticcheck
+   github.com/mattn/memo@master
+   github.com/motemen/gore/cmd/gore
+   github.com/sclevine/yj
+   golang.org/x/tools/cmd/...
 )
 
 cd "$(dirname "$0")"
