@@ -150,12 +150,12 @@ call plug#begin('~/.cache/plugged')
 
   Plug 'prabirshrestha/async.vim'
   Plug 'prabirshrestha/vim-lsp'
-  if executable('gopls')
+  if executable('bingo')
     augroup LspGo
       au!
       autocmd User lsp_setup call lsp#register_server({
             \ 'name': 'go-lang',
-            \ 'cmd': {server_info->['gopls', '-mode', 'stdio']},
+            \ 'cmd': {server_info->['bingo', '-mode', 'stdio']},
             \ 'whitelist': ['go'],
             \ })
       autocmd FileType go setlocal noexpandtab
