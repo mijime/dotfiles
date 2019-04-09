@@ -53,7 +53,7 @@ function __crypt {
   esac
 }
 
-function __overssh_psql {
+function __psql_overssh {
   sql_mode=connect
   conf_name=
   use_config=1
@@ -84,6 +84,10 @@ function __overssh_psql {
         sql_mode=load
         shift
         ;;
+      -h|--help)
+        sql_mode=help
+        shift
+        ;;
       --current)
         use_config=
         shift
@@ -99,6 +103,18 @@ function __overssh_psql {
   fi
 
   case ${sql_mode} in
+    help)
+      cat <<EOS
+USAGE
+===
+
+$0 --config=testdb
+$0 --config=testdb --save
+$0 --config=testdb --load
+$0 --current
+EOS
+
+      ;;
     save)
       if [[ ! -f ${pgpass} ]]
       then
@@ -155,4 +171,4 @@ function __overssh_psql {
   esac
 }
 
-__overssh_psql "${@}"
+__psql_overssh "${@}"
