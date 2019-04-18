@@ -5,13 +5,12 @@ gotools=(
    github.com/cweill/gotests/gotests@master
    github.com/ddollar/forego
    github.com/dominikh/go-tools/cmd/staticcheck
+   github.com/golangci/golangci-lint/cmd/golangci-lint
    github.com/mattn/memo@master
    github.com/motemen/gore/cmd/gore
    github.com/sclevine/yj
-   golang.org/x/tools/cmd/...
 )
 
 cd "$(dirname "$0")"
-for t in "${gotools[@]}"
-do GO111MODULE=on go get -v "${t[@]}"
-done
+GO111MODULE=on go get -v "${gotools[@]}"
+GO111MODULE=on go get -v golang.org/x/tools/cmd/...
