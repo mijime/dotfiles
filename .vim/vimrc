@@ -144,7 +144,7 @@ call plug#begin('~/.cache/plugged')
   let g:memolist_fzf = 1
 
   " Plug 'fatih/vim-go', {'for':['go']}
-  Plug 'buoto/gotests-vim', {'for':['go']}
+  " Plug 'buoto/gotests-vim', {'for':['go']}
   Plug 'rhysd/vim-goyacc', {'for':['goyacc']}
   autocmd FileType goyacc setlocal noexpandtab
 

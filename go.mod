@@ -5,15 +5,12 @@ go 1.12
 require (
 	github.com/cweill/gotests v1.5.3 // indirect
 	github.com/ddollar/forego v0.16.1 // indirect
-	github.com/dominikh/go-tools v0.0.0-20190404041852-d36bf9040906 // indirect
-	github.com/fatih/color v1.7.0 // indirect
-	github.com/mattn/go-colorable v0.1.1 // indirect
-	github.com/mattn/go-isatty v0.0.7 // indirect
+	github.com/dominikh/go-tools v0.0.0-20190415040902-b088cadd8b3d // indirect
+	github.com/golangci/golangci-lint v1.16.0 // indirect
 	github.com/mattn/go-runewidth v0.0.4 // indirect
 	github.com/mattn/go-tty v0.0.0-20190407112021-83fae09cc007 // indirect
 	github.com/mattn/memo v0.0.5-0.20181129012928-8cb45fd6e8de // indirect
 	github.com/microcosm-cc/bluemonday v1.0.2 // indirect
-	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/motemen/go-quickfix v0.0.0-20160413151302-5c522febc679 // indirect
 	github.com/motemen/gore v0.4.1 // indirect
 	github.com/peterh/liner v1.1.0 // indirect
@@ -28,6 +25,6 @@ require (
 	github.com/sourcegraph/annotate v0.0.0-20160123013949-f4cad6c6324d // indirect
 	github.com/sourcegraph/syntaxhighlight v0.0.0-20170531221838-bd320f5d308e // indirect
 	github.com/urfave/cli v1.20.0 // indirect
-	golang.org/x/tools v0.0.0-20190407030857-0fdf0c73855b // indirect
-	honnef.co/go/tools v0.0.0-20190404041852-d36bf9040906 // indirect
+	golang.org/x/tools v0.0.0-20190417223002-a5870b403859 // indirect
+	honnef.co/go/tools v0.0.0-20190415040902-b088cadd8b3d // indirect
 )
