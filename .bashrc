@@ -147,7 +147,7 @@ __create_ssh_private() {
     esac
   done
 
-  dir="${ssh_project}/$(echo "${host}"|awk -F. '{for(i=NF;i>0;i--)printf"%s%s",$i,i==1?"":"/"}'|sed -e 's|*|_|g')"
+  dir="${ssh_project}/${host/\*/_}"
   mkdir -p "${dir}"
 
   keyname=${dir}/id_${algo}
