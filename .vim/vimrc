@@ -135,6 +135,9 @@ call plug#begin('~/.cache/plugged')
   Plug 'mijime/pomo.vim'
   Plug 'zah/nim.vim'
   Plug 'w0rp/ale'
+  let g:ale_fixers = {
+        \ 'go': ['golangci-lint'],
+        \ }
 
   Plug 'glidenote/memolist.vim'
   let g:memolist_path = '~/.memo'
