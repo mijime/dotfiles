@@ -23,7 +23,7 @@ case "$(uname)" in
       fi
     done
 
-    export PATH="${homebrew_prefix}/bin:${PATH}"
+    export PATH="${homebrew_prefix}/bin:${homebrew_prefix}/sbin:${PATH}"
     export PATH="${homebrew_prefix}/opt/openssl/bin:${PATH}"
     export PATH="${homebrew_prefix}/opt/coreutils/libexec/gnubin:${PATH}"
     export MANPATH="${homebrew_prefix}/opt/coreutils/libexec/gnuman:${MANPATH}"
