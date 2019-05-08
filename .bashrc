@@ -48,6 +48,9 @@ esac
 export PATH="${PATH}:${HOME}/bin"
 export PATH="${PATH}:${HOME}/.dotfiles/bin:${HOME}/.dotfiles/node_modules/.bin"
 export GOPATH=${HOME}
+if type bat > /dev/null
+then export FZF_DEFAULT_OPTS="--ansi --preview-window 'right:50%' --preview 'bat --color=always --style=header,grid --line-range :50 {}'"
+fi
 
 alias cd=__cd
 __cd() {
