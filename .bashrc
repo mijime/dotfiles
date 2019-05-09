@@ -49,7 +49,7 @@ export PATH="${PATH}:${HOME}/bin"
 export PATH="${PATH}:${HOME}/.dotfiles/bin:${HOME}/.dotfiles/node_modules/.bin"
 export GOPATH=${HOME}
 if type bat 2>/dev/null 1>/dev/null
-then export FZF_DEFAULT_OPTS="--ansi --preview-window 'right:50%' --preview 'bat --color=always --style=header,grid --line-range :50 {}'"
+then export FZF_CTRL_T_OPTS="--ansi --preview-window 'right:50%' --preview '(bat --color=always --style=header,grid --line-range :50 {} || tree -L 1 -d {}) 2>/dev/null'"
 fi
 
 alias cd=__cd
