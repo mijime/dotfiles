@@ -49,16 +49,14 @@ esac
 export PATH="${PATH}:${HOME}/bin"
 export PATH="${PATH}:${HOME}/.dotfiles/bin:${HOME}/.dotfiles/node_modules/.bin"
 export GOPATH=${HOME}
-if type bat 2>/dev/null 1>/dev/null
-then export FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --preview '( \
+export FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --preview '( \
   __f={}; __f=\${__f%%:*}; \
   if [[ -d \"\${__f}\" ]] \
-    ; then tree -L 1 -d \"\${__f}\" | head -n 50 \
+    ; then tree -L 1 \"\${__f}\" | head -n 50 \
     ; else bat --color=always --style=header,grid --line-range :50 \"\${__f}\" \
     || head -n 50 \"\${__f}\" \
     ; fi \
     ) 2>/dev/null'"
-fi
 
 alias cd=__cd
 __cd() {
