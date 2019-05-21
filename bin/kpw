@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -ue
+
+kpw_cli=${kpw_cli:-keepassxc-cli}
+ssh_key=${kpw_ssh_key:-~/Documents/kpw/id_ed25519}
+db_path=${kpw_db_path:-~/Documents/kpw/mydb.kdbx}
+
+
+__main(){
+  subcmd=${1:-"help"}
+  shift || {
+    "${kpw_cli}" --help
+    return
+  }
+
+  case "${subcmd}" in
+    generate)
+      "${kpw_cli}" "${subcmd}" "${@}"
+      ;;
+    create)
+      "${kpw_cli}" "${subcmd}" -k "${ssh_key}" "${db_path}" "${@}"
+      ;;
+    *)
+      "${kpw_cli}" "${subcmd}" -k "${ssh_key}" "${db_path}" "${@}" --no-password
+      ;;
+  esac
+}
+
+__main "$@"
