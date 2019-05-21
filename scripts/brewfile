@@ -11,6 +11,7 @@ gawk
 shellcheck
 fzf
 bat
+nkf
 
 # git
 git
@@ -38,3 +39,4 @@ rust
 python
 pipenv
 nim
+goenv
