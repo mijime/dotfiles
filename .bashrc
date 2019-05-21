@@ -37,8 +37,9 @@ case "$(uname)" in
 
     if type reattach-to-user-namespace 1>/dev/null 2>/dev/null
     then alias tmux='reattach-to-user-namespace tmux'
-      fi
-      export PS1='$(__ret_ps1)\u\[\e[0;00m\]@\[\e[0;34m\]\h\[\e[0;33m\] \w\[\e[0;31m\]$(__git_ps1)\[\e[0;35m\] $(date +%H:%M:%S)\[\e[0;00m\]\n$ '
+    fi
+      icon=$(echo -ne $((127744 + 16#$(whoami|md5sum|cut -c-8)%512))|awk '{printf("%3c",$1)}')
+      PS1='${icon} $(__ret_ps1)\u\[\e[0;00m\]@\[\e[0;34m\]\h\[\e[0;33m\] \w\[\e[0;31m\]$(__git_ps1)\[\e[0;35m\] $(date +%H:%M:%S)\[\e[0;00m\]\n$ '
     ;;
 
   *)
@@ -89,10 +90,8 @@ __cd() {
   done
 }
 
-icon=$(echo -ne $((127744 + 16#$(whoami|md5sum|cut -c-8)%512))|awk '{printf("%3c",$1)}')
 __ret_ps1() {
   ret=$?
-  echo -ne "${icon} "
   if [[ ${ret} -eq 0 ]]
   then printf '\e[0;32m'
   else printf '\e[0;31m'
