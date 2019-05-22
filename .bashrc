@@ -26,6 +26,7 @@ case "$(uname)" in
     export PATH="${homebrew_prefix}/bin:${homebrew_prefix}/sbin:${PATH}"
     export PATH="${homebrew_prefix}/opt/openssl/bin:${PATH}"
 
+    alias ls='ls -G'
     alias ll='ls -l'
     __rm(){
       now="$(date +%Y%m%d-%H%M%S)"
