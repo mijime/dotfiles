@@ -1,7 +1,3 @@
-# core tools
-coreutils
-findutils
-
 # shell
 bash
 tmux
