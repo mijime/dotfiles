@@ -27,7 +27,12 @@ case "$(uname)" in
     export PATH="${homebrew_prefix}/opt/openssl/bin:${PATH}"
 
     alias ll='ls -l'
-    alias rm='mv -v --backup=numbered -t ~/.Trash'
+    __rm(){
+      now="$(date +%Y%m%d-%H%M%S)"
+      mkdir -p ~/.Trash/"${now}"
+      mv -v -n "$@" ~/.Trash/"${now}"
+    }
+    alias rm='__rm'
     alias vi='vim -u NONE -c '\''set syntax=on|set nu'\'''
     alias cdg='cd ${GOPATH}/src/$(ghq list|fzf)'
     alias cdh='cd $(dirs -v|awk "!a[\$NF]{print;a[\$NF]=1}"|fzf|awk "{print\$NF}"|sed -e "s|~|${HOME}|")'
