@@ -25,15 +25,12 @@ case "$(uname)" in
 
     export PATH="${homebrew_prefix}/bin:${homebrew_prefix}/sbin:${PATH}"
     export PATH="${homebrew_prefix}/opt/openssl/bin:${PATH}"
+    export PATH="${homebrew_prefix}/opt/coreutils/libexec/gnubin:${PATH}"
+    export MANPATH="${homebrew_prefix}/opt/coreutils/libexec/gnuman:${MANPATH}"
 
-    alias ls='ls -G'
+    alias ls='ls --color'
     alias ll='ls -l'
-    __rm(){
-      now="$(date +%Y%m%d-%H%M%S)"
-      mkdir -p ~/.Trash/"${now}"
-      mv -v -n "$@" ~/.Trash/"${now}"
-    }
-    alias rm='__rm'
+    alias rm='mv -v --backup=numbered -t ~/.Trash'
     alias vi='vim -u NONE -c '\''set syntax=on|set nu'\'''
     alias cdg='cd ${GOPATH}/src/$(ghq list|fzf)'
     alias cdh='cd $(dirs -v|awk "!a[\$NF]{print;a[\$NF]=1}"|fzf|awk "{print\$NF}"|sed -e "s|~|${HOME}|")'
