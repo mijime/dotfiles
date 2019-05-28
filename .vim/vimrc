@@ -139,6 +139,7 @@ call plug#begin('~/.cache/plugged')
         \ 'go': ['golangci-lint'],
         \ }
 
+  Plug 'cespare/vim-toml', {'for':['toml']}
 
   Plug 'fatih/vim-go', {'for':['go']}
   let g:go_fmt_command = 'goimports'
