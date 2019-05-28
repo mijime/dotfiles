@@ -139,12 +139,6 @@ call plug#begin('~/.cache/plugged')
         \ 'go': ['golangci-lint'],
         \ }
 
-  Plug 'glidenote/memolist.vim'
-  let g:memolist_path = '~/.memo'
-  let g:memolist_memo_suffix = 'md'
-  let g:memolist_template_dir_path = '~/.vim/templates/memo'
-  let g:memolist_memo_date = "%Y-%m-%dT%H:%M:%S%z"
-  let g:memolist_fzf = 1
 
   Plug 'fatih/vim-go', {'for':['go']}
   let g:go_fmt_command = 'goimports'
