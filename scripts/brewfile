@@ -12,6 +12,7 @@ shellcheck
 fzf
 bat
 nkf
+direnv
 
 # git
 git
