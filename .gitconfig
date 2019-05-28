@@ -3,6 +3,7 @@
 	filemode = false
 	safecrlf = false
 	autocrlf = input
+	excludesfile = ~/.gitignore.global
 [color]
 	ui = auto
 [alias]
