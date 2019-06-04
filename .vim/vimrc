@@ -149,14 +149,16 @@ call plug#begin('~/.cache/plugged')
   Plug 'rhysd/vim-goyacc', {'for':['goyacc']}
   autocmd FileType goyacc setlocal noexpandtab
 
-  " Plug 'prabirshrestha/async.vim'
-  " Plug 'prabirshrestha/vim-lsp'
-  " if executable('bingo')
+  Plug 'prabirshrestha/async.vim'
+  Plug 'prabirshrestha/vim-lsp'
+  let g:lsp_diagnostics_enabled = 0
+
+  " if executable('gopls')
   "   augroup LspGo
   "     au!
   "     autocmd User lsp_setup call lsp#register_server({
-  "           \ 'name': 'go-lang',
-  "           \ 'cmd': {server_info->['bingo', '-mode', 'stdio']},
+  "           \ 'name': 'gopls',
+  "           \ 'cmd': {server_info->['gopls', '-mode', 'stdio']},
   "           \ 'whitelist': ['go'],
   "           \ })
   "     autocmd FileType go setlocal noexpandtab
@@ -164,7 +166,7 @@ call plug#begin('~/.cache/plugged')
   "     autocmd FileType go nmap <C-]> :LspDefinition<CR>
   "     autocmd FileType go nmap K :LspHover<CR>
   "     autocmd FileType go nmap ]] :LspDocumentSymbol<CR>
-  "     let g:lsp_diagnostics_enabled = 0
+  "     autocmd BufWritePre *.go LspDocumentFormatSync
   "   augroup END
   " endif
 
@@ -173,14 +175,19 @@ call plug#begin('~/.cache/plugged')
     augroup LspTypeScript
       au!
       autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'typescript-language-server',
-          \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-          \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-          \ 'whitelist': ['typescript'],
-          \ })
-      autocmd FileType typescript setlocal omnifunc=lsp#complete
+            \ 'name': 'typescript-language-server',
+            \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+            \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+            \ 'whitelist': ['typescript', 'typescript.tsx'],
+            \ })
+      autocmd FileType typescript set omnifunc=lsp#complete
+      autocmd FileType typescript nmap <C-]> :LspDefinition<CR>
+      autocmd FileType typescript nmap K :LspHover<CR>
+      autocmd FileType typescript nmap ]] :LspDocumentSymbol<CR>
     augroup END
   endif
+
+  Plug 'posva/vim-vue', {'for':['vue']}
 
   Plug 'hashivim/vim-terraform', {'for':['tf']}
 call plug#end()
