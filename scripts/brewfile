@@ -41,3 +41,4 @@ python
 pipenv
 nim
 goenv
+protobuf
