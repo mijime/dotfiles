@@ -9,6 +9,7 @@ gotools=(
    github.com/motemen/gore/cmd/gore
    github.com/saibing/bingo
    github.com/sclevine/yj
+   github.com/golang/protobuf/protoc-gen-go
 )
 
 cd "$(dirname "$0")"
