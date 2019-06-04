@@ -1,5 +1,6 @@
-virtualbox
+docker
 firefox
 google-chrome
-docker
+google-cloud-sdk
 keepassxc
+virtualbox
