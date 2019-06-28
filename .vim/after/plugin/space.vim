@@ -5,9 +5,10 @@ endf
 
 if has('syntax')
   syntax on
-  augroup InvisibleUser
+  augroup InvisibleGroup
     autocmd!
     autocmd BufNew,BufRead * call JISX0208SpaceHilight()
     autocmd BufWritePre    * :%s/\s\+$//ge
+    command RemoveInvisibleGroup augroup InvisibleGroup | autocmd! | augroup END
   augroup END
 end
