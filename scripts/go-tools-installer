@@ -10,6 +10,7 @@ gotools=(
    github.com/saibing/bingo
    github.com/sclevine/yj
    github.com/golang/protobuf/protoc-gen-go
+   github.com/kode4food/ale/cmd/ale
 )
 
 cd "$(dirname "$0")"
