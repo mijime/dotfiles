@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@vue/cli": "^3.8.4",
+    "express-generator": "^4.16.1",
     "textlint": "^11.2.5",
     "textlint-rule-preset-ja-technical-writing": "^3.1.2",
     "textlint-rule-preset-japanese": "^4.0.3",
