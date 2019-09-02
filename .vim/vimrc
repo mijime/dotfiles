@@ -36,10 +36,6 @@ cnoremap <C-B> <Left>
 cnoremap <C-D> <Del>
 cnoremap <C-E> <End>
 cnoremap <C-F> <Right>
-vnoremap <C-A> <Home>
-vnoremap <C-E> <End>
-vnoremap <C-N> <Down>
-vnoremap <C-P> <Up>
 
 nnoremap j gj
 nnoremap k gk
@@ -188,6 +184,6 @@ call plug#begin('~/.cache/plugged')
   endif
 
   Plug 'posva/vim-vue', {'for':['vue']}
-
   Plug 'hashivim/vim-terraform', {'for':['tf']}
 call plug#end()
+
