@@ -1,0 +1,27 @@
+add_newline = false
+prompt_order=[
+  "username",
+  "hostname",
+  "directory",
+  "git_branch",
+  "git_state",
+  "git_status",
+  "package",
+  "nodejs",
+  "ruby",
+  "rust",
+  "python",
+  "golang",
+  "nix_shell",
+  "cmd_duration",
+  "line_break",
+  "jobs",
+  "battery",
+  "character",
+]
+
+
+[git_branch]
+symbol = "🌱 "
+truncation_length = "4"
+truncation_symbol = ""
