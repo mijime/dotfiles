@@ -12,6 +12,7 @@ gotools=(
    github.com/golang/protobuf/protoc-gen-go
    github.com/kode4food/ale/cmd/ale
    github.com/kubernetes/kompose
+   github.com/tsenart/vegeta
 )
 
 cd "$(dirname "$0")"
