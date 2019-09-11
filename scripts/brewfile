@@ -13,6 +13,7 @@ fzf
 bat
 nkf
 direnv
+starship
 
 # git
 git
