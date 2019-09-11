@@ -183,6 +183,15 @@ call plug#begin('~/.cache/plugged')
     augroup END
   endif
 
+  Plug 'neoclide/coc.nvim', {
+        \ 'do': {-> coc#util#install()},
+        \ 'for':['scala']}
+  autocmd FileType scala nmap <silent> <C-]> <Plug>(coc-definition)
+  autocmd FileType scala nnoremap <silent> K :call CocAction('doHover')<CR>
+  autocmd FileType scala nmap <silent> gy <Plug>(coc-type-definition)
+  autocmd FileType scala nmap <silent> gi <Plug>(coc-implementation)
+  autocmd FileType scala nmap <silent> gr <Plug>(coc-references)
+
   Plug 'posva/vim-vue', {'for':['vue']}
   Plug 'hashivim/vim-terraform', {'for':['tf']}
 call plug#end()
