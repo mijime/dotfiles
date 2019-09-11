@@ -144,6 +144,7 @@ call plug#begin('~/.cache/plugged')
   " Plug 'buoto/gotests-vim', {'for':['go']}
   Plug 'rhysd/vim-goyacc', {'for':['goyacc']}
   autocmd FileType goyacc setlocal noexpandtab
+  Plug 'leafgarland/typescript-vim', {'for':['typescript']}
 
   Plug 'prabirshrestha/async.vim'
   Plug 'prabirshrestha/vim-lsp'
@@ -155,6 +156,7 @@ call plug#begin('~/.cache/plugged')
       autocmd User lsp_setup call lsp#register_server({
             \ 'name': 'bingo',
             \ 'cmd': {server_info->['bingo', '-mode', 'stdio']},
+            \ 'initialization_options': {'rootPatterns': ['go.mod', 'Gopkg.toml']},
             \ 'whitelist': ['go'],
             \ })
       autocmd FileType go setlocal noexpandtab
@@ -165,8 +167,6 @@ call plug#begin('~/.cache/plugged')
       autocmd BufWritePre *.go LspDocumentFormatSync
     augroup END
   endif
-
-  Plug 'leafgarland/typescript-vim', {'for':['typescript']}
   if executable('typescript-language-server')
     augroup LspTypeScript
       au!
