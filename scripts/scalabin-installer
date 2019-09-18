@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -ue
+
+bin_dir=${HOME}/bin
+
+if [[ ! -f  "${bin_dir}/coursier" ]]
+then curl -L -o "${bin_dir}/coursier" https://git.io/coursier
+fi
+chmod +x "${bin_dir}/coursier"
+
+"${bin_dir}/coursier" bootstrap \
+  --java-opt -Xss4m \
+  --java-opt -Xms1G \
+  --java-opt -Dmetals.client=coc.nvim \
+  org.scalameta:metals_2.12:0.7.5 \
+  -r bintray:scalacenter/releases \
+  -r sonatype:snapshots \
+  -o "${bin_dir}/metals-vim" -f
+
+"${bin_dir}/coursier" bootstrap \
+  org.scalameta:scalafmt-cli_2.12:2.1.0-RC1 \
+  -r sonatype:snapshots \
+  --standalone --main org.scalafmt.cli.Cli \
+  -o "${bin_dir}/scalafmt" -f
