@@ -128,11 +128,13 @@ call plug#begin('~/.cache/plugged')
     autocmd BufRead,BufNewFile *.kt set filetype=kotlin
   augroup END
 
-  Plug 'mijime/pomo.vim'
   Plug 'zah/nim.vim'
-  Plug 'w0rp/ale'
+  Plug 'dense-analysis/ale'
+  let g:ale_lint_on_save = 1
+  let g:ale_lint_on_text_changed = 0
+  let g:ale_lint_on_enter = 0
   let g:ale_fixers = {
-        \ 'go': ['golangci-lint'],
+        \   'go': ['goimports'],
         \ }
 
   Plug 'cespare/vim-toml', {'for':['toml']}
@@ -141,7 +143,7 @@ call plug#begin('~/.cache/plugged')
   " let g:go_fmt_command = 'goimports'
   " let g:go_def_mode    = 'gopls'
   " let g:go_info_mode   = 'gopls'
-  " Plug 'buoto/gotests-vim', {'for':['go']}
+
   Plug 'rhysd/vim-goyacc', {'for':['goyacc']}
   autocmd FileType goyacc setlocal noexpandtab
   Plug 'leafgarland/typescript-vim', {'for':['typescript']}
@@ -185,7 +187,7 @@ call plug#begin('~/.cache/plugged')
 
   Plug 'neoclide/coc.nvim', {
         \ 'do': {-> coc#util#install()},
-        \ 'for':['scala']}
+        \ 'for':['scala', 'sbt']}
   autocmd FileType scala nmap <silent> <C-]> <Plug>(coc-definition)
   autocmd FileType scala nnoremap <silent> K :call CocAction('doHover')<CR>
   autocmd FileType scala nmap <silent> gy <Plug>(coc-type-definition)
