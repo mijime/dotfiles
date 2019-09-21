@@ -16,12 +16,9 @@ case "$(uname)" in
     export HOMEBREW_CASK_OPTS='--appdir=~/Applications --fontdir=/Library/Fonts'
     homebrew_prefix=$(brew --prefix)
 
-    for bash_completion in "${homebrew_prefix}/etc/bash_completion.d/"*
-    do
-      if [[ -f ${bash_completion} ]]
-      then source "${bash_completion}"
-      fi
-    done
+    if [[ -r "${homebrew_prefix}/etc/profile.d/bash_completion.sh" ]]
+    then source "${homebrew_prefix}/etc/profile.d/bash_completion.sh"
+    fi
 
     export PATH="${homebrew_prefix}/bin:${homebrew_prefix}/sbin:${PATH}"
     export PATH="${homebrew_prefix}/opt/openssl/bin:${PATH}"
