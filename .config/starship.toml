@@ -1,5 +1,6 @@
 add_newline = false
-prompt_order=[
+
+prompt_order = [
   "username",
   "hostname",
   "directory",
@@ -7,21 +8,36 @@ prompt_order=[
   "git_state",
   "git_status",
   "package",
+  "dotnet",
+  "golang",
+  "java",
   "nodejs",
+  "python",
   "ruby",
   "rust",
-  "python",
-  "golang",
   "nix_shell",
+  "conda",
+  "memory_usage",
+  "aws",
+  "env_var",
   "cmd_duration",
+  "kubernetes",
   "line_break",
   "jobs",
   "battery",
+  "time",
   "character",
 ]
 
+[character]
+symbol = "🦍"
 
 [git_branch]
 symbol = "🌱 "
 truncation_length = "4"
 truncation_symbol = ""
+
+[kubernetes]
+symbol = "🌵 "
+style = "dim green"
+disabled = false
