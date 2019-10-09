@@ -147,6 +147,7 @@ call plug#begin('~/.cache/plugged')
   Plug 'rhysd/vim-goyacc', {'for':['goyacc']}
   autocmd FileType goyacc setlocal noexpandtab
   Plug 'leafgarland/typescript-vim', {'for':['typescript']}
+  autocmd BufRead,BufNewFile *.tsx set filetype=typescript
 
   Plug 'prabirshrestha/async.vim'
   Plug 'prabirshrestha/vim-lsp'

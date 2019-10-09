@@ -38,5 +38,5 @@ truncation_length = "4"
 truncation_symbol = ""
 
 [kubernetes]
-symbol = "☸  "
+symbol = "🌵 "
 disabled = false
