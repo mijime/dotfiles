@@ -30,7 +30,7 @@ prompt_order = [
 ]
 
 [character]
-symbol = "🦍"
+symbol = "🦍 #"
 
 [git_branch]
 symbol = "🌱 "
