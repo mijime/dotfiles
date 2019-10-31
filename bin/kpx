@@ -2,27 +2,23 @@
 
 set -ue
 
-kpxw_cli_path=${kpxw_cli_path:-keepassxc-cli}
+kpxw_cli_path=${kpxw_cli_path:-kpcli}
 kpxw_ssh_key=${kpxw_ssh_key:-~/Documents/kpxw/id_ed25519}
 kpxw_db_path=${kpxw_db_path:-~/Documents/kpxw/mydb.kdbx}
 
 
-__main(){
-  subcmd=${1:-"help"}
-  shift || {
-    "${kpxw_cli_path}" --help
-    return
-  }
+__main() {
+  subcmd=${1:-"shell"}
 
   case "${subcmd}" in
-    generate)
-      "${kpxw_cli_path}" "${subcmd}" "${@}"
+    shell)
+      "${kpxw_cli_path}" --key="${kpxw_ssh_key}" --kdb="${kpxw_db_path}"
       ;;
-    create)
-      "${kpxw_cli_path}" "${subcmd}" -k "${kpxw_ssh_key}" "${kpxw_db_path}" "${@}"
+    --help)
+      "${kpxw_cli_path}" --key="${kpxw_ssh_key}" --kdb="${kpxw_db_path}" "$@"
       ;;
     *)
-      "${kpxw_cli_path}" "${subcmd}" -k "${kpxw_ssh_key}" "${kpxw_db_path}" "${@}" --no-password
+      "${kpxw_cli_path}" --key="${kpxw_ssh_key}" --kdb="${kpxw_db_path}" --command="${*}"
       ;;
   esac
 }
