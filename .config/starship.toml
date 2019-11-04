@@ -40,3 +40,6 @@ truncation_symbol = ""
 [kubernetes]
 symbol = "🌵 "
 disabled = false
+
+[aws]
+symbol = "🌥  "

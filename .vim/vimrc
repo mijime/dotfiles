@@ -128,7 +128,6 @@ call plug#begin('~/.cache/plugged')
     autocmd BufRead,BufNewFile *.kt set filetype=kotlin
   augroup END
 
-  Plug 'zah/nim.vim'
   Plug 'dense-analysis/ale'
   let g:ale_lint_on_save = 1
   let g:ale_lint_on_text_changed = 0
@@ -167,7 +166,7 @@ call plug#begin('~/.cache/plugged')
       autocmd FileType go nmap <C-]> :LspDefinition<CR>
       autocmd FileType go nmap K :LspHover<CR>
       autocmd FileType go nmap ]] :LspDocumentSymbol<CR>
-      autocmd BufWritePre *.go LspDocumentFormatSync
+      autocmd BufWritePre *.go LspDocumentFormat
     augroup END
   endif
   if executable('typescript-language-server')
@@ -197,5 +196,7 @@ call plug#begin('~/.cache/plugged')
 
   Plug 'posva/vim-vue', {'for':['vue']}
   Plug 'hashivim/vim-terraform', {'for':['tf']}
+
+  Plug 'baabelfish/nvim-nim', {'for':['nim']}
 call plug#end()
 
