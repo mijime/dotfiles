@@ -13,6 +13,7 @@ gotools=(
   github.com/kode4food/ale/cmd/ale
   github.com/tsenart/vegeta
   golang.org/x/tools/cmd/...
+  cuelang.org/go/cmd/cue
 )
 
 cd "$(dirname "$0")"
