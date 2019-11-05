@@ -35,6 +35,6 @@ do
   do brew cask install "${package}"
   done
 done
-brew cask upgrade
+brew cask list | xargs brew cask upgrade
 
 brew cleanup
