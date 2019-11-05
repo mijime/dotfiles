@@ -32,6 +32,7 @@ tree
 circleci
 graphviz
 terraform
+kpcli
 
 # lang & tools
 go
