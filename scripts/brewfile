@@ -2,18 +2,25 @@
 coreutils
 findutils
 
-# shell
+# terminal
 bash
-tmux
-reattach-to-user-namespace
-cmake
-gawk
-shellcheck
-fzf
 bat
-nkf
+cmake
 direnv
+fzf
+gawk
+ghq
+graphviz
+jq
+kpcli
+nkf
+pwgen
+reattach-to-user-namespace
 starship
+tmux
+tree
+vim
+w3m
 
 # git
 git
@@ -21,26 +28,26 @@ gibo
 tig
 hub
 
-# tools
+# tools for cloud
 awscli
-vim
-w3m
-jq
-ghq
 azure-cli
-tree
 circleci
-graphviz
 terraform
-kpcli
 
-# lang & tools
+# tools for developments
 go
-node
-yarn
-rust
-python
-pipenv
-nim
 goenv
+nim
+node
+pipenv
 protobuf
+python
+rust
+shellcheck
+yarn
+
+# tools for kubernetes
+kubernetes-helm
+kustomize
+skaffold
+stern
