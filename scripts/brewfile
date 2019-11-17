@@ -45,6 +45,8 @@ python
 rust
 shellcheck
 yarn
+vegeta
+golangci/tap/golangci-lint
 
 # tools for kubernetes
 kubernetes-helm
