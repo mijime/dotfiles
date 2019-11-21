@@ -166,7 +166,7 @@ call plug#begin('~/.cache/plugged')
       autocmd FileType go nmap <C-]> :LspDefinition<CR>
       autocmd FileType go nmap K :LspHover<CR>
       autocmd FileType go nmap ]] :LspDocumentSymbol<CR>
-      autocmd BufWritePre *.go LspDocumentFormat
+      autocmd BufWritePre *.go LspDocumentFormatSync
     augroup END
   endif
   if executable('typescript-language-server')
