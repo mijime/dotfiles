@@ -129,29 +129,18 @@ call plug#begin('~/.cache/plugged')
   augroup END
 
   Plug 'dense-analysis/ale'
-  let g:ale_lint_on_save = 1
-  let g:ale_lint_on_text_changed = 0
-  let g:ale_lint_on_enter = 0
-  let g:ale_fixers = {
-        \   'go': ['goimports'],
-        \ }
-
-  Plug 'cespare/vim-toml', {'for':['toml']}
-
-  " Plug 'fatih/vim-go', {'for':['go']}
-  " let g:go_fmt_command = 'goimports'
-  " let g:go_def_mode    = 'gopls'
-  " let g:go_info_mode   = 'gopls'
-
-  Plug 'rhysd/vim-goyacc', {'for':['goyacc']}
-  autocmd FileType goyacc setlocal noexpandtab
-  Plug 'leafgarland/typescript-vim', {'for':['typescript']}
-  autocmd BufRead,BufNewFile *.tsx set filetype=typescript
+  let g:ale_linters = {'go': ['gofmt', 'golint', 'go vet', 'golangci-lint']}
 
   Plug 'prabirshrestha/async.vim'
   Plug 'prabirshrestha/vim-lsp'
   let g:lsp_diagnostics_enabled = 0
 
+  " Plug 'fatih/vim-go', {'for':['go']}
+  " let g:go_fmt_command = 'goimports'
+  " let g:go_def_mode    = 'gopls'
+  " let g:go_info_mode   = 'gopls'
+  Plug 'rhysd/vim-goyacc', {'for':['goyacc']}
+  autocmd FileType goyacc setlocal noexpandtab
   if executable('bingo')
     augroup LspGo
       au!
@@ -169,6 +158,9 @@ call plug#begin('~/.cache/plugged')
       autocmd BufWritePre *.go LspDocumentFormatSync
     augroup END
   endif
+
+  Plug 'leafgarland/typescript-vim', {'for':['typescript']}
+  autocmd BufRead,BufNewFile *.tsx set filetype=typescript
   if executable('typescript-language-server')
     augroup LspTypeScript
       au!
@@ -185,18 +177,9 @@ call plug#begin('~/.cache/plugged')
     augroup END
   endif
 
-  Plug 'neoclide/coc.nvim', {
-        \ 'do': {-> coc#util#install()},
-        \ 'for':['scala', 'sbt']}
-  autocmd FileType scala nmap <silent> <C-]> <Plug>(coc-definition)
-  autocmd FileType scala nnoremap <silent> K :call CocAction('doHover')<CR>
-  autocmd FileType scala nmap <silent> gy <Plug>(coc-type-definition)
-  autocmd FileType scala nmap <silent> gi <Plug>(coc-implementation)
-  autocmd FileType scala nmap <silent> gr <Plug>(coc-references)
-
-  Plug 'posva/vim-vue', {'for':['vue']}
-  Plug 'hashivim/vim-terraform', {'for':['tf']}
-
+  Plug 'cespare/vim-toml', {'for':['toml']}
   Plug 'baabelfish/nvim-nim', {'for':['nim']}
+  Plug 'hashivim/vim-terraform', {'for':['tf']}
+  let g:terraform_fmt_on_save=1
 call plug#end()
 
