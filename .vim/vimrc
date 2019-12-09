@@ -112,7 +112,12 @@ call plug#begin('~/.cache/plugged')
   Plug 'tpope/vim-dispatch'
   " Plug 'scrooloose/nerdtree'
   let g:netrw_liststyle = 3
+
   Plug 'udalov/kotlin-vim', {'for':['kotlin']}
+  augroup MyKotlin
+    au!
+    autocmd BufRead,BufNewFile *.kt set filetype=kotlin
+  augroup END
 
   Plug 'tpope/vim-speeddating', {'for':['org']}
   Plug 'jceb/vim-orgmode', {'for':['org']}
@@ -123,22 +128,29 @@ call plug#begin('~/.cache/plugged')
 
   Plug 'thinca/vim-quickrun', {'on':['QuickRun']}
   Plug 'digitaltoad/vim-pug', {'for':['pug']}
-  augroup MyAutoCmd
+  augroup MyPug
+    au!
     autocmd BufRead,BufNewFile *.pug set filetype=pug
-    autocmd BufRead,BufNewFile *.kt set filetype=kotlin
   augroup END
 
+  Plug 'baabelfish/nvim-nim', {'for':['nim']}
+  Plug 'cespare/vim-toml', {'for':['toml']}
+  Plug 'hashivim/vim-terraform', {'for':['tf']}
+  let g:terraform_align       = 1
+  let g:terraform_fmt_on_save = 1
+
   Plug 'dense-analysis/ale'
-  let g:ale_linters = {'go': ['gofmt', 'golint', 'go vet', 'golangci-lint']}
+  let g:ale_linters = {'go': ['gofmt', 'goimports', 'go vet', 'golint', 'golangci-lint']}
 
   Plug 'prabirshrestha/async.vim'
   Plug 'prabirshrestha/vim-lsp'
   let g:lsp_diagnostics_enabled = 0
 
-  " Plug 'fatih/vim-go', {'for':['go']}
+  " Plug 'fatih/vim-go', {'for':['go'], 'do':':GoInstallBinaries'}
   " let g:go_fmt_command = 'goimports'
   " let g:go_def_mode    = 'gopls'
   " let g:go_info_mode   = 'gopls'
+
   Plug 'rhysd/vim-goyacc', {'for':['goyacc']}
   autocmd FileType goyacc setlocal noexpandtab
   if executable('bingo')
@@ -147,7 +159,6 @@ call plug#begin('~/.cache/plugged')
       autocmd User lsp_setup call lsp#register_server({
             \ 'name': 'bingo',
             \ 'cmd': {server_info->['bingo', '-mode', 'stdio']},
-            \ 'initialization_options': {'rootPatterns': ['go.mod', 'Gopkg.toml']},
             \ 'whitelist': ['go'],
             \ })
       autocmd FileType go setlocal noexpandtab
@@ -176,10 +187,5 @@ call plug#begin('~/.cache/plugged')
       autocmd FileType typescript nmap ]] :LspDocumentSymbol<CR>
     augroup END
   endif
-
-  Plug 'cespare/vim-toml', {'for':['toml']}
-  Plug 'baabelfish/nvim-nim', {'for':['nim']}
-  Plug 'hashivim/vim-terraform', {'for':['tf']}
-  let g:terraform_fmt_on_save=1
 call plug#end()
 
