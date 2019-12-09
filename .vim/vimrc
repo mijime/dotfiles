@@ -142,6 +142,9 @@ call plug#begin('~/.cache/plugged')
   Plug 'dense-analysis/ale'
   let g:ale_linters = {'go': ['gofmt', 'goimports', 'go vet', 'golint', 'golangci-lint']}
 
+  Plug 'haya14busa/vim-auto-programming'
+  set completefunc=autoprogramming#complete
+
   Plug 'prabirshrestha/async.vim'
   Plug 'prabirshrestha/vim-lsp'
   let g:lsp_diagnostics_enabled = 0
