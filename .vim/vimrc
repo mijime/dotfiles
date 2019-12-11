@@ -173,6 +173,7 @@ call plug#begin('~/.cache/plugged')
     augroup END
   endif
 
+  Plug 'prettier/vim-prettier', {'do': 'npm install'}
   Plug 'leafgarland/typescript-vim', {'for':['typescript']}
   autocmd BufRead,BufNewFile *.tsx set filetype=typescript
   if executable('typescript-language-server')
