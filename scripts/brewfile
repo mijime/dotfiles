@@ -32,7 +32,6 @@ hub
 awscli
 azure-cli
 circleci
-terraform
 terraformer
 tfenv
 
@@ -55,3 +54,4 @@ kubernetes-helm
 kustomize
 skaffold
 stern
+datawire/blackbird/telepresence
