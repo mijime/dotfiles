@@ -55,3 +55,4 @@ kustomize
 skaffold
 stern
 datawire/blackbird/telepresence
+kind
