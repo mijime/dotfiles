@@ -7,8 +7,7 @@ declare basedir=
 basedir=$({ cd "$(dirname "$0")"; pwd; cd; })
 
 dotfiles=(
-  .bash_profile
-  .bashrc
+  .bashrc.include
   .gitconfig
   .gitignore.global
   .inputrc
