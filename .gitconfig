@@ -17,19 +17,15 @@
 	ds       = diff --staged
 	l        = log --graph --date=relative --abbrev-commit --pretty='%C(red)%h %C(reset)%s%C(yellow)%d %C(green)(%cr) %C(blue)<%an>'
 	ll       = log --graph --date=relative --abbrev-commit --pretty=full --stat
-[include]
-	path = ~/.gitconfig.local
 [push]
 	default = simple
 [ghq]
 	root = ~/src
-[http "https://gopkg.in"]
-	followRedirects = true
 [commit]
 	verbose = true
 [merge]
 	ff = false
 [pull]
 	ff = only
-[url "git@github.com:"]
-	insteadOf = https://github.com/
+[include]
+	path = ~/.gitconfig.local
