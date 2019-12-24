@@ -1,58 +1,46 @@
-# core tools
-coreutils
-findutils
+#!/usr/bin/env ruby
+# frozen_string_literal: true
 
-# terminal
-bash
-bat
-cmake
-direnv
-fzf
-gawk
-ghq
-graphviz
-jq
-kpcli
-nkf
-pwgen
-reattach-to-user-namespace
-starship
-tmux
-tree
-vim
-w3m
+if platform? :darwin
+  use 'bash', 'gawk', 'coreutils', 'findutils'
 
-# git
-git
-gibo
-tig
-hub
+  use 'reattach-to-user-namespace'
+  use 'datawire/blackbird/telepresence'
 
-# tools for cloud
-awscli
-azure-cli
-circleci
-terraformer
-tfenv
+  use 'rust'
+  use 'python', 'pipenv'
+end
 
-# tools for developments
-go
-goenv
-nim
-node
-pipenv
-protobuf
-python
-rust
-shellcheck
-yarn
-vegeta
-golangci/tap/golangci-lint
+use 'bat'
+use 'cmake'
+use 'direnv'
+use 'fzf'
+use 'ghq'
+use 'graphviz'
+use 'jq'
+use 'nkf'
+use 'pwgen'
+use 'starship'
+use 'tmux'
+use 'tree'
+use 'vim'
+use 'git', 'gibo', 'tig', 'hub'
+use 'awscli', 'azure-cli'
+use 'circleci'
+use 'terraformer', 'tfenv'
 
-# tools for kubernetes
-kubernetes-helm
-kustomize
-skaffold
-stern
-datawire/blackbird/telepresence
-kind
+use 'go', 'goenv'
+use 'node'
+use 'protobuf'
+use 'shellcheck'
+use 'vegeta'
+use 'golangci/tap/golangci-lint'
+
+use 'kind'
+use 'kubernetes-cli'
+use 'kustomize'
+use 'helm'
+use 'skaffold'
+use 'stern'
+
+use 'w3m' if ENV['BREW_MACHINE_NAME'] == 'home'
