@@ -1,46 +1,84 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-if platform? :darwin
-  use 'bash', 'gawk', 'coreutils', 'findutils'
+add %w[
+  bat
+  cmake
+  direnv
+  fzf
+  ghq
+  graphviz
+  jq
+  nkf
+  pwgen
+  starship
+  tmux
+  tree
+  vim
 
-  use 'reattach-to-user-namespace'
-  use 'datawire/blackbird/telepresence'
+  git
+  gibo
+  tig
+  hub
+  git-secret
 
-  use 'rust'
-  use 'python', 'pipenv'
+  awscli
+  azure-cli
+
+  terraformer
+  tfenv
+
+  circleci
+
+  go
+  goenv
+  node
+
+  protobuf
+  shellcheck
+  vegeta
+  golangci/tap/golangci-lint
+
+  kind
+  kubernetes-cli
+  kustomize
+  helm
+  skaffold
+  stern
+]
+
+if ENV['BREW_MACHINE_NAME'] == 'home'
+  add :w3m
+  add :slackcat
 end
 
-use 'bat'
-use 'cmake'
-use 'direnv'
-use 'fzf'
-use 'ghq'
-use 'graphviz'
-use 'jq'
-use 'nkf'
-use 'pwgen'
-use 'starship'
-use 'tmux'
-use 'tree'
-use 'vim'
-use 'git', 'gibo', 'tig', 'hub'
-use 'awscli', 'azure-cli'
-use 'circleci'
-use 'terraformer', 'tfenv'
 
-use 'go', 'goenv'
-use 'node'
-use 'protobuf'
-use 'shellcheck'
-use 'vegeta'
-use 'golangci/tap/golangci-lint'
+if platform? :darwin
+  add %i[
+    datawire/blackbird/telepresence
+  ]
+  add 'osxfuse', cmdlist: %i[brew cask]
 
-use 'kind'
-use 'kubernetes-cli'
-use 'kustomize'
-use 'helm'
-use 'skaffold'
-use 'stern'
+  add %w[
+    bash
+    gawk
+    coreutils
+    findutils
 
-use 'w3m' if ENV['BREW_MACHINE_NAME'] == 'home'
+    rust
+    python
+    pipenv
+
+    reattach-to-user-namespace
+  ]
+
+  add_with :cask do
+    %w[
+      docker
+      firefox
+      google-chrome
+      google-cloud-sdk
+      keepassxc
+    ]
+  end
+end
