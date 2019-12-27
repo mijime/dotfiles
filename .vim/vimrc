@@ -142,57 +142,31 @@ call plug#begin('~/.cache/plugged')
   Plug 'dense-analysis/ale'
   let g:ale_lint_on_text_changed = 'never'
   let g:ale_lint_on_insert_leave = 0
-  let g:ale_linters = {'go': ['gofmt', 'goimports', 'go vet', 'golint', 'golangci-lint']}
+  let g:ale_linters = {
+        \ 'go': ['gofmt', 'goimports', 'go vet', 'golint', 'golangci-lint']}
 
   Plug 'haya14busa/vim-auto-programming'
   set completefunc=autoprogramming#complete
 
-  Plug 'prabirshrestha/async.vim'
-  Plug 'prabirshrestha/vim-lsp'
-  let g:lsp_diagnostics_enabled = 0
-
-  " Plug 'fatih/vim-go', {'for':['go'], 'do':':GoInstallBinaries'}
-  " let g:go_fmt_command = 'goimports'
-  " let g:go_def_mode    = 'gopls'
-  " let g:go_info_mode   = 'gopls'
-
   Plug 'rhysd/vim-goyacc', {'for':['goyacc']}
   autocmd FileType goyacc setlocal noexpandtab
-  if executable('bingo')
-    augroup LspGo
-      au!
-      autocmd User lsp_setup call lsp#register_server({
-            \ 'name': 'bingo',
-            \ 'cmd': {server_info->['bingo', '-mode', 'stdio']},
-            \ 'whitelist': ['go'],
-            \ })
-      autocmd FileType go setlocal noexpandtab
-      autocmd FileType go setlocal omnifunc=lsp#complete
-      autocmd FileType go nmap <C-]> :LspDefinition<CR>
-      autocmd FileType go nmap K :LspHover<CR>
-      autocmd FileType go nmap ]] :LspDocumentSymbol<CR>
-      autocmd BufWritePre *.go LspDocumentFormatSync
-    augroup END
-  endif
 
   Plug 'prettier/vim-prettier', {'do': 'npm install'}
   Plug 'leafgarland/typescript-vim', {'for':['typescript']}
   autocmd BufRead,BufNewFile *.tsx set filetype=typescript
-  if executable('typescript-language-server')
-    augroup LspTypeScript
-      au!
-      autocmd User lsp_setup call lsp#register_server({
-            \ 'name': 'typescript-language-server',
-            \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-            \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-            \ 'whitelist': ['typescript', 'typescript.tsx'],
-            \ })
-      autocmd FileType typescript set omnifunc=lsp#complete
-      autocmd FileType typescript nmap <C-]> :LspDefinition<CR>
-      autocmd FileType typescript nmap K :LspHover<CR>
-      autocmd FileType typescript nmap ]] :LspDocumentSymbol<CR>
-    augroup END
-  endif
   Plug 'ElmCast/elm-vim', {'for': 'elm'}
+  let g:elm_setup_keybindings = 0
+
+  Plug 'prabirshrestha/vim-lsp'
+  Plug 'prabirshrestha/async.vim'
+  Plug 'prabirshrestha/asyncomplete.vim'
+  Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  Plug 'mattn/vim-lsp-settings'
+
+  setlocal omnifunc=lsp#complete
+  nmap <C-]> :LspDefinition<CR>
+  nmap K :LspHover<CR>
+  nmap ]] :LspDocumentSymbol<CR>
+  autocmd BufWritePre *.* LspDocumentFormatSync
 call plug#end()
 
