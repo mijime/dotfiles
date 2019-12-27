@@ -167,6 +167,6 @@ call plug#begin('~/.cache/plugged')
   nmap <C-]> :LspDefinition<CR>
   nmap K :LspHover<CR>
   nmap ]] :LspDocumentSymbol<CR>
-  autocmd BufWritePre *.* LspDocumentFormatSync
+  autocmd BufWritePre *.go LspDocumentFormatSync
 call plug#end()
 
