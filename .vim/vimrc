@@ -193,5 +193,6 @@ call plug#begin('~/.cache/plugged')
       autocmd FileType typescript nmap ]] :LspDocumentSymbol<CR>
     augroup END
   endif
+  Plug 'ElmCast/elm-vim', {'for': 'elm'}
 call plug#end()
 

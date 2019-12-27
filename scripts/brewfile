@@ -33,6 +33,7 @@ add %i[
   go
   goenv
   node
+  elm
 
   protobuf
   shellcheck
