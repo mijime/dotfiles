@@ -1,7 +1,3 @@
-augroup MyAutoCmd
-  autocmd!
-augroup END
-
 set bs=2
 set list listchars=tab:>\ ,trail:-,nbsp:%,extends:>,precedes:<
 set autoindent smartindent cindent
@@ -60,12 +56,10 @@ call plug#begin('~/.cache/plugged')
   Plug 'junegunn/vim-plug',
        \ {'dir': '~/.cache/plugged/vim-plug/autoload'}
   Plug 'junegunn/seoul256.vim'
-  augroup MyAutoCmd
-    autocmd VimEnter * nested colo seoul256
-  augroup END
-
   Plug 'junegunn/goyo.vim', {'on':['Goyo']}
-  augroup MyAutoCmd
+  augroup MyJunegunn
+    au!
+    autocmd VimEnter * nested colo seoul256
     autocmd User GoyoEnter Limelight
     autocmd User GoyoLeave Limelight!
   augroup END
@@ -104,7 +98,8 @@ call plug#begin('~/.cache/plugged')
   endfunction
 
   Plug 'previm/previm', {'for':['markdown']}
-  augroup MyAutoCmd
+  augroup MyMarkdown
+    au!
     autocmd FileType markdown setlocal sw=4 sts=4 ts=4 et
   augroup END
   Plug 'tyru/open-browser.vim'
