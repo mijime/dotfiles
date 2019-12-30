@@ -33,7 +33,7 @@ add %i[
   goenv
   node
   elm
-  rust
+  rustup-init
 
   protobuf
   shellcheck
