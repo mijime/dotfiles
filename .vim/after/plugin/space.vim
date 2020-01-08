@@ -9,6 +9,6 @@ if has('syntax')
     autocmd!
     autocmd BufNew,BufRead * call JISX0208SpaceHilight()
     autocmd BufWritePre    * :%s/\s\+$//ge
-    command RemoveInvisibleGroup augroup InvisibleGroup | autocmd! | augroup END
+    command DisabledInvisible augroup InvisibleGroup | autocmd! | augroup END
   augroup END
 end

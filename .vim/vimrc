@@ -43,6 +43,8 @@ vmap <Space> <Leader>
 
 syntax on
 
+let g:netrw_liststyle = 3
+
 if has('vim_starting')
   set rtp+=~/.cache/plugged/vim-plug
   if !isdirectory(expand('~/.cache/plugged/vim-plug'))
@@ -54,120 +56,8 @@ endif
 
 call plug#begin('~/.cache/plugged')
   Plug 'junegunn/vim-plug',
-       \ {'dir': '~/.cache/plugged/vim-plug/autoload'}
-  Plug 'junegunn/seoul256.vim'
-  Plug 'junegunn/goyo.vim', {'on':['Goyo']}
-  augroup MyJunegunn
-    au!
-    autocmd VimEnter * nested colo seoul256
-    autocmd User GoyoEnter Limelight
-    autocmd User GoyoLeave Limelight!
-  augroup END
+        \ {'dir': '~/.cache/plugged/vim-plug/autoload'}
 
-  Plug 'junegunn/limelight.vim', {'on':['Limelight']}
-  Plug 'junegunn/fzf'
-  Plug 'junegunn/fzf.vim'
-  augroup MyFzfSettings
-    autocmd!
-    command! -bang -nargs=* GGrep
-          \ call fzf#vim#grep(
-          \   'git grep --line-number '.shellescape(<q-args>), 0,
-          \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
-  augroup END
-  Plug 'junegunn/vim-easy-align', {'on':['EasyAlign']}
-  Plug 'junegunn/gv.vim', {'on':['GV']}
-
-  Plug 'tpope/vim-fugitive'
-
-  Plug 'itchyny/lightline.vim'
-  let g:lightline={
-        \ 'colorscheme':'seoul256',
-        \ 'active': {'left':[['mode','paste'],['readonly','filepath','modified']]},
-        \ 'component_function': {
-        \ 'filepath': 'FilePathForLightline'
-        \ }
-        \ }
-  function! FilePathForLightline()
-    let path = expand('%')
-    let pathlen = len(path)
-    let winlen = winwidth(0)/3
-    if pathlen > winlen
-      return '...'.path[pathlen-winlen:pathlen]
-    endif
-    return path
-  endfunction
-
-  Plug 'previm/previm', {'for':['markdown']}
-  augroup MyMarkdown
-    au!
-    autocmd FileType markdown setlocal sw=4 sts=4 ts=4 et
-  augroup END
-  Plug 'tyru/open-browser.vim'
-
-  Plug 'tpope/vim-dispatch'
-  " Plug 'scrooloose/nerdtree'
-  let g:netrw_liststyle = 3
-
-  Plug 'udalov/kotlin-vim', {'for':['kotlin']}
-  augroup MyKotlin
-    au!
-    autocmd BufRead,BufNewFile *.kt set filetype=kotlin
-  augroup END
-
-  Plug 'tpope/vim-speeddating', {'for':['org']}
-  Plug 'jceb/vim-orgmode', {'for':['org']}
-  let g:org_agenda_files=['~/org/*.org']
-
-  Plug 'OmniSharp/omnisharp-vim', {'for':['cs']}
-  let g:OmniSharp_selector_ui = 'fzf'
-
-  Plug 'thinca/vim-quickrun', {'on':['QuickRun']}
-  Plug 'digitaltoad/vim-pug', {'for':['pug']}
-  augroup MyPug
-    au!
-    autocmd BufRead,BufNewFile *.pug set filetype=pug
-  augroup END
-
-  Plug 'baabelfish/nvim-nim', {'for':['nim']}
-  Plug 'cespare/vim-toml', {'for':['toml']}
-  Plug 'hashivim/vim-terraform', {'for':['tf']}
-  let g:terraform_align       = 1
-  let g:terraform_fmt_on_save = 1
-
-  Plug 'dense-analysis/ale'
-  let g:ale_open_list = 1
-  let g:ale_keep_list_window_open = 1
-  let g:ale_set_loclist = 0
-  let g:ale_set_quickfix = 1
-
-  let g:ale_lint_on_enter = 0
-  let g:ale_lint_on_insert_leave = 0
-  let g:ale_lint_on_save = 1
-  let g:ale_lint_on_text_changed = 0
-  let g:ale_linters = {'go': ['gofmt', 'goimports', 'go vet', 'golint', 'golangci-lint']}
-
-  Plug 'haya14busa/vim-auto-programming'
-  set completefunc=autoprogramming#complete
-
-  Plug 'rhysd/vim-goyacc', {'for':['goyacc']}
-  autocmd FileType goyacc setlocal noexpandtab
-
-  Plug 'prettier/vim-prettier', {'do': 'npm install'}
-  Plug 'leafgarland/typescript-vim', {'for':['typescript']}
-  autocmd BufRead,BufNewFile *.tsx set filetype=typescript
-  Plug 'ElmCast/elm-vim', {'for': 'elm'}
-  let g:elm_setup_keybindings = 0
-
-  Plug 'prabirshrestha/vim-lsp'
-  Plug 'prabirshrestha/async.vim'
-  Plug 'prabirshrestha/asyncomplete.vim'
-  Plug 'prabirshrestha/asyncomplete-lsp.vim'
-  Plug 'mattn/vim-lsp-settings'
-
-  setlocal omnifunc=lsp#complete
-  nmap <C-]> :LspDefinition<CR>
-  nmap K :LspHover<CR>
-  nmap ]] :LspDocumentSymbol<CR>
-  autocmd BufWritePre *.go LspDocumentFormatSync
+  call map(sort(split(globpath(&runtimepath, 'vimrc.d/*.vim'))), {->[execute('exec "so" v:val')]})
 call plug#end()
 

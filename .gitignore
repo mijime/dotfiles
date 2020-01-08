@@ -1,4 +1,4 @@
-*.local
+*.local*
 
 ### https://raw.github.com/github/gitignore/b3ae3810f8b0f97f24cd61c2d3dd1b5089b91801/Global/Vim.gitignore
 
