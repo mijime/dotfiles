@@ -54,11 +54,6 @@ if ENV['BREW_MACHINE_NAME'] == 'home'
 end
 
 if platform? :darwin
-  add 'datawire/blackbird/telepresence'
-  add_with :cask do
-    :osxfuse
-  end
-
   add %i[
     bash
     gawk
