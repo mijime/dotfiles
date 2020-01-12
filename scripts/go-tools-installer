@@ -2,16 +2,16 @@
 
 set -xue
 gotools=(
-  golang.org/x/lint/golint
+  cuelang.org/go/cmd/cue
   github.com/cweill/gotests/gotests
   github.com/ddollar/forego
+  github.com/golang/protobuf/protoc-gen-go
+  github.com/kode4food/ale/cmd/ale
   github.com/motemen/gore/cmd/gore
   github.com/saibing/bingo
   github.com/sclevine/yj
-  github.com/golang/protobuf/protoc-gen-go
-  github.com/kode4food/ale/cmd/ale
+  golang.org/x/lint/golint
   golang.org/x/tools/cmd/...
-  cuelang.org/go/cmd/cue
 )
 
 cd "$(dirname "$0")"
