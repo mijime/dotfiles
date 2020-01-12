@@ -46,6 +46,7 @@ add %i[
   helm
   skaffold
   stern
+  hadolint
 ]
 
 if ENV['BREW_MACHINE_NAME'] == 'home'
