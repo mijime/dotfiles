@@ -4,6 +4,7 @@
 	safecrlf = false
 	autocrlf = input
 	excludesfile = ~/.gitignore.global
+	quotepath = false
 [color]
 	ui = auto
 [alias]
