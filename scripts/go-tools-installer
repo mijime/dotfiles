@@ -4,10 +4,7 @@ set -xue
 gotools=(
   cuelang.org/go/cmd/cue
   github.com/cweill/gotests/gotests
-  github.com/ddollar/forego
   github.com/golang/protobuf/protoc-gen-go
-  github.com/kode4food/ale/cmd/ale
-  github.com/motemen/gore/cmd/gore
   github.com/saibing/bingo
   github.com/sclevine/yj
   golang.org/x/lint/golint
