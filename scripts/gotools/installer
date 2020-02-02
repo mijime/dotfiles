@@ -9,7 +9,8 @@ gotools=(
   github.com/sclevine/yj
   golang.org/x/lint/golint
   golang.org/x/tools/cmd/...
+  mvdan.cc/gofumpt/gofumports
 )
 
 cd "$(dirname "$0")"
-GO111MODULE=on go get -u -v "${gotools[@]}"
+GO111MODULE=on go get -v "${gotools[@]}"
