@@ -1,11 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-cask_args appdir: "#{ENV['HOME']}/Applications"
-
 tap 'homebrew/core'
 tap 'homebrew/bundle'
-tap 'homebrew/homebrew-cask'
 
 brew 'bat'
 brew 'cmake'
@@ -59,9 +56,11 @@ if ENV['BREW_MACHINE_NAME'] == 'home'
 end
 
 platform = `uname`.split(/\s+/).first.to_sym.downcase
-
 case platform
 when :darwin
+  cask_args appdir: "#{ENV['HOME']}/Applications"
+  tap 'homebrew/homebrew-cask'
+
   brew 'bash'
   brew 'gawk'
 
