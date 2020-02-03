@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@elm-tooling/elm-language-server": "^1.4.6",
+    "@elm-tooling/elm-language-server": "^1.5.0",
     "@vue/cli": "^3.12.1",
     "express-generator": "^4.16.1",
     "prettier": "^1.19.1",
-    "textlint": "^11.6.1",
+    "textlint": "^11.6.2",
     "textlint-rule-preset-ja-technical-writing": "^3.1.2",
     "textlint-rule-preset-japanese": "^4.0.3",
     "typescript-language-server": "^0.3.8"
