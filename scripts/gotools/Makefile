@@ -10,3 +10,7 @@ install:
 		golang.org/x/tools/cmd/... \
 		mvdan.cc/gofumpt/gofumports \
 		./...
+
+update:
+	go mod tidy
+	make install
