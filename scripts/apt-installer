@@ -2,7 +2,7 @@
 
 set -xue
 
-apt install --no-install-recommends \
+apt-get install --no-install-recommends \
   vim \
   vim-gtk3 \
   xclip \
@@ -21,7 +21,7 @@ do
   then curl -sSL ${src} -o "/tmp/$(basename $src)"
   fi
 
-  apt install --no-install-recommends "/tmp/$(basename $src)"
+  apt-get install --no-install-recommends "/tmp/$(basename $src)"
 done
 
 curl -sSL https://download.docker.com/linux/debian/gpg | apt-key add -

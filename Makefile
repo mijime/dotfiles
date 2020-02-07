@@ -1,5 +1,5 @@
 
-install:
+gotools_install:
 	go get -v \
 		cuelang.org/go/cmd/cue \
 		github.com/cweill/gotests/gotests \
@@ -9,8 +9,8 @@ install:
 		golang.org/x/lint/golint \
 		golang.org/x/tools/cmd/... \
 		mvdan.cc/gofumpt/gofumports \
-		./...
+		./gotools/...
 
-update:
+gotools_update:
 	go mod tidy
-	make install
+	make gotools_install

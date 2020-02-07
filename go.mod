@@ -1,4 +1,4 @@
-module github.com/mijime/dotfiles/scripts/gotools
+module github.com/mijime/dotfiles
 
 go 1.13
 
@@ -9,6 +9,6 @@ require (
 	github.com/saibing/bingo v0.0.0-20190331051950-76bcd777316d // indirect
 	github.com/sclevine/yj v0.0.0-20191212033837-ce9ec1f3a3f5 // indirect
 	golang.org/x/lint v0.0.0-20200130185559-910be7a94367 // indirect
-	golang.org/x/tools v0.0.0-20200206050830-dd0d5d485177 // indirect
+	golang.org/x/tools v0.0.0-20200207001614-6fdc5776f4bb // indirect
 	mvdan.cc/gofumpt v0.0.0-20200129124340-2a103673760e // indirect
 )
