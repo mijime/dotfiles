@@ -1,0 +1,42 @@
+{
+  "magic": "nassh-prefs",
+  "version": 1,
+  "nassh": {
+    "profile-ids": []
+  },
+  "hterm": {
+    "default": {
+      "background-color": "#3a3a3a",
+      "foreground-color": "#d0d0d0",
+      "cursor-color": "#d0d0d0",
+      "color-palette-overrides": [
+        "#4e4e4e",
+        "#d68787",
+        "#5f865f",
+        "#d8af5f",
+        "#85add4",
+        "#d7afaf",
+        "#87afaf",
+        "#d0d0d0",
+        "#626262",
+        "#d75f87",
+        "#87af87",
+        "#ffd787",
+        "#add4fb",
+        "#ffafaf",
+        "#87d7d7",
+        "#e4e4e4"
+      ],
+      "copy-on-select": false,
+      "east-asian-ambiguous-as-two-column": true,
+      "enable-8-bit-control": true,
+      "keybindings": {
+        "Ctrl-Shift-Space": "DEFAULT",
+        "Ctrl-Space": "DEFAULT"
+      },
+      "meta-sends-escape": false,
+      "page-keys-scroll": true,
+      "shift-insert-paste": false
+    }
+  }
+}
