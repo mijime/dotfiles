@@ -2,10 +2,9 @@
 
 set -ue
 
-secure_cli_path=${secure_cli_path:-keepassxc-cli}
-secure_ssh_key=${secure_ssh_key:-~/Documents/secure/my.key}
-secure_db_path=${secure_db_path:-~/Documents/secure/my.kdbx}
-
+secure_cli_path=${SECURE_CLI_PATH:-keepassxc-cli}
+secure_ssh_key=${SECURE_SSH_KEY:-~/Documents/secure/my.key}
+secure_db_path=${SECURE_DB_PATH:-~/Documents/secure/my.kdbx}
 
 __main(){
   subcmd=${1:-"help"}
@@ -17,9 +16,6 @@ __main(){
   case "${subcmd}" in
     generate)
       "${secure_cli_path}" "${subcmd}" "${@}"
-      ;;
-    create)
-      "${secure_cli_path}" "${subcmd}" -k "${secure_ssh_key}" "${secure_db_path}" "${@}"
       ;;
     *)
       "${secure_cli_path}" "${subcmd}" -k "${secure_ssh_key}" "${secure_db_path}" "${@}"
