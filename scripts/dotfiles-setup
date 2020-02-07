@@ -4,7 +4,7 @@ set -xue
 
 declare -a dotfiles=()
 declare basedir=
-basedir=$({ cd "$(dirname "$0")"; pwd; cd; })
+basedir=$(cd "$(dirname "$0")/.."; pwd)
 
 dotfiles=(
   .bashrc.include
