@@ -1,3 +1,7 @@
+install: brew_install gotools_install
+
+brew_install:
+	brew bundle --verbose
 
 gotools_install:
 	go get -v \
