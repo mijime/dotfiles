@@ -33,7 +33,7 @@ brew 'circleci'
 
 brew 'go'
 brew 'goenv'
-brew 'node'
+brew 'nodebrew'
 brew 'elm'
 brew 'rustup-init'
 
@@ -48,12 +48,11 @@ brew 'kustomize'
 brew 'helm'
 brew 'skaffold'
 brew 'stern'
-brew 'imagemagick'
 
-if ENV['BREW_MACHINE_NAME'] == 'home'
-  brew 'w3m'
-  brew 'slackcat'
-end
+brew 'imagemagick'
+brew 'w3m'
+brew 'slackcat'
+brew 'mutt'
 
 platform = `uname`.split(/\s+/).first.to_sym.downcase
 case platform
