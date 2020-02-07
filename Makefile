@@ -1,4 +1,6 @@
-install: brew_install gotools_install
+install: brew_install gotools_install npm_install
+
+update: brew_install gotools_update npm_update
 
 brew_install:
 	brew bundle --verbose
@@ -18,3 +20,10 @@ gotools_install:
 gotools_update:
 	go mod tidy
 	make gotools_install
+
+npm_install:
+	npm install
+
+npm_update:
+	npm upgrade
+	npm prune
