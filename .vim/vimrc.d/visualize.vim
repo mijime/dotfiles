@@ -2,7 +2,6 @@ Plug 'junegunn/seoul256.vim'
 Plug 'junegunn/goyo.vim', {'on':['Goyo']}
 augroup MyJunegunn
   au!
-  autocmd VimEnter * nested colo seoul256
   autocmd User GoyoEnter Limelight
   autocmd User GoyoLeave Limelight!
 augroup END
