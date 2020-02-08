@@ -18,7 +18,7 @@ set updatetime=300 timeout timeoutlen=500 ttimeout ttimeoutlen=50 ttyfast nolazy
 set wrapscan incsearch hlsearch magic
 
 " Cache
-let $cache = expand('~/.cache/backup')
+let $cache = expand('~/.cache/vim/backup')
 if !isdirectory($cache) | call mkdir($cache, 'p') | end
 set history=1000 viminfo='10,/100,:1000,<10,@10,s10,h,n$cache/.viminfo
 set nospell  spellfile=$cache/en.utf-8.add
@@ -46,17 +46,17 @@ syntax on
 let g:netrw_liststyle = 3
 
 if has('vim_starting')
-  set rtp+=~/.cache/plugged/vim-plug
-  if !isdirectory(expand('~/.cache/plugged/vim-plug'))
+  set rtp+=~/.cache/vim/plugged/vim-plug
+  if !isdirectory(expand('~/.cache/vim/plugged/vim-plug'))
     echo 'install vim-plug...'
-    call system('mkdir -p ~/.cache/plugged/vim-plug')
-    call system('git clone https://github.com/junegunn/vim-plug.git ~/.cache/plugged/vim-plug/autoload')
+    call system('mkdir -p ~/.cache/vim/plugged/vim-plug')
+    call system('git clone https://github.com/junegunn/vim-plug.git ~/.cache/vim/plugged/vim-plug/autoload')
   end
 endif
 
-call plug#begin('~/.cache/plugged')
+call plug#begin('~/.cache/vim/plugged')
   Plug 'junegunn/vim-plug',
-        \ {'dir': '~/.cache/plugged/vim-plug/autoload'}
+        \ {'dir': '~/.cache/vim/plugged/vim-plug/autoload'}
 
   call map(sort(split(globpath(&runtimepath, 'vimrc.d/*.vim'))), {->[execute('exec "so" v:val')]})
 call plug#end()
