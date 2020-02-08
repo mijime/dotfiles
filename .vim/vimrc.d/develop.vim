@@ -57,9 +57,10 @@ Plug 'hashivim/vim-terraform', {'for':['tf']}
 let g:terraform_align       = 1
 let g:terraform_fmt_on_save = 1
 
-
 Plug 'udalov/kotlin-vim', {'for':['kotlin']}
 augroup MyKotlin
   au!
   autocmd BufRead,BufNewFile *.kt set filetype=kotlin
 augroup END
+
+autocmd BufRead,BufNewFile *.muttrc set filetype=muttrc
