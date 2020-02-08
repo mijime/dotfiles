@@ -1,3 +1,4 @@
+.mutt/accounts/
 Brewfile.lock.json
 *.local*
 
