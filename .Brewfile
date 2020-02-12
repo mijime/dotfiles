@@ -22,6 +22,7 @@ brew 'gibo'
 brew 'tig'
 brew 'hub'
 brew 'git-secret'
+brew 'github/gh/gh'
 
 brew 'awscli'
 brew 'azure-cli'
