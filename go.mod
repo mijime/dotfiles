@@ -9,6 +9,6 @@ require (
 	github.com/saibing/bingo v0.0.0-20190331051950-76bcd777316d // indirect
 	github.com/sclevine/yj v0.0.0-20191212033837-ce9ec1f3a3f5 // indirect
 	golang.org/x/lint v0.0.0-20200130185559-910be7a94367 // indirect
-	golang.org/x/tools v0.0.0-20200207001614-6fdc5776f4bb // indirect
+	golang.org/x/tools v0.0.0-20200211205636-11eff242d136 // indirect
 	mvdan.cc/gofumpt v0.0.0-20200129124340-2a103673760e // indirect
 )

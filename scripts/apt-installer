@@ -2,13 +2,15 @@
 
 set -xue
 
-apt-get install --no-install-recommends \
+apt-get install \
+  lsb-release \
   vim \
   vim-gtk3 \
   xclip \
   gnome-shell-pomodoro \
   keepassxc \
   mpv \
+  fcitx \
   fcitx-mozc \
   fonts-noto-cjk \
   fonts-noto-mono
@@ -21,7 +23,7 @@ do
   then curl -sSL ${src} -o "/tmp/$(basename $src)"
   fi
 
-  apt-get install --no-install-recommends "/tmp/$(basename $src)"
+  apt-get install "/tmp/$(basename $src)"
 done
 
 curl -sSL https://download.docker.com/linux/debian/gpg | apt-key add -
