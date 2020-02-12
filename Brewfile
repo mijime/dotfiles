@@ -48,6 +48,7 @@ brew 'kustomize'
 brew 'helm'
 brew 'skaffold'
 brew 'stern'
+brew 'hadolint'
 
 brew 'imagemagick'
 brew 'w3m'
@@ -69,7 +70,6 @@ when :darwin
 
   brew 'pipenv'
   brew 'reattach-to-user-namespace'
-  brew 'hadolint'
 
   cask 'docker'
   cask 'firefox'
