@@ -11,18 +11,13 @@ let g:ale_lint_on_enter = 0
 let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
-let g:ale_linters = {'go': [
-      \ 'gofmt', 'goimports', 'go vet', 'golint', 'golangci-lint'
-      \ ]}
+let g:ale_linters = {'go': ['go vet', 'golint', 'golangci-lint']}
 
-Plug 'haya14busa/vim-auto-programming'
-set completefunc=autoprogramming#complete
-
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/async.vim' |
+Plug 'prabirshrestha/vim-lsp' |
+      \ Plug 'prabirshrestha/async.vim'
+Plug 'mattn/vim-lsp-settings' |
       \ Plug 'prabirshrestha/asyncomplete.vim' |
-      \ Plug 'prabirshrestha/asyncomplete-lsp.vim' |
-      \ Plug 'mattn/vim-lsp-settings'
+      \ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 setlocal omnifunc=lsp#complete
 nmap <C-]> :LspDefinition<CR>
 nmap K :LspHover<CR>
