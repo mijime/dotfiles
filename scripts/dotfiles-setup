@@ -7,16 +7,16 @@ declare basedir=
 basedir=$(cd "$(dirname "$0")/.."; pwd)
 
 dotfiles=(
+  .Brewfile
   .bashrc.include
   .gitconfig
   .gitignore.global
+  .golangci.yml
   .inputrc
+  .mutt
+  .textlintrc
   .tmux.conf
   .vim
-  .textlintrc
-  .mutt
-  .Brewfile
-  .rainbow_config.json
 )
 
 main() {
