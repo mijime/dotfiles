@@ -17,6 +17,7 @@ brew 'starship'
 brew 'tmux'
 brew 'tree'
 brew 'vim'
+brew 'make'
 
 brew 'git'
 brew 'gibo'
