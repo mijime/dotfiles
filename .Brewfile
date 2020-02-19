@@ -55,10 +55,11 @@ brew 'skaffold'
 brew 'stern'
 brew 'hadolint'
 
-brew 'imagemagick'
 brew 'w3m'
 brew 'mutt'
+brew 'imagemagick'
 brew 'youtube-dl'
+brew 'ffmpeg'
 
 tap 'golangci/tap'
 brew 'golangci/tap/golangci-lint'
