@@ -6,6 +6,7 @@
   "dependencies": {
     "@elm-tooling/elm-language-server": "^1.6.1",
     "@vue/cli": "^3.12.1",
+    "aws-cdk": "^1.25.0",
     "express-generator": "^4.16.1",
     "graphqurl": "^0.3.3",
     "prettier": "^1.19.1",
