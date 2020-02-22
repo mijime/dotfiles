@@ -3,6 +3,7 @@
 set -xue
 
 apt-get install --no-install-recommends \
+  build-essential \
   ca-certificates \
   curl \
   gnupg-agent \
@@ -52,7 +53,7 @@ aptpkg_repo(){
 }
 
 aptpkg julia
-aptpkg clang
+aptpkg clang clang-tools
 aptpkg vim vim-gtk3
 aptpkg xclip
 aptpkg gnome-shell-pomodoro
