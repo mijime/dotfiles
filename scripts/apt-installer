@@ -51,6 +51,7 @@ aptpkg_repo(){
   echo "${reposrc}" > "/etc/apt/sources.list.d/${reponame}.list"
 }
 
+aptpkg julia
 aptpkg clang
 aptpkg vim vim-gtk3
 aptpkg xclip
