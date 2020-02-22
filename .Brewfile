@@ -18,6 +18,7 @@ brew 'tmux'
 brew 'tree'
 brew 'vim'
 brew 'make'
+brew 'ipfs'
 
 brew 'git'
 brew 'gibo'
