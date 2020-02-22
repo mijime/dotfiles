@@ -13,6 +13,7 @@ brew_update:
 gotools_install:
 	go get -v \
 		cuelang.org/go/cmd/cue \
+		github.com/shpota/goxygen \
 		github.com/cweill/gotests/gotests \
 		github.com/golang/protobuf/protoc-gen-go \
 		github.com/mijime/twty@master \
