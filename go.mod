@@ -12,6 +12,6 @@ require (
 	github.com/sclevine/yj v0.0.0-20191212033837-ce9ec1f3a3f5 // indirect
 	github.com/shpota/goxygen v0.1.0 // indirect
 	golang.org/x/lint v0.0.0-20200130185559-910be7a94367 // indirect
-	golang.org/x/tools v0.0.0-20200221224223-e1da425f72fd // indirect
+	golang.org/x/tools v0.0.0-20200224233636-daf22849ce59 // indirect
 	mvdan.cc/gofumpt v0.0.0-20200129124340-2a103673760e // indirect
 )
