@@ -13,13 +13,14 @@ brew_update:
 gotools_install:
 	go get -v \
 		cuelang.org/go/cmd/cue \
-		github.com/shpota/goxygen \
 		github.com/cweill/gotests/gotests \
 		github.com/golang/protobuf/protoc-gen-go \
+		github.com/google/ko/cmd/ko \
 		github.com/mijime/twty@master \
 		github.com/sachaos/atcoder \
 		github.com/saibing/bingo \
 		github.com/sclevine/yj \
+		github.com/shpota/goxygen \
 		golang.org/x/lint/golint \
 		golang.org/x/tools/cmd/... \
 		mvdan.cc/gofumpt/gofumports \
