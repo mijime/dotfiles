@@ -36,3 +36,9 @@ npm_install:
 npm_update:
 	npm upgrade
 	npm prune
+
+pip3_install:
+	pip3 install -r requirements.txt
+
+pip3_update:
+	pip3 install --upgrade -r requirements.txt
