@@ -29,13 +29,15 @@ case "$(uname)" in
     then alias tmux='reattach-to-user-namespace tmux'
     fi
 
-    alias ls='ls --color'
+    alias rm='rmtrash'
+    alias ls='exa'
     alias ll='ls -l'
-    alias rm='mv -v --backup=numbered -t ~/.Trash'
     alias vi='vim -u NONE -c '\''set syntax=on|set nu'\'''
     ;;
   Linux)
-    alias rm='mv -v --backup=numbered -t ~/.Trash'
+    alias rm='rmtrash'
+    alias ls='exa'
+    alias ll='ls -l'
     alias vi='vim -u NONE -c '\''set syntax=on|set nu'\'''
     alias open=xdg-open
     ;;

@@ -5,6 +5,9 @@ tap 'homebrew/core'
 tap 'homebrew/bundle'
 
 brew 'bat'
+brew 'exa'
+brew 'rmtrash'
+
 brew 'cmake'
 brew 'direnv'
 brew 'fzf'
