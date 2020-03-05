@@ -35,7 +35,7 @@ case "$(uname)" in
     alias vi='vim -u NONE -c '\''set syntax=on|set nu'\'''
     ;;
   Linux)
-    alias rm='rmtrash'
+    alias rm='mv --target-directory=${HOME}/.Trash'
     alias ls='exa'
     alias ll='ls -l'
     alias vi='vim -u NONE -c '\''set syntax=on|set nu'\'''

@@ -6,7 +6,6 @@ tap 'homebrew/bundle'
 
 brew 'bat'
 brew 'exa'
-brew 'rmtrash'
 
 brew 'cmake'
 brew 'direnv'
@@ -81,6 +80,7 @@ when :darwin
 
   brew 'pipenv'
   brew 'reattach-to-user-namespace'
+  brew 'rmtrash'
 
   tap 'homebrew/homebrew-cask'
 
