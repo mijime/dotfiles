@@ -1,2 +1,4 @@
+flake8
 hacking
-autopep8
+black
+mypy
