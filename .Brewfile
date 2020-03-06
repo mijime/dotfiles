@@ -34,6 +34,7 @@ brew 'github/gh/gh'
 
 brew 'awscli'
 brew 'azure-cli'
+brew 'remind101/formulae/assume-role'
 
 brew 'terraformer'
 brew 'tfenv'
