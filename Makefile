@@ -3,7 +3,7 @@ install: brew_install gotools_install npm_install
 update: brew_update gotools_update npm_update
 
 brew_install:
-	brew bundle --global --verbose
+	brew bundle install --global --verbose
 
 brew_update:
 	brew update
