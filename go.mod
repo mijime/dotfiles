@@ -3,8 +3,9 @@ module github.com/mijime/dotfiles
 go 1.13
 
 require (
-	cuelang.org/go v0.0.15 // indirect
+	cuelang.org/go v0.0.15
 	github.com/Microsoft/hcsshim v0.8.7 // indirect
+	github.com/aws/aws-sdk-go v1.27.1
 	github.com/containerd/continuity v0.0.0-20200107194136-26c1120b8d41 // indirect
 	github.com/cweill/gotests v1.5.3 // indirect
 	github.com/golang/protobuf v1.3.3 // indirect
