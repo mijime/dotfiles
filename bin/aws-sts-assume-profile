@@ -25,7 +25,7 @@ role_session_name="$(whoami)"
 role_arn=$(aws configure get role_arn --profile "${aws_profile}")
 mfa_serial=$(aws configure get mfa_serial --profile "${aws_profile}")
 
-printf "%s MFA Code: " "${mfa_serial}" >&2
+printf "Enter MFA code for %s: " "${mfa_serial}" >&2
 read -r token_code
 
 aws sts assume-role \

@@ -51,7 +51,7 @@ func main() {
 }
 
 func readTokenCode() (string, error) {
-	fmt.Fprintf(os.Stderr, "MFA code: ")
+	fmt.Fprintf(os.Stderr, "Enter MFA code: ")
 
 	r := bufio.NewReader(os.Stdin)
 
