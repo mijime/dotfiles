@@ -2,3 +2,6 @@ flake8
 hacking
 black
 mypy
+
+html2text
+ginza
