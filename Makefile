@@ -44,7 +44,7 @@ pip3_update:
 	pip3 install --upgrade -r requirements.txt
 
 vim_install:
-	vim -c PlugInstall
+	vim -c PlugInstall -c quit
 
 vim_update: vim_install
-	vim -c PlugUpdate
+	vim -c PlugUpdate -c quit

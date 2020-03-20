@@ -9,12 +9,12 @@ require (
 	github.com/containerd/continuity v0.0.0-20200228182428-0f16d7a0959c // indirect
 	github.com/cweill/gotests v1.5.3 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/golang/protobuf v1.3.4 // indirect
+	github.com/golang/protobuf v1.3.5 // indirect
 	github.com/google/ko v0.4.0 // indirect
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/mijime/twty v0.0.3-0.20200222170544-f58df601e3b6 // indirect
 	github.com/opencontainers/runc v0.1.1 // indirect
-	github.com/sachaos/atcoder v0.2.12 // indirect
+	github.com/sachaos/atcoder v0.2.13 // indirect
 	github.com/saibing/bingo v0.0.0-20190331051950-76bcd777316d // indirect
 	github.com/sclevine/yj v0.0.0-20191212033837-ce9ec1f3a3f5 // indirect
 	github.com/shpota/goxygen v0.2.1 // indirect
@@ -22,8 +22,8 @@ require (
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
 	golang.org/x/net v0.0.0-20200226121028-0de0cce0169b // indirect
 	golang.org/x/text v0.3.2 // indirect
-	golang.org/x/tools v0.0.0-20200311090712-aafaee8bce8c // indirect
+	golang.org/x/tools v0.0.0-20200317043434-63da46f3035e // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
-	mvdan.cc/gofumpt v0.0.0-20200308213309-1e5100141ec2 // indirect
+	mvdan.cc/gofumpt v0.0.0-20200314181158-5d3748106d9c // indirect
 )
