@@ -41,7 +41,6 @@ brew 'tfenv'
 brew 'circleci'
 
 brew 'go'
-brew 'goenv'
 brew 'nodebrew'
 brew 'elm'
 brew 'rustup-init'
