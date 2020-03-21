@@ -82,3 +82,6 @@ apt-get update
 apt-get install --no-install-recommends "${aptpkgs[@]}"
 
 gpasswd --add "${USER}" docker
+
+# install snapd
+apt-get install libsquashfuse0 squashfuse fuse snapd
