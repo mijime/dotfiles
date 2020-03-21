@@ -3,12 +3,17 @@ func! JISX0208SpaceHilight()
   highlight JISX0208Space term=underline ctermbg=LightCyan
 endf
 
+func! ExtraWhitespaceHighlight()
+  match ExtraWhitespace /\s\+$/
+  highlight ExtraWhitespace ctermbg=red guibg=red
+endf
+
 if has('syntax')
   syntax on
   augroup InvisibleGroup
     autocmd!
     autocmd BufNew,BufRead * call JISX0208SpaceHilight()
-    autocmd BufWritePre    * :%s/\s\+$//ge
-    command DisabledInvisible augroup InvisibleGroup | autocmd! | augroup END
+    autocmd BufNew,BufRead * call ExtraWhitespaceHighlight()
+    " autocmd BufWritePre    * :%s/\s\+$//ge
   augroup END
 end
