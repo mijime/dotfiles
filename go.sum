@@ -562,6 +562,8 @@ golang.org/x/tools v0.0.0-20200313205530-4303120df7d8 h1:gkI/wGGwpcG5W4hLCzZNGxA
 golang.org/x/tools v0.0.0-20200313205530-4303120df7d8/go.mod h1:Sl4aGygMT6LrqrWclx+PTx3U+LnKx/seiNR+3G19Ar8=
 golang.org/x/tools v0.0.0-20200317043434-63da46f3035e h1:8ogAbHWoJTPepnVbNRqXLOpzMkl0rtRsM7crbflc4XM=
 golang.org/x/tools v0.0.0-20200317043434-63da46f3035e/go.mod h1:Sl4aGygMT6LrqrWclx+PTx3U+LnKx/seiNR+3G19Ar8=
+golang.org/x/tools v0.0.0-20200321014904-268ba720d32c h1:Qp5jXmUCqMiVq4676uW7bY2oskIR1ivTboSMn8qgeX0=
+golang.org/x/tools v0.0.0-20200321014904-268ba720d32c/go.mod h1:Sl4aGygMT6LrqrWclx+PTx3U+LnKx/seiNR+3G19Ar8=
 golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
 golang.org/x/xerrors v0.0.0-20191011141410-1b5146add898/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
 golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543 h1:E7g+9GITq07hpfrRu66IVDexMakfv52eLZ2CXBWiKr4=
@@ -659,6 +661,8 @@ modernc.org/strutil v1.0.0/go.mod h1:lstksw84oURvj9y3tn8lGvRxyRC1S2+g5uuIzNfIOBs
 modernc.org/xc v1.0.0/go.mod h1:mRNCo0bvLjGhHO9WsyuKVU4q0ceiDDDoEeWDJHrNx8I=
 mvdan.cc/gofumpt v0.0.0-20200314181158-5d3748106d9c h1:cFiSFbGNXymVOpNrlbkw+/ofl2WCMYJ9FE5wxkInnKU=
 mvdan.cc/gofumpt v0.0.0-20200314181158-5d3748106d9c/go.mod h1:JcEKJKbW2k+khw0skCxi8eobww1gXIi/3Igh2DG3Uls=
+mvdan.cc/gofumpt v0.0.0-20200320225430-4bdc928868e6 h1:lHiNoFNgJGorLOw7Afu5gLzMshjPYp0F3xbMYlcucLQ=
+mvdan.cc/gofumpt v0.0.0-20200320225430-4bdc928868e6/go.mod h1:JcEKJKbW2k+khw0skCxi8eobww1gXIi/3Igh2DG3Uls=
 sigs.k8s.io/kustomize v2.0.3+incompatible h1:JUufWFNlI44MdtnjUqVnvh29rR37PQFzPbLXqhyOyX0=
 sigs.k8s.io/kustomize v2.0.3+incompatible/go.mod h1:MkjgH3RdOWrievjo6c9T245dYlB5QeXV4WCbnt/PEpU=
 sigs.k8s.io/structured-merge-diff v0.0.0-20190525122527-15d366b2352e/go.mod h1:wWxsB5ozmmv/SG7nM11ayaAW51xMvak/t1r0CSlcokI=

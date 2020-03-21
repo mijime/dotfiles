@@ -22,8 +22,8 @@ require (
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
 	golang.org/x/net v0.0.0-20200226121028-0de0cce0169b // indirect
 	golang.org/x/text v0.3.2 // indirect
-	golang.org/x/tools v0.0.0-20200317043434-63da46f3035e // indirect
+	golang.org/x/tools v0.0.0-20200321014904-268ba720d32c // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
-	mvdan.cc/gofumpt v0.0.0-20200314181158-5d3748106d9c // indirect
+	mvdan.cc/gofumpt v0.0.0-20200320225430-4bdc928868e6 // indirect
 )
