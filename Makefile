@@ -1,6 +1,6 @@
-install: brew_install gotools_install npm_install vim_install
+install: brew_install gotools_install npm_install vim_install pip3_install
 
-update: brew_update gotools_update npm_update vim_update
+update: brew_update gotools_update npm_update vim_update pip3_update
 
 brew_install:
 	brew bundle install --global --verbose
@@ -44,7 +44,7 @@ pip3_update:
 	pip3 install --upgrade -r requirements.txt
 
 vim_install:
-	vim -c PlugInstall -c quit
+	vim -c PlugInstall -c quitall
 
 vim_update: vim_install
-	vim -c PlugUpdate -c quit
+	vim -c PlugUpdate -c quitall
