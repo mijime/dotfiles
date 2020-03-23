@@ -1,13 +1,14 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+platform = `uname`.split(/\s+/).first.to_sym.downcase
+
 tap 'homebrew/core'
 tap 'homebrew/bundle'
 
 brew 'bat'
 brew 'exa'
 
-brew 'cmake'
 brew 'direnv'
 brew 'fzf'
 brew 'ghq'
@@ -19,9 +20,6 @@ brew 'starship'
 brew 'tmux'
 brew 'tree'
 brew 'vim'
-brew 'make'
-brew 'clang-format'
-brew 'ipfs'
 
 brew 'git'
 brew 'gibo'
@@ -38,18 +36,16 @@ brew 'azure-cli'
 brew 'terraformer'
 brew 'tfenv'
 
-brew 'circleci'
-
 brew 'go'
+brew 'pyenv'
+brew 'pipenv'
 brew 'nodebrew'
 brew 'elm'
 brew 'rustup-init'
 
-brew 'protobuf'
+brew 'clang-format'
 brew 'shellcheck'
-brew 'vegeta'
 brew 'goreleaser'
-
 brew 'kind'
 brew 'kubernetes-cli'
 brew 'kustomize'
@@ -58,28 +54,23 @@ brew 'skaffold'
 brew 'stern'
 brew 'hadolint'
 
-brew 'w3m'
-brew 'mutt'
 brew 'imagemagick'
-brew 'youtube-dl'
-brew 'ffmpeg'
+brew 'protobuf'
+brew 'vegeta'
+brew 'plantuml'
 
 tap 'golangci/tap'
 brew 'golangci/tap/golangci-lint'
 
-platform = `uname`.split(/\s+/).first.to_sym.downcase
-case platform
-when :darwin
+brew 'docker-compose' if platform == :linux
+
+if platform == :darwin
   cask_args appdir: "#{ENV['HOME']}/Applications"
   brew 'bash'
   brew 'gawk'
 
-  brew 'coreutils'
-  brew 'findutils'
-
-  brew 'pipenv'
-  brew 'reattach-to-user-namespace'
   brew 'rmtrash'
+  brew 'reattach-to-user-namespace'
 
   tap 'homebrew/homebrew-cask'
 
@@ -89,6 +80,4 @@ when :darwin
   cask 'google-cloud-sdk'
   cask 'keepassxc'
 
-when :linux
-  brew 'docker-compose'
 end
