@@ -21,15 +21,29 @@ export AWS_SESSION_TOKEN="{{ .SessionToken }}";
 export AWS_SECURITY_TOKEN="{{ .SessionToken }}";
 `))
 
+var unsetBashTmpl = `
+unset AWS_ACCESS_KEY_ID;
+unset AWS_SECRET_ACCESS_KEY;
+unset AWS_SESSION_TOKEN;
+unset AWS_SECURITY_TOKEN;
+`
+
 func main() {
 	var (
 		profile  string
 		duration time.Duration
+		unset    bool
 	)
 
 	flag.StringVar(&profile, "profile", "", "")
 	flag.DurationVar(&duration, "duration", time.Hour, "")
+	flag.BoolVar(&unset, "unset", false, "")
 	flag.Parse()
+
+	if unset {
+		fmt.Fprintln(os.Stdout, unsetBashTmpl)
+		return
+	}
 
 	stscreds.DefaultDuration = duration
 
