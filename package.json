@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "aws-cdk": "^1.28.0",
+    "aws-cdk": "^1.30.0",
     "prettier": "^1.19.1",
     "textlint": "^11.6.3",
     "textlint-rule-preset-ja-technical-writing": "^3.1.2",

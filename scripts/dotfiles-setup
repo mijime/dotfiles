@@ -28,14 +28,13 @@ install_dotfiles() {
   do
     echo "${basedir}/${dotfile}"
   done \
-    | sed -e "s@${HOME}/@@g" \
     | while read -r dotfile
       do
         ln -sf "${dotfile}" "${HOME}/"
       done
 
   mkdir -p "${HOME}/.config"
-  for config in $(find "${basedir}/.config/" -maxdepth 1 | sed -e "s@${HOME}/@../@")
+  for config in $(find "${basedir}/.config/" -maxdepth 1)
   do cp -rv "${config}" "${HOME}/.config/"
   done
 

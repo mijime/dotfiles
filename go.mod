@@ -17,12 +17,12 @@ require (
 	github.com/sachaos/atcoder v0.2.13 // indirect
 	github.com/saibing/bingo v0.0.0-20190331051950-76bcd777316d // indirect
 	github.com/sclevine/yj v0.0.0-20191212033837-ce9ec1f3a3f5 // indirect
-	github.com/shpota/goxygen v0.2.1 // indirect
+	github.com/shpota/goxygen v0.2.2 // indirect
 	github.com/stretchr/testify v1.4.0 // indirect
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
 	golang.org/x/net v0.0.0-20200226121028-0de0cce0169b // indirect
 	golang.org/x/text v0.3.2 // indirect
-	golang.org/x/tools v0.0.0-20200321014904-268ba720d32c // indirect
+	golang.org/x/tools v0.0.0-20200321224714-0d839f3cf2ed // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 	mvdan.cc/gofumpt v0.0.0-20200320225430-4bdc928868e6 // indirect
