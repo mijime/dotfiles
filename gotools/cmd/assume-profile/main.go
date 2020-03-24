@@ -15,10 +15,11 @@ import (
 )
 
 var bashTmpl = template.Must(template.New("bashTmpl").Parse(`
-export AWS_ACCESS_KEY_ID="{{ .AccessKeyID }}";
-export AWS_SECRET_ACCESS_KEY="{{ .SecretAccessKey }}";
-export AWS_SESSION_TOKEN="{{ .SessionToken }}";
-export AWS_SECURITY_TOKEN="{{ .SessionToken }}";
+export AWS_PROFILE="{{ .profile }}";
+export AWS_ACCESS_KEY_ID="{{ .cred.AccessKeyID }}";
+export AWS_SECRET_ACCESS_KEY="{{ .cred.SecretAccessKey }}";
+export AWS_SESSION_TOKEN="{{ .cred.SessionToken }}";
+export AWS_SECURITY_TOKEN="{{ .cred.SessionToken }}";
 `))
 
 var unsetBashTmpl = `
@@ -58,7 +59,10 @@ func main() {
 		log.Fatalf("failed to get credentials: %s", err)
 	}
 
-	err = bashTmpl.Execute(os.Stdout, cred)
+	err = bashTmpl.Execute(os.Stdout, map[string]interface{}{
+		"profile": profile,
+		"cred":    cred,
+	})
 	if err != nil {
 		log.Fatalf("failed to output: %s", err)
 	}
