@@ -22,7 +22,7 @@ gotools_install:
 		github.com/sclevine/yj \
 		github.com/shpota/goxygen \
 		golang.org/x/lint/golint \
-		golang.org/x/tools/cmd/... \
+		golang.org/x/tools/... \
 		mvdan.cc/gofumpt/gofumports \
 		./gotools/...
 
