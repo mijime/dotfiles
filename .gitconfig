@@ -8,16 +8,13 @@
 [color]
 	ui = auto
 [alias]
-	ignore   = update-index --assume-unchanged
-	unignore = update-index --no-assume-unchanged
-	ignored  = !git ls-files -v | grep "^h"
-	b        = branch --all --verbose
-	c        = commit -v
-	s        = status --short --branch
-	d        = diff
-	ds       = diff --staged
-	l        = log --graph --date=relative --abbrev-commit --pretty='%C(red)%h %C(reset)%s%C(yellow)%d %C(green)(%cr) %C(blue)<%an>'
-	ll       = log --graph --date=relative --abbrev-commit --pretty=full --stat
+	b  = branch --all --verbose
+	c  = commit -v
+	s  = status --short --branch
+	d  = diff
+	ds = diff --staged
+	l  = log --graph --date=relative --abbrev-commit --pretty='%C(red)%h %C(reset)%s%C(yellow)%d %C(green)(%cr) %C(blue)<%an>'
+	ll = log --graph --date=relative --abbrev-commit --pretty=full --stat
 [push]
 	default = simple
 [ghq]
