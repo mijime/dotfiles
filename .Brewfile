@@ -53,6 +53,10 @@ brew 'awscli'
 
 brew 'azure-cli'
 
+# cloud/gcp
+
+cask 'google-cloud-sdk' if platform == :darwin
+
 # lang/go
 
 brew 'go'
@@ -113,6 +117,5 @@ brew 'plantuml'
 if platform == :darwin
   cask 'firefox'
   cask 'google-chrome'
-  cask 'google-cloud-sdk'
   cask 'keepassxc'
 end
