@@ -4,7 +4,6 @@ flake8
 hacking
 black
 autopep8
-mypy
 
 html2text
 ginza
