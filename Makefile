@@ -18,7 +18,6 @@ gotools_install:
 		github.com/google/ko/cmd/ko \
 		github.com/mijime/twty@master \
 		github.com/sachaos/atcoder \
-		github.com/saibing/bingo \
 		github.com/sclevine/yj \
 		github.com/shpota/goxygen \
 		golang.org/x/lint/golint \
