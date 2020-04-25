@@ -1,9 +1,10 @@
-pydocstyle
+black
 pylint
+
+autopep8
 flake8
 hacking
-black
-autopep8
+pydocstyle
 
-html2text
 ginza
+html2text

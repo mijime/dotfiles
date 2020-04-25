@@ -16,6 +16,7 @@ gotools_install:
 		github.com/cweill/gotests/gotests \
 		github.com/golang/protobuf/protoc-gen-go \
 		github.com/google/ko/cmd/ko \
+		github.com/mattn/memo \
 		github.com/mijime/twty@master \
 		github.com/sachaos/atcoder \
 		github.com/sclevine/yj \
