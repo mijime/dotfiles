@@ -22,6 +22,7 @@ brew 'starship'
 brew 'tmux'
 brew 'tree'
 brew 'vim'
+brew 'w3m'
 
 if platform == :darwin
   brew 'bash'
