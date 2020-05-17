@@ -18,7 +18,7 @@ gotools_install:
 		github.com/google/ko/cmd/ko \
 		github.com/mattn/memo \
 		github.com/mijime/twty@master \
-		github.com/sachaos/atcoder \
+		github.com/sachaos/ac-deck \
 		github.com/sclevine/yj \
 		github.com/shpota/goxygen \
 		golang.org/x/lint/golint \
