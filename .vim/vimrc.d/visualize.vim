@@ -8,6 +8,7 @@ augroup MyJunegunn
       silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
     endif
     set noshowmode
+    set nowrap
     Limelight
   endfunction
 
@@ -18,6 +19,7 @@ augroup MyJunegunn
       -q Z && tmux resize-pane -Z
     endif
     set showmode
+    set wrap
     Limelight!
   endfunction
 
