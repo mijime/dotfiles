@@ -61,3 +61,5 @@ function! FilePathForLightline()
   endif
   return path
 endfunction
+
+Plug 'sheerun/vim-polyglot'
