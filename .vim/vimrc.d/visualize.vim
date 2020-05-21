@@ -2,11 +2,34 @@ Plug 'junegunn/seoul256.vim'
 Plug 'junegunn/goyo.vim', {'on':['Goyo']}
 augroup MyJunegunn
   au!
-  autocmd User GoyoEnter Limelight
-  autocmd User GoyoLeave Limelight!
+  function! s:goyo_enter()
+    if executable('tmux') && strlen($TMUX)
+      silent !tmux set status off
+      silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+    endif
+    set noshowmode
+    Limelight
+  endfunction
+
+  function! s:goyo_leave()
+    if executable('tmux') && strlen($TMUX)
+      silent !tmux set status on
+      silent !tmux list-panes -F '\#F' | grep
+      -q Z && tmux resize-pane -Z
+    endif
+    set showmode
+    Limelight!
+  endfunction
+
+  autocmd User GoyoEnter nested call <SID>goyo_enter()
+  autocmd User GoyoLeave nested call <SID>goyo_leave()
 augroup END
 
 Plug 'junegunn/limelight.vim', {'on':['Limelight']}
+let g:limelight_conceal_ctermfg = 'Gray'
+let g:limelight_default_coefficient = 0.2
+let g:limelight_paragraph_span = 1
+
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 augroup MyFzfSettings
