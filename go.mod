@@ -11,6 +11,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/golang/protobuf v1.4.2 // indirect
 	github.com/google/ko v0.5.1 // indirect
+	github.com/k-saiki/mfa v0.0.0-20191209161925-2bcbc8b5f485 // indirect
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/mattn/memo v0.0.13 // indirect
 	github.com/mijime/twty v0.0.3-0.20200222170544-f58df601e3b6 // indirect
