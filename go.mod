@@ -3,7 +3,7 @@ module github.com/mijime/dotfiles
 go 1.13
 
 require (
-	cuelang.org/go v0.1.2 // indirect
+	cuelang.org/go v0.2.0 // indirect
 	github.com/Microsoft/hcsshim v0.8.9 // indirect
 	github.com/aws/aws-sdk-go v1.27.1
 	github.com/containerd/continuity v0.0.0-20200413184840-d3ef23f19fbb // indirect
@@ -22,7 +22,7 @@ require (
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
 	golang.org/x/net v0.0.0-20200301022130-244492dfa37a // indirect
 	golang.org/x/text v0.3.2 // indirect
-	golang.org/x/tools v0.0.0-20200515220128-d3bf790afa53 // indirect
+	golang.org/x/tools v0.0.0-20200520220537-cf2d1e09c845 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 	mvdan.cc/gofumpt v0.0.0-20200513141252-abc0db2c416a // indirect
