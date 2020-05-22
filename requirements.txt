@@ -1,10 +1,7 @@
 black
-pylint
-
-autopep8
-flake8
-hacking
+mypy
 pydocstyle
+pylint
 
 ginza
 html2text
