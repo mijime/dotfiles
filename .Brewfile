@@ -22,6 +22,7 @@ brew 'starship'
 brew 'tmux'
 brew 'tree'
 brew 'vim'
+brew 'w3m'
 
 if platform == :darwin
   brew 'bash'
@@ -52,6 +53,10 @@ brew 'awscli'
 # cloud/azure
 
 brew 'azure-cli'
+
+# cloud/gcp
+
+cask 'google-cloud-sdk' if platform == :darwin
 
 # lang/go
 
@@ -113,6 +118,5 @@ brew 'plantuml'
 if platform == :darwin
   cask 'firefox'
   cask 'google-chrome'
-  cask 'google-cloud-sdk'
   cask 'keepassxc'
 end

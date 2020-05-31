@@ -1,7 +1,0 @@
-black
-mypy
-pydocstyle
-pylint
-
-ginza
-html2text
