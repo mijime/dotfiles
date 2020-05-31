@@ -1,7 +1,3 @@
-Plug 'thinca/vim-quickrun', {'on':['QuickRun']}
-
-Plug 'prettier/vim-prettier', {'do': 'npm install'}
-
 Plug 'dense-analysis/ale'
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 1
@@ -11,26 +7,43 @@ let g:ale_lint_on_enter = 0
 let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
-let g:ale_linters = {'go': ['go vet', 'golint', 'golangci-lint']}
+let g:ale_linters = {
+      \ 'go': ['go vet', 'golint', 'golangci-lint']}
 
-Plug 'prabirshrestha/vim-lsp' |
-      \ Plug 'prabirshrestha/async.vim'
-Plug 'mattn/vim-lsp-settings' |
-      \ Plug 'prabirshrestha/asyncomplete.vim' |
-      \ Plug 'prabirshrestha/asyncomplete-lsp.vim'
-setlocal omnifunc=lsp#complete
-nmap <C-]> :LspDefinition<CR>
-nmap K :LspHover<CR>
-nmap ]] :LspDocumentSymbol<CR>
-
-Plug 'mattn/vim-goimports'
-autocmd FileType go setlocal noexpandtab
-autocmd FileType go setlocal omnifunc=lsp#complete
-autocmd BufWritePre *.go LspDocumentFormatSync
-
-Plug 'hashivim/vim-terraform', {'for':['tf']}
-let g:terraform_align       = 1
-let g:terraform_fmt_on_save = 1
-
+Plug 'prettier/vim-prettier', {'do': 'npm install'}
 Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['csv']
+
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+let g:asyncomplete_auto_popup = 0
+let g:asyncomplete_auto_completeopt = 0
+let g:asyncomplete_popup_delay = 200
+
+Plug 'prabirshrestha/vim-lsp'
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
+
+Plug 'mattn/vim-lsp-icons'
+Plug 'mattn/vim-lsp-settings'
+
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+
+function! s:on_lsp_buffer_enabled() abort
+  setlocal omnifunc=lsp#complete
+  setlocal signcolumn=yes
+  nmap <buffer> <f2> <plug>(lsp-rename)
+  nmap <buffer> K    <plug>(lsp-hover)
+  nmap <buffer> gd   <plug>(lsp-definition)
+  inoremap <expr> <cr> pumvisible() ? "\<c-y>\<cr>" : "\<cr>"
+endfunction
+augroup LspInstall
+  au!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+command! LspDebug let lsp_log_verbose=1 | let lsp_log_file = expand('~/lsp.log')
+
+
+Plug 'mattn/vim-goimports'
