@@ -1,6 +1,6 @@
-install: brew_install gotools_install npm_install vim_install pip_install
+install: brew_install gotools_install npm_install vim_install python_install
 
-update: brew_update gotools_update npm_update vim_update pip_update
+update: brew_update gotools_update npm_update vim_update python_update
 
 brew_install:
 	brew bundle install --global --verbose
@@ -39,11 +39,11 @@ npm_update:
 	npm upgrade
 	npm prune
 
-pip_install:
-	pipenv install
+python_install:
+	poetry install
 
-pip_update:
-	pipenv update
+python_update:
+	poetry update
 
 vim_install:
 	vim -c PlugInstall -c quitall

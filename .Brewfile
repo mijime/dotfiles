@@ -68,7 +68,7 @@ brew 'golangci/tap/golangci-lint'
 # lang/python
 
 brew 'pyenv'
-brew 'pipenv'
+brew 'poetry'
 
 # lang/js
 
@@ -112,6 +112,9 @@ brew 'imagemagick'
 brew 'protobuf'
 brew 'vegeta'
 brew 'plantuml'
+brew 'youtube-dl'
+brew 'hugo'
+brew 'ffmpeg'
 
 # misc/application
 

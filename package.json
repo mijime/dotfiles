@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "aws-cdk": "*",
+    "aws-cdk": "^1.44.0",
     "lighthouse": "*",
     "prettier": "*",
-    "pyright": "*",
+    "pyright": "^1.1.41",
     "textlint": "*",
     "textlint-rule-preset-ja-technical-writing": "*",
     "textlint-rule-preset-japanese": "*",
-    "typescript": "*",
+    "typescript": "^3.9.5",
     "typescript-language-server": "*"
   },
   "devDependencies": {},
