@@ -17,14 +17,14 @@ require (
 	github.com/mijime/twty v0.0.3-0.20200222170544-f58df601e3b6 // indirect
 	github.com/mmcdole/gofeed v1.0.0
 	github.com/opencontainers/runc v0.1.1 // indirect
-	github.com/sachaos/ac-deck v0.3.2 // indirect
+	github.com/sachaos/ac-deck v0.3.4 // indirect
 	github.com/sclevine/yj v0.0.0-20191212033837-ce9ec1f3a3f5 // indirect
 	github.com/shpota/goxygen v0.3.1 // indirect
 	github.com/stretchr/testify v1.4.0 // indirect
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
 	golang.org/x/net v0.0.0-20200301022130-244492dfa37a // indirect
 	golang.org/x/text v0.3.2 // indirect
-	golang.org/x/tools v0.0.0-20200530233709-52effbd89c51 // indirect
+	golang.org/x/tools v0.0.0-20200606014950-c42cb6316fb6 // indirect
 	golang.org/x/tools/gopls v0.4.1 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
