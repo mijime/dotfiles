@@ -3,11 +3,11 @@ module github.com/mijime/dotfiles
 go 1.13
 
 require (
-	cuelang.org/go v0.2.0 // indirect
+	cuelang.org/go v0.2.1 // indirect
 	github.com/Microsoft/hcsshim v0.8.9 // indirect
 	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/aws/aws-sdk-go v1.27.1
-	github.com/containerd/continuity v0.0.0-20200413184840-d3ef23f19fbb // indirect
+	github.com/containerd/continuity v0.0.0-20200706134602-f1c9af8e2a20 // indirect
 	github.com/cweill/gotests v1.5.3 // indirect
 	github.com/golang/protobuf v1.4.2 // indirect
 	github.com/google/ko v0.5.1 // indirect
@@ -22,11 +22,11 @@ require (
 	github.com/shpota/goxygen v0.3.1 // indirect
 	github.com/stretchr/testify v1.4.0 // indirect
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
-	golang.org/x/net v0.0.0-20200301022130-244492dfa37a // indirect
+	golang.org/x/net v0.0.0-20200625001655-4c5254603344 // indirect
 	golang.org/x/text v0.3.2 // indirect
-	golang.org/x/tools v0.0.0-20200606014950-c42cb6316fb6 // indirect
-	golang.org/x/tools/gopls v0.4.1 // indirect
+	golang.org/x/tools v0.0.0-20200706234117-b22de6825cf7 // indirect
+	golang.org/x/tools/gopls v0.4.2 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
-	mvdan.cc/gofumpt v0.0.0-20200513141252-abc0db2c416a // indirect
+	mvdan.cc/gofumpt v0.0.0-20200627213337-90206bd98491 // indirect
 )
