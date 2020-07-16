@@ -9,6 +9,7 @@ basedir=$(cd "$(dirname "$0")/.."; pwd)
 dotfiles=(
   .Brewfile
   .bashrc.include
+  .bash_logout.include
   .gitconfig
   .gitignore.global
   .golangci.yml
