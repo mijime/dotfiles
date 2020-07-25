@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "aws-cdk": "^1.49.1",
-    "lighthouse": "^6.1.0",
+    "aws-cdk": "^1.51.0",
+    "lighthouse": "^6.1.1",
     "prettier": "*",
-    "pyright": "^1.1.50",
+    "pyright": "^1.1.53",
     "textlint": "*",
     "textlint-rule-preset-ja-technical-writing": "^4.0.0",
     "textlint-rule-preset-japanese": "^5.0.0",
