@@ -31,6 +31,8 @@ if platform == :darwin
   brew 'reattach-to-user-namespace'
 end
 
+brew 'asdf'
+
 # git
 
 brew 'git'
@@ -44,7 +46,6 @@ brew 'github/gh/gh'
 # cloud/terraform
 
 brew 'terraformer'
-brew 'tfenv'
 
 # cloud/aws
 
@@ -67,12 +68,10 @@ brew 'golangci/tap/golangci-lint'
 
 # lang/python
 
-brew 'pyenv'
 brew 'poetry'
 
 # lang/js
 
-brew 'nodebrew'
 brew 'elm'
 
 # lang/shell
@@ -80,8 +79,6 @@ brew 'elm'
 brew 'shellcheck'
 
 # lang/rust
-
-brew 'rustup-init'
 
 # lang/c
 
@@ -105,7 +102,6 @@ brew 'stern'
 # misc
 
 brew 'ghq'
-brew 'graphviz'
 brew 'jq'
 brew 'nkf'
 brew 'imagemagick'
