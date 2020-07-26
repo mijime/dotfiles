@@ -23,6 +23,7 @@ brew 'tmux'
 brew 'tree'
 brew 'vim'
 brew 'w3m'
+brew 'yj'
 
 if platform == :darwin
   brew 'bash'
