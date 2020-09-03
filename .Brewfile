@@ -42,8 +42,7 @@ brew 'gibo'
 brew 'tig'
 brew 'hub'
 brew 'git-secret'
-tap 'github/gh'
-brew 'github/gh/gh'
+brew 'gh'
 
 # cloud/terraform
 
