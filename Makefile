@@ -18,9 +18,7 @@ gotools_install:
 		github.com/google/ko/cmd/ko \
 		github.com/k-saiki/mfa \
 		github.com/mattn/memo \
-		github.com/mijime/twty@master \
 		github.com/sachaos/ac-deck \
-		github.com/sclevine/yj \
 		github.com/shpota/goxygen \
 		golang.org/x/lint/golint \
 		golang.org/x/tools/gopls/... \

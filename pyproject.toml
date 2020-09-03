@@ -6,10 +6,8 @@ authors = [""]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-pylint = "^2.5.3"
 bandit = "^1.6.2"
 yapf = "^0.30.0"
-black = "^19.10b0"
 flake8 = "^3.8.2"
 mccabe = "^0.6.1"
 pycodestyle = "^2.6.0"

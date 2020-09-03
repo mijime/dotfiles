@@ -69,6 +69,8 @@ brew 'golangci/tap/golangci-lint'
 # lang/python
 
 brew 'poetry'
+brew 'black'
+brew 'pylint'
 
 # lang/js
 
@@ -93,7 +95,7 @@ brew 'docker-compose' if platform == :linux
 # k8s
 
 brew 'kind'
-brew 'kubernetes-cli'
+brew 'kubernetes-cli' if platform == :linux
 brew 'kustomize'
 brew 'helm'
 brew 'skaffold'
@@ -111,6 +113,7 @@ brew 'plantuml'
 brew 'youtube-dl'
 brew 'hugo'
 brew 'ffmpeg'
+brew 'yj'
 
 # misc/application
 
