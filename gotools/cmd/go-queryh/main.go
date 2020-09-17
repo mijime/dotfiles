@@ -41,6 +41,7 @@ func queryHTML(w io.Writer, r io.Reader, query, attr string) error {
 			res, err := s.Html()
 			if err != nil {
 				log.Println(err)
+
 				return
 			}
 
