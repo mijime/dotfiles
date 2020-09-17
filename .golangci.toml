@@ -1,0 +1,11 @@
+[run]
+tests = false
+
+[linters]
+enable-all = true
+
+[linters-settings.gocognit]
+min-complexity = 10
+
+[linters-settings.gocyclo]
+min-complexity = 15
