@@ -34,7 +34,7 @@ npm_install:
 	npm install
 
 npm_update:
-	npm upgrade
+	npm update
 	npm prune
 
 python_install:
