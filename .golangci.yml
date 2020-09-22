@@ -1,9 +1,0 @@
----
-run:
-  tests: false
-
-linters-settings:
-  gocognit:
-    min-complexity: 10
-  gocyclo:
-    min-complexity: 15

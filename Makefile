@@ -11,6 +11,7 @@ brew_update:
 	brew bundle cleanup --global --verbose
 
 gotools_install:
+	[[ -f go.mod ]] || go mod init github.com/mijime/dotfiles
 	go get -v \
 		cuelang.org/go/cmd/cue \
 		github.com/cweill/gotests/gotests \
@@ -34,7 +35,7 @@ npm_install:
 	npm install
 
 npm_update:
-	npm upgrade
+	npm outdated | awk 'NR>1{print$$1}' | xargs npm update
 	npm prune
 
 python_install:

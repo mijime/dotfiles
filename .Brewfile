@@ -23,6 +23,8 @@ brew 'tmux'
 brew 'tree'
 brew 'vim'
 brew 'w3m'
+brew 'yj'
+brew 'wget'
 
 if platform == :darwin
   brew 'bash'
@@ -40,8 +42,7 @@ brew 'gibo'
 brew 'tig'
 brew 'hub'
 brew 'git-secret'
-tap 'github/gh'
-brew 'github/gh/gh'
+brew 'gh'
 
 # cloud/terraform
 
@@ -114,6 +115,7 @@ brew 'youtube-dl'
 brew 'hugo'
 brew 'ffmpeg'
 brew 'yj'
+brew 'unzip' if platform == :darwin
 
 # misc/application
 

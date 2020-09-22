@@ -12,7 +12,7 @@ dotfiles=(
   .bash_logout.include
   .gitconfig
   .gitignore.global
-  .golangci.yml
+  .golangci.toml
   .inputrc
   .mutt
   .textlintrc

@@ -15,6 +15,7 @@ import (
 )
 
 var bashTmpl = template.Must(template.New("bashTmpl").Parse(`
+export __PREV_AWS_PROFILE="${AWS_PROFILE}";
 export AWS_PROFILE="{{ .profile }}";
 export AWS_ACCESS_KEY_ID="{{ .cred.AccessKeyID }}";
 export AWS_SECRET_ACCESS_KEY="{{ .cred.SecretAccessKey }}";
@@ -23,6 +24,8 @@ export AWS_SECURITY_TOKEN="{{ .cred.SessionToken }}";
 `))
 
 var unsetBashTmpl = `
+export AWS_PROFILE="${__PREV_AWS_PROFILE}";
+unset __PREV_AWS_PROFILE;
 unset AWS_ACCESS_KEY_ID;
 unset AWS_SECRET_ACCESS_KEY;
 unset AWS_SESSION_TOKEN;
@@ -43,6 +46,7 @@ func main() {
 
 	if unset {
 		fmt.Fprintln(os.Stdout, unsetBashTmpl)
+
 		return
 	}
 
