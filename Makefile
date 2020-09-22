@@ -35,7 +35,7 @@ npm_install:
 	npm install
 
 npm_update:
-	npm update
+	npm outdated | awk 'NR>1{print$$1}' | xargs npm update
 	npm prune
 
 python_install:
