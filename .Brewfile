@@ -115,6 +115,7 @@ brew 'youtube-dl'
 brew 'hugo'
 brew 'ffmpeg'
 brew 'yj'
+brew 'unzip' if platform == :darwin
 
 # misc/application
 
