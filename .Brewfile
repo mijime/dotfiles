@@ -24,6 +24,7 @@ brew 'tree'
 brew 'vim'
 brew 'w3m'
 brew 'yj'
+brew 'wget'
 
 if platform == :darwin
   brew 'bash'
