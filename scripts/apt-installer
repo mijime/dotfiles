@@ -61,8 +61,6 @@ aptpkg keepassxc
 aptpkg mpv
 aptpkg fcitx fcitx-mozc
 aptpkg fonts-noto-cjk fonts-noto-mono
-aptpkg https://github.com/eosrei/twemoji-color-font/releases/download/v12.0.1/fonts-twemoji-svginot_12.0.1-1_all.deb
-aptpkg https://github.com/alacritty/alacritty/releases/download/v0.4.1/Alacritty-v0.4.1-ubuntu_18_04_amd64.deb
 
 aptpkg_repo \
   --name=docker \
