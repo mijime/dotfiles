@@ -25,6 +25,9 @@ brew 'vim'
 brew 'w3m'
 brew 'yj'
 brew 'wget'
+brew 'cmake'
+brew 'make'
+brew 'rsync'
 
 if platform == :darwin
   brew 'bash'
@@ -32,8 +35,6 @@ if platform == :darwin
   brew 'rmtrash'
   brew 'reattach-to-user-namespace'
 end
-
-brew 'asdf'
 
 # git
 
@@ -46,6 +47,7 @@ brew 'gh'
 
 # cloud/terraform
 
+brew 'tfenv'
 brew 'terraformer'
 
 # cloud/aws
@@ -72,16 +74,22 @@ brew 'golangci/tap/golangci-lint'
 brew 'poetry'
 brew 'black'
 brew 'pylint'
+brew 'pipenv'
+brew 'pyenv'
 
 # lang/js
 
 brew 'elm'
+brew 'node'
 
 # lang/shell
 
 brew 'shellcheck'
 
 # lang/rust
+
+brew 'rust'
+brew 'rustup-init'
 
 # lang/c
 
