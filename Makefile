@@ -11,7 +11,7 @@ brew_update:
 	brew bundle cleanup --global --verbose
 
 gotools_install:
-	[[ -f go.mod ]] || go mod init github.com/mijime/dotfiles
+	test -f go.mod || go mod init github.com/mijime/dotfiles
 	go get -v \
 		cuelang.org/go/cmd/cue \
 		github.com/cweill/gotests/gotests \
