@@ -13,8 +13,8 @@
 	s  = status --short --branch
 	d  = diff
 	ds = diff --staged
-	l  = log --graph --date=relative --abbrev-commit --pretty='%C(red)%h %C(reset)%s%C(yellow)%d %C(green)(%cr) %C(blue)<%an>'
-	ll = log --graph --date=relative --abbrev-commit --pretty=full --stat
+	l  = log --graph --abbrev-commit --pretty='%C(red)%h %C(reset)%s%C(yellow)%d %C(green)(%cd) %C(blue)<%an>' --date=short
+	ll = log --graph --abbrev-commit --pretty=full --stat
 [push]
 	default = simple
 [ghq]
