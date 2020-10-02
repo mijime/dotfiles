@@ -14,7 +14,6 @@ dotfiles=(
   .gitignore.global
   .golangci.toml
   .inputrc
-  .mutt
   .textlintrc
   .tmux.conf
   .vim
