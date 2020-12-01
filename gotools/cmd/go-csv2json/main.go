@@ -4,33 +4,41 @@ import (
 	"bufio"
 	"encoding/csv"
 	"encoding/json"
+	"errors"
+	"fmt"
 	"io"
 	"log"
 	"os"
 )
 
-func csv2json(in io.Reader, out io.Writer) error {
+func main() {
+	err := csv2json(os.Stdout, os.Stdin)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func csv2json(out io.Writer, in io.Reader) error {
 	r := csv.NewReader(bufio.NewReader(in))
 
 	header, err := r.Read()
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to read csv: %w", err)
 	}
 
 	w := bufio.NewWriter(out)
-
 	defer w.Flush()
 
 	enc := json.NewEncoder(w)
 
 	for {
 		record, err := r.Read()
-		if err == io.EOF {
+		if errors.Is(err, io.EOF) {
 			break
 		}
 
 		if err != nil {
-			return err
+			return fmt.Errorf("failed to read csv: %w", err)
 		}
 
 		dict := make(map[string]string)
@@ -39,19 +47,9 @@ func csv2json(in io.Reader, out io.Writer) error {
 		}
 
 		if err := enc.Encode(dict); err != nil {
-			return err
+			return fmt.Errorf("failed to encode json: %w", err)
 		}
 	}
 
 	return nil
-}
-
-func main() {
-	in := os.Stdin
-	out := os.Stdout
-
-	err := csv2json(in, out)
-	if err != nil {
-		log.Fatal(err)
-	}
 }

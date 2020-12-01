@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -16,17 +17,19 @@ func main() {
 	}
 }
 
-func feed2json(w io.Writer, r io.Reader) error {
+func feed2json(out io.Writer, in io.Reader) error {
 	fp := gofeed.NewParser()
 
-	feed, err := fp.Parse(r)
+	feed, err := fp.Parse(in)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to parse feed: %w", err)
 	}
 
+	enc := json.NewEncoder(out)
+
 	for _, item := range feed.Items {
-		if err := json.NewEncoder(w).Encode(item); err != nil {
-			return err
+		if err := enc.Encode(item); err != nil {
+			return fmt.Errorf("failed to encode json: %w", err)
 		}
 	}
 
