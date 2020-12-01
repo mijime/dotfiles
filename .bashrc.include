@@ -48,15 +48,6 @@ esac
 
 export PATH="${PATH}:${HOME}/bin"
 export PATH="${PATH}:${HOME}/.dotfiles/bin:${HOME}/.dotfiles/node_modules/.bin"
-export GOPATH=${HOME}
-export FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --preview '( \
-  __f={}; __f=\${__f%%:*}; \
-  if [[ -d \"\${__f}\" ]] \
-    ; then tree -L 1 \"\${__f}\" | head -n 50 \
-    ; else bat --color=always --style=header,grid --line-range :50 \"\${__f}\" \
-    || head -n 50 \"\${__f}\" \
-    ; fi \
-    ) 2>/dev/null'"
 
 alias cd=__cd
 __cd() {

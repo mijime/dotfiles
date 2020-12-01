@@ -26,16 +26,16 @@ func main() {
 	}
 }
 
-func queryHTML(w io.Writer, r io.Reader, query, attr string) error {
-	doc, err := goquery.NewDocumentFromReader(r)
+func queryHTML(out io.Writer, in io.Reader, query, attr string) error {
+	doc, err := goquery.NewDocumentFromReader(in)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to read html: %w", err)
 	}
 
 	doc.Find(query).Each(func(i int, s *goquery.Selection) {
 		switch attr {
 		case "text":
-			fmt.Fprintln(w, s.Text())
+			fmt.Fprintln(out, s.Text())
 
 		case "html":
 			res, err := s.Html()
@@ -45,12 +45,12 @@ func queryHTML(w io.Writer, r io.Reader, query, attr string) error {
 				return
 			}
 
-			fmt.Fprintln(w, res)
+			fmt.Fprintln(out, res)
 
 		default:
 			res, ok := s.Attr(attr)
 			if ok {
-				fmt.Fprintln(w, res)
+				fmt.Fprintln(out, res)
 			}
 		}
 	})

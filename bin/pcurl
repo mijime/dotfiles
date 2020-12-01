@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -ueo pipefail
+
+exec node "$(dirname "$0")/../scripts/pcurl.js" "$@"
