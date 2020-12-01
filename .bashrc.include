@@ -48,7 +48,6 @@ esac
 
 export PATH="${PATH}:${HOME}/bin"
 export PATH="${PATH}:${HOME}/.dotfiles/bin:${HOME}/.dotfiles/node_modules/.bin"
-export GOPATH=${HOME}
 
 alias cd=__cd
 __cd() {
