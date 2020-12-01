@@ -5,7 +5,8 @@ go 1.13
 require (
 	cuelang.org/go v0.2.2 // indirect
 	github.com/Microsoft/hcsshim v0.8.10 // indirect
-	github.com/PuerkitoBio/goquery v1.5.1
+	github.com/PuerkitoBio/goquery v1.6.0
+	github.com/asticode/go-astisub v0.10.0
 	github.com/aws/aws-sdk-go v1.31.6
 	github.com/containerd/continuity v0.0.0-20200928162600-f2cc35102c2a // indirect
 	github.com/cweill/gotests v1.5.3 // indirect
