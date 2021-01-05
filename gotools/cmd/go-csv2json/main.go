@@ -5,6 +5,7 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"errors"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -12,13 +13,26 @@ import (
 )
 
 func main() {
-	err := csv2json(os.Stdout, os.Stdin)
+	var quiet bool
+
+	flag.BoolVar(&quiet, "quiet", false, "")
+	flag.Parse()
+
+	ctx := context{
+		Quiet: quiet,
+	}
+
+	err := ctx.csv2json(os.Stdout, os.Stdin)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func csv2json(out io.Writer, in io.Reader) error {
+type context struct {
+	Quiet bool
+}
+
+func (ctx context) csv2json(out io.Writer, in io.Reader) error {
 	r := csv.NewReader(bufio.NewReader(in))
 
 	header, err := r.Read()
@@ -42,7 +56,12 @@ func csv2json(out io.Writer, in io.Reader) error {
 		}
 
 		dict := make(map[string]string)
+
 		for i, d := range record {
+			if ctx.Quiet && len(d) == 0 {
+				continue
+			}
+
 			dict[header[i]] = d
 		}
 
