@@ -25,11 +25,7 @@ Plug 'prabirshrestha/vim-lsp'
 let g:lsp_diagnostics_enabled = 1
 let g:lsp_diagnostics_echo_cursor = 1
 
-Plug 'mattn/vim-lsp-icons'
 Plug 'mattn/vim-lsp-settings'
-
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
 
 function! s:on_lsp_buffer_enabled() abort
   setlocal omnifunc=lsp#complete
