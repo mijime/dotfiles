@@ -28,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/mijime/dotfiles/issues"
   },
-  "homepage": "https://github.com/mijime/dotfiles#readme"
+  "homepage": "https://github.com/mijime/dotfiles#readme",
+  "volta": {
+    "node": "14.15.4"
+  }
 }
