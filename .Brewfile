@@ -81,6 +81,7 @@ brew 'pyenv'
 
 brew 'elm'
 brew 'node'
+brew 'volta'
 
 # lang/shell
 
