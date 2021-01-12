@@ -161,7 +161,14 @@ EOF
   fi
 }
 
+function share_history {
+  history -a
+  history -c
+  history -r
+}
+PROMPT_COMMAND='share_history'
 shopt -u histappend
+
 HISTSIZE=100000
 HISTFILESIZE=100000
 HISTTIMEFORMAT='[%y/%m/%d %H:%M:%S]  '
