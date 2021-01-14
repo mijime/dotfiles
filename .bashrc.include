@@ -1,144 +1,92 @@
 #!/usr/bin/env bash
 
 case "$(uname)" in
-  Darwin)
-    export PATH=${HOME}/.brew/bin:${PATH}
+Darwin)
+  if type reattach-to-user-namespace 1>/dev/null 2>/dev/null; then
+    alias tmux='reattach-to-user-namespace tmux'
+  fi
 
-    __install_brew(){
-      mkdir -p "${HOME}/.brew"
-      curl -L https://github.com/Homebrew/brew/archive/master.tar.gz \
-        | tar xz --strip-components=1 -C "${HOME}/.brew"
-      }
-    if ! type brew 1>/dev/null 2>/dev/null
-    then __install_brew
-    fi
+  export HOMEBREW_CASK_OPTS='--appdir=~/Applications --fontdir=/Library/Fonts'
+  ;;
+Linux)
+  alias open=xdg-open
+  export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+  ;;
 
-    export HOMEBREW_CASK_OPTS='--appdir=~/Applications --fontdir=/Library/Fonts'
-    homebrew_prefix=$(brew --prefix)
+*) ;;
 
-    if [[ -r "${homebrew_prefix}/etc/profile.d/bash_completion.sh" ]]
-    then source "${homebrew_prefix}/etc/profile.d/bash_completion.sh"
-    fi
-
-    export PATH="${homebrew_prefix}/bin:${homebrew_prefix}/sbin:${PATH}"
-    export PATH="${homebrew_prefix}/opt/openssl/bin:${PATH}"
-    export PATH="${homebrew_prefix}/opt/coreutils/libexec/gnubin:${PATH}"
-    export MANPATH="${homebrew_prefix}/opt/coreutils/libexec/gnuman:${MANPATH}"
-
-    if type reattach-to-user-namespace 1>/dev/null 2>/dev/null
-    then alias tmux='reattach-to-user-namespace tmux'
-    fi
-
-    alias rm='rmtrash'
-    alias ls='exa'
-    alias ll='ls -l'
-    alias vi='vim -u NONE -c '\''set syntax=on|set nu'\'''
-    ;;
-  Linux)
-    alias rm='mv --backup=numbered --target-directory=${HOME}/.Trash'
-    alias ls='ls --color=auto'
-    alias ll='ls -l'
-    alias vi='vim -u NONE -c '\''set syntax=on|set nu'\'''
-    alias open=xdg-open
-    ;;
-
-  *)
-    ;;
 esac
 
-export PATH="${PATH}:${HOME}/bin"
+if ! type brew 1>/dev/null 2>/dev/null; then
+  bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+homebrew_prefix=$(brew --prefix)
+export PATH="${homebrew_prefix}/bin:${homebrew_prefix}/sbin:${PATH}"
+export PATH="${homebrew_prefix}/opt/openssl/bin:${PATH}"
+export PATH="${homebrew_prefix}/opt/coreutils/libexec/gnubin:${PATH}"
+export MANPATH="${homebrew_prefix}/opt/coreutils/libexec/gnuman:${MANPATH}"
+
+if [[ -r "${homebrew_prefix}/etc/profile.d/bash_completion.sh" ]]; then
+  source "${homebrew_prefix}/etc/profile.d/bash_completion.sh"
+fi
+
 export PATH="${PATH}:${HOME}/.dotfiles/bin:${HOME}/.dotfiles/node_modules/.bin"
+
+alias ls='exa'
+alias ll='ls -l'
+export TRASH_DIR=${HOME}/.Trash
+alias rm='mv --backup=numbered --target-directory=${TRASH_DIR}'
 
 alias cd=__cd
 __cd() {
-  if [[ $# -eq 0 ]]
-  then
+  if [[ $# -eq 0 ]]; then
     pushd ~ || return 1
     return
   fi
-  while [[ $# -gt 0 ]]
-  do
+  while [[ $# -gt 0 ]]; do
     case $1 in
-      -)
-        popd 1>&2 || return 1
-        shift
-        ;;
-      -c|--clear)
-        dirs -c
-        shift
-        ;;
-      -l|--list)
-        dirs -v | awk 'p[$2]!=1{print}{p[$2]=1}'
-        shift
-        ;;
-      *)
-        pushd "$1" >/dev/null || return 1
-        shift
-        ;;
+    -)
+      popd 1>&2 || return 1
+      shift
+      ;;
+    -c | --clear)
+      dirs -c
+      shift
+      ;;
+    -l | --list)
+      dirs -v | awk 'p[$2]!=1{print}{p[$2]=1}'
+      shift
+      ;;
+    *)
+      pushd "$1" >/dev/null || return 1
+      shift
+      ;;
     esac
   done
 }
 
-__ret_ps1() {
-  ret=$?
-  if [[ ${ret} -eq 0 ]]
-  then printf '\e[0;32m'
-  else printf '\e[0;31m'
-  fi
-  return ${ret}
-}
-
-__create_ssh_config() {
-    local ssh_project=~/.ssh/projects
-    local ssh_config=~/.ssh/config
-
-    while [[ $# -gt 0 ]]
-    do
-        case $1 in
-            --project|-p)
-                ssh_project=$2
-                shift 2 || return 2
-                ;;
-
-            --config|-c)
-                ssh_config=$2
-                shift 2 || return 2
-                ;;
-
-            *)
-                echo "[ERROR] $*" 1>&2
-                return 1
-                ;;
-        esac
-    done
-
-    mkdir -p "${ssh_project}"
-    find "${ssh_project}" -name ssh_config \
-        | sort \
-        | xargs cat > "${ssh_config}"
-}
-__create_ssh_config "$@"
+# ssh config
 
 __create_ssh_private() {
   local ssh_project=${SSH_PROJECT:-~/.ssh/projects}
   local host=localhost
   local algo=ed25519
 
-  while [[ $# -gt 0 ]]
-  do
+  while [[ $# -gt 0 ]]; do
     case $1 in
-      --project|-p)
-        ssh_project=$2
-        shift 2 || return 1
-        ;;
-      -t)
-        algo=$2
-        shift 2 || return 1
-        ;;
-      *)
-        host=$1
-        shift || return 1
-        ;;
+    --project | -p)
+      ssh_project=$2
+      shift 2 || return 1
+      ;;
+    -t)
+      algo=$2
+      shift 2 || return 1
+      ;;
+    *)
+      host=$1
+      shift || return 1
+      ;;
     esac
   done
 
@@ -146,39 +94,70 @@ __create_ssh_private() {
   mkdir -p "${dir}"
 
   keyname=${dir}/id_${algo}
-  if [[ ! -f ${keyname} ]]
-  then
+  if [[ ! -f ${keyname} ]]; then
     ssh-keygen -t "${algo}" -f "${keyname}" -N "" -C ""
   fi
 
   ssh_config=${dir}/ssh_config
-  if [[ ! -f ${ssh_config} ]]
-  then
-    cat <<EOF > "${ssh_config}"
+  if [[ ! -f ${ssh_config} ]]; then
+    cat <<EOF >"${ssh_config}"
 Host ${host}
   IdentityFile ${keyname}
 EOF
   fi
 }
 
-function share_history {
+__create_ssh_config() {
+  local ssh_project=~/.ssh/projects
+  local ssh_config=~/.ssh/config
+
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --project | -p)
+      ssh_project=$2
+      shift 2 || return 2
+      ;;
+
+    --config | -c)
+      ssh_config=$2
+      shift 2 || return 2
+      ;;
+
+    *)
+      echo "[ERROR] $*" 1>&2
+      return 1
+      ;;
+    esac
+  done
+
+  mkdir -p "${ssh_project}"
+  find "${ssh_project}" -name ssh_config |
+    sort |
+    xargs cat >"${ssh_config}"
+}
+
+__create_ssh_config "$@"
+
+# history settings
+
+shopt -u histappend
+share_history() {
   history -a
   history -c
   history -r
 }
 PROMPT_COMMAND='share_history'
-shopt -u histappend
-
 HISTSIZE=100000
 HISTFILESIZE=100000
 HISTTIMEFORMAT='[%F %T %Z]  '
 HISTIGNORE='l[sla]:history*:pwd:exit:cd:[bf]g:jobs'
 HISTCONTROL='ignoredups:ignorespace:erasedups'
 
-for localrc in ~/.bashrc.local \
-  ~/.dockerrc
-do
-  if [[ -f ${localrc} ]]
-  then source ${localrc}
+export FZF_CTRL_T_COMMAND='git ls-files 2>/dev/null || rg --files --hidden --follow --glob "!.git/*"'
+export FZF_CTRL_T_OPTS='--preview "bat  --color=always --style=header,grid --line-range :100 {}"'
+
+for localrc in ~/.bashrc.local ~/.dockerrc; do
+  if [[ -f ${localrc} ]]; then
+    source ${localrc}
   fi
 done
