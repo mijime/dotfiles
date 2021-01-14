@@ -4,7 +4,10 @@ set -xue
 
 declare -a dotfiles=()
 declare basedir=
-basedir=$(cd "$(dirname "$0")/.."; pwd)
+basedir=$(
+  cd "$(dirname "$0")/.."
+  pwd
+)
 
 dotfiles=(
   .Brewfile
@@ -24,27 +27,25 @@ main() {
 }
 
 install_dotfiles() {
-  for dotfile in "${dotfiles[@]}"
-  do
+  for dotfile in "${dotfiles[@]}"; do
     echo "${basedir}/${dotfile}"
-  done \
-    | while read -r dotfile
-      do
-        ln -sf "${dotfile}" "${HOME}/"
-      done
+  done |
+    while read -r dotfile; do
+      ln -sf "${dotfile}" "${HOME}/"
+    done
 
   mkdir -p "${HOME}/.config"
-  for config in $(find "${basedir}/.config/" -maxdepth 1)
-  do cp -rv "${config}" "${HOME}/.config/"
+  for config in $(find "${basedir}/.config/" -maxdepth 1); do
+    cp -rv "${config}" "${HOME}/.config/"
   done
 
-  if [[ -f ~/.tmux.conf.local ]]
-  then return
+  if [[ -f ~/.tmux.conf.local ]]; then
+    return
   fi
 
   case "$(uname)" in
   Darwin)
-    cat > ~/.tmux.conf.local <<EOS
+    cat >~/.tmux.conf.local <<EOS
 bind-key -T copy-mode-vi v                 send      -X begin-selection
 bind-key -T copy-mode-vi y                 send-keys -X copy-pipe-and-cancel "pbcopy"
 bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
