@@ -28,11 +28,16 @@ brew 'wget'
 brew 'cmake'
 brew 'make'
 brew 'rsync'
+brew 'ripgrep'
+brew 'grex'
+brew 'coreutils'
+
+tap 'itchyny/tap'
+brew 'itchyny/tap/mmv'
 
 if platform == :darwin
   brew 'bash'
   brew 'gawk'
-  brew 'rmtrash'
   brew 'reattach-to-user-namespace'
 end
 
@@ -65,7 +70,9 @@ cask 'google-cloud-sdk' if platform == :darwin
 # lang/go
 
 brew 'go'
+brew 'gofumpt'
 brew 'goreleaser'
+
 tap 'golangci/tap'
 brew 'golangci/tap/golangci-lint'
 
@@ -80,12 +87,12 @@ brew 'pyenv'
 # lang/js
 
 brew 'elm'
-brew 'node'
 brew 'volta'
 
 # lang/shell
 
 brew 'shellcheck'
+brew 'shfmt'
 
 # lang/rust
 
@@ -111,6 +118,10 @@ brew 'helm'
 brew 'skaffold'
 brew 'stern'
 
+# sql
+
+brew 'sqlparse'
+
 # misc
 
 brew 'ghq'
@@ -125,6 +136,8 @@ brew 'hugo'
 brew 'ffmpeg'
 brew 'yj'
 brew 'unzip' if platform == :darwin
+brew 'mkcert'
+brew 'translate-shell'
 
 # misc/application
 
