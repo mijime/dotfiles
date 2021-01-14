@@ -8,7 +8,14 @@ let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
 let g:ale_linters = {
-      \ 'go': ['go vet', 'golint', 'golangci-lint']}
+      \ 'go': ['go vet', 'golint', 'golangci-lint'],
+      \ }
+let g:ale_fixers = {
+      \ 'terraform': ['terraform'],
+      \ 'sh': ['shfmt'],
+      \ 'python': ['black'],
+      \ 'markdown': ['prettier', 'textlint'],
+      \ }
 
 Plug 'prettier/vim-prettier', {'do': 'npm install'}
 Plug 'sheerun/vim-polyglot'
@@ -48,3 +55,9 @@ Plug 'mattn/vim-goimports'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
+
+let g:ale_sh_shfmt_options = '-i=2'
+autocmd Filetype sh setlocal sw=2 sts=2 expandtab
+autocmd BufWritePre *.sh ALEFix
+
+autocmd BufWritePre *.md ALEFix
