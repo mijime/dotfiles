@@ -171,7 +171,7 @@ shopt -u histappend
 
 HISTSIZE=100000
 HISTFILESIZE=100000
-HISTTIMEFORMAT='[%y/%m/%d %H:%M:%S]  '
+HISTTIMEFORMAT='[%F %T %Z]  '
 HISTIGNORE='l[sla]:history*:pwd:exit:cd:[bf]g:jobs'
 HISTCONTROL='ignoredups:ignorespace:erasedups'
 
