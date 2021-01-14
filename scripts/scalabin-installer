@@ -4,8 +4,8 @@ set -ue
 
 bin_dir=${HOME}/bin
 
-if [[ ! -f  "${bin_dir}/coursier" ]]
-then curl -L -o "${bin_dir}/coursier" https://git.io/coursier
+if [[ ! -f "${bin_dir}/coursier" ]]; then
+  curl -L -o "${bin_dir}/coursier" https://git.io/coursier
 fi
 chmod +x "${bin_dir}/coursier"
 

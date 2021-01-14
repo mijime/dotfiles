@@ -2,69 +2,66 @@
 set -ue
 
 declare \
-  __LANG="" \
-  __DIR="." \
-  __PORT="3000" \
-  __BIND="127.0.0.1"
+  __lang="" \
+  __dir="." \
+  __port="3000" \
+  __bind="127.0.0.1"
 
-while [[ $# -gt 0 ]]
-do
+while [[ $# -gt 0 ]]; do
   case $1 in
-    --lang|-l)
-      __LANG=$2
-      shift 2 || exit 2
-      ;;
+  --lang | -l)
+    __lang=$2
+    shift 2 || exit 2
+    ;;
 
-    --dir|-d)
-      __DIR=$2
-      shift 2 || exit 2
-      ;;
+  --dir | -d)
+    __dir=$2
+    shift 2 || exit 2
+    ;;
 
-    --port|-p)
-      __PORT=$2
-      shift 2 || exit 2
-      ;;
+  --port | -p)
+    __port=$2
+    shift 2 || exit 2
+    ;;
 
-    --bind|-b)
-      __BIND=$2
-      shift 2 || exit 2
-      ;;
+  --bind | -b)
+    __bind=$2
+    shift 2 || exit 2
+    ;;
 
-    --all|-A)
-      __BIND="0.0.0.0"
-      shift || exit 2
-      ;;
+  --all | -A)
+    __bind="0.0.0.0"
+    shift || exit 2
+    ;;
 
-    *)
-      __DIR=$1
-      shift || exit 2
-      ;;
+  *)
+    __dir=$1
+    shift || exit 2
+    ;;
   esac
 done
 
-if [[ -z "${__LANG}" ]]
-then
-  if type python >/dev/null 2>/dev/null
-  then
+if [[ -z ${__lang} ]]; then
+  if type python >/dev/null 2>/dev/null; then
     PYTHON_MAJER_VERSION="$(python --version 2>&1 | awk '{print$2}' | awk -v FS="." '{print$1}')"
-    __LANG="python${PYTHON_MAJER_VERSION}"
-  elif type ruby >/dev/null 2>/dev/null
-  then __LANG=ruby
+    __lang="python${PYTHON_MAJER_VERSION}"
+  elif type ruby >/dev/null 2>/dev/null; then
+    __lang=ruby
   fi
 fi
 
-case "${__LANG}" in
-  p*3|python3)
-    cd "${__DIR}" || exit 1
-    python -m http.server "${__PORT}" --bind "${__BIND}"
-    ;;
+case "${__lang}" in
+python | python3)
+  cd "${__dir}" || exit 1
+  python -m http.server "${__port}" --bind "${__bind}"
+  ;;
 
-  p*2|python2)
-    cd "${__DIR}" || exit 1
-    python -m SimpleHTTPServer "${__PORT}" --bind "${__BIND}"
-    ;;
+python2)
+  cd "${__dir}" || exit 1
+  python -m SimpleHTTPServer "${__port}" --bind "${__bind}"
+  ;;
 
-  r*|ruby)
-    ruby -run -e httpd "${__DIR}" --port "${__PORT}" --bind "${__BIND}"
-    ;;
+ruby)
+  ruby -run -e httpd "${__dir}" --port "${__port}" --bind "${__bind}"
+  ;;
 esac

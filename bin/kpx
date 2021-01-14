@@ -6,7 +6,7 @@ secure_cli_path=${SECURE_CLI_PATH:-keepassxc-cli}
 secure_ssh_key=${SECURE_SSH_KEY:-~/Documents/secure/my.key}
 secure_db_path=${SECURE_DB_PATH:-~/Documents/secure/my.kdbx}
 
-__main(){
+__main() {
   subcmd=${1:-"help"}
   shift || {
     "${secure_cli_path}" --help
@@ -14,12 +14,12 @@ __main(){
   }
 
   case "${subcmd}" in
-    generate)
-      "${secure_cli_path}" "${subcmd}" "${@}"
-      ;;
-    *)
-      "${secure_cli_path}" "${subcmd}" -k "${secure_ssh_key}" "${secure_db_path}" "${@}"
-      ;;
+  generate)
+    "${secure_cli_path}" "${subcmd}" "${@}"
+    ;;
+  *)
+    "${secure_cli_path}" "${subcmd}" -k "${secure_ssh_key}" "${secure_db_path}" "${@}"
+    ;;
   esac
 }
 

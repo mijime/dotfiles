@@ -13,43 +13,41 @@ apt-get install --no-install-recommends \
 
 aptpkgs=()
 
-aptpkg(){
-  while [[ $# -gt 0 ]]
-  do
+aptpkg() {
+  while [[ $# -gt 0 ]]; do
     case $1 in
-      https://*)
-        if [[ ! -f "/tmp/$(basename "$1")" ]]
-        then curl -sSL "$1" -o "/tmp/$(basename "$1")"
-        fi
+    https://*)
+      if [[ ! -f "/tmp/$(basename "$1")" ]]; then
+        curl -sSL "$1" -o "/tmp/$(basename "$1")"
+      fi
 
-        aptpkgs=("${aptpkgs[@]}" "/tmp/$(basename "$1")")
-        ;;
-      *)
-        aptpkgs=("${aptpkgs[@]}" "$1")
-        ;;
+      aptpkgs=("${aptpkgs[@]}" "/tmp/$(basename "$1")")
+      ;;
+    *)
+      aptpkgs=("${aptpkgs[@]}" "$1")
+      ;;
     esac
     shift
   done
 }
 
-aptpkg_repo(){
-  while [[ $# -gt 0 ]]
-  do
+aptpkg_repo() {
+  while [[ $# -gt 0 ]]; do
     case $1 in
-      --name=*)
-        reponame="${1#*=}"
-        ;;
-      --source=*)
-        reposrc="${1#*=}"
-        ;;
-      --key=https://*)
-        keyurl="${1#*=}"
-        curl -sSL "${keyurl}" | apt-key add -
-        ;;
+    --name=*)
+      reponame="${1#*=}"
+      ;;
+    --source=*)
+      reposrc="${1#*=}"
+      ;;
+    --key=https://*)
+      keyurl="${1#*=}"
+      curl -sSL "${keyurl}" | apt-key add -
+      ;;
     esac
     shift
   done
-  echo "${reposrc}" > "/etc/apt/sources.list.d/${reponame}.list"
+  echo "${reposrc}" >"/etc/apt/sources.list.d/${reponame}.list"
 }
 
 aptpkg julia

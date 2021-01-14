@@ -23,7 +23,6 @@ gotools_install:
 		golang.org/x/lint/golint \
 		golang.org/x/tools/gopls/... \
 		golang.org/x/tools/... \
-		mvdan.cc/gofumpt/gofumports \
 		./gotools/...
 
 gotools_update:
