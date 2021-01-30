@@ -9,4 +9,4 @@ Plug 'tpope/vim-speeddating', {'for':['org']}
 Plug 'jceb/vim-orgmode', {'for':['org']}
 let g:org_agenda_files=['~/org/*.org']
 
-let g:previm_plantuml_imageprefix = 'http://plantuml.local.gd/png/'
+let g:previm_plantuml_imageprefix = 'http://plantuml.local.gd/svg/'

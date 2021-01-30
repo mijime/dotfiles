@@ -8,16 +8,38 @@ let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_save = 1
 let g:ale_lint_on_text_changed = 0
 let g:ale_linters = {
-      \ 'go': ['go vet', 'golint', 'golangci-lint'],
+      \ 'go': ['govet', 'golint', 'golangci-lint'],
       \ }
 let g:ale_fixers = {
-      \ 'terraform': ['terraform'],
-      \ 'sh': ['shfmt'],
-      \ 'python': ['black'],
-      \ 'markdown': ['prettier', 'textlint'],
+      \ 'go':              ['gofmt', 'goimports'],
+      \ 'graphql':         ['prettier'],
+      \ 'javascript':      ['prettier', 'eslint'],
+      \ 'markdown':        ['prettier', 'textlint'],
+      \ 'python':          ['black'],
+      \ 'sh':              ['shfmt'],
+      \ 'sql':             ['sqlformat'],
+      \ 'terraform':       ['terraform'],
+      \ 'typescript':      ['prettier', 'eslint'],
+      \ 'typescriptreact': ['prettier', 'eslint'],
       \ }
 
-Plug 'prettier/vim-prettier', {'do': 'npm install'}
+let g:ale_sh_shfmt_options      = '-i=2'
+let g:ale_sql_sqlformat_options = '--reindent --indent_after_first --indent_columns --keywords upper --identifiers lower'
+
+augroup ALEFixSettings
+  autocmd!
+  autocmd FileType go              autocmd BufWritePre <buffer> ALEFix
+  autocmd Filetype graphql         autocmd BufWritePre <buffer> ALEFix
+  autocmd Filetype javascript      autocmd BufWritePre <buffer> ALEFix
+  autocmd Filetype markdown        autocmd BufWritePre <buffer> ALEFix
+  autocmd Filetype python          autocmd BufWritePre <buffer> ALEFix
+  autocmd Filetype sh              autocmd BufWritePre <buffer> ALEFix
+  autocmd Filetype sql             autocmd BufWritePre <buffer> ALEFix
+  autocmd Filetype terraform       autocmd BufWritePre <buffer> ALEFix
+  autocmd Filetype typescript      autocmd BufWritePre <buffer> ALEFix
+  autocmd Filetype typescriptreact autocmd BufWritePre <buffer> ALEFix
+augroup END
+
 Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['csv']
 
@@ -48,16 +70,10 @@ augroup LspInstall
 augroup END
 command! LspDebug let lsp_log_verbose=1 | let lsp_log_file = expand('~/lsp.log')
 
-
-Plug 'mattn/vim-goimports'
-
 " typescript settings
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
 
-let g:ale_sh_shfmt_options = '-i=2'
+" sh settings
 autocmd Filetype sh setlocal sw=2 sts=2 expandtab
-autocmd BufWritePre *.sh ALEFix
-
-autocmd BufWritePre *.md ALEFix
