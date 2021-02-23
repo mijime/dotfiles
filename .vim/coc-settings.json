@@ -1,15 +1,5 @@
 {
   "languageserver": {
-    "efm": {
-      "command": "efm-langserver",
-      "rootPatterns": [
-        ".git",
-        ".vim"
-      ],
-      "filetypes": [
-        "markdown"
-      ]
-    },
     "go": {
       "command": "gopls",
       "rootPatterns": [
