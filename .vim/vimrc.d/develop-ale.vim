@@ -1,0 +1,23 @@
+Plug 'dense-analysis/ale'
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_save = 1
+let g:ale_fix_on_save = 1
+let g:ale_linters = {
+      \ 'go': ['govet', 'golint', 'golangci-lint'],
+      \ }
+let g:ale_fixers = {
+      \ 'go':              ['gofmt', 'goimports'],
+      \ 'graphql':         ['prettier'],
+      \ 'javascript':      ['prettier', 'eslint'],
+      \ 'markdown':        ['prettier', 'textlint'],
+      \ 'python':          ['black'],
+      \ 'sh':              ['shfmt'],
+      \ 'sql':             ['sqlformat'],
+      \ 'terraform':       ['terraform'],
+      \ 'typescript':      ['prettier', 'eslint'],
+      \ 'typescriptreact': ['prettier', 'eslint'],
+      \ }
+let g:ale_sh_shfmt_options      = '-i=2'
+let g:ale_sql_sqlformat_options = '--reindent --indent_after_first --indent_columns --keywords upper --identifiers lower'

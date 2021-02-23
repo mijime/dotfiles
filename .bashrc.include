@@ -5,16 +5,13 @@ Darwin)
   if type reattach-to-user-namespace 1>/dev/null 2>/dev/null; then
     alias tmux='reattach-to-user-namespace tmux'
   fi
-
   export HOMEBREW_CASK_OPTS='--appdir=~/Applications --fontdir=/Library/Fonts'
   ;;
 Linux)
   alias open=xdg-open
   export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
   ;;
-
 *) ;;
-
 esac
 
 if ! type brew 1>/dev/null 2>/dev/null; then
@@ -33,7 +30,9 @@ fi
 
 export PATH="${PATH}:${HOME}/.dotfiles/bin:${HOME}/.dotfiles/node_modules/.bin"
 
-alias ls='exa'
+if type exa >/dev/null 2>&1; then
+  alias ls='exa'
+fi
 alias ll='ls -l'
 export TRASH_DIR=${HOME}/.Trash
 alias rm='mv --backup=numbered --target-directory=${TRASH_DIR}'
