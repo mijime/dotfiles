@@ -72,9 +72,8 @@ cask 'google-cloud-sdk' if platform == :darwin
 brew 'go'
 brew 'gofumpt'
 brew 'goreleaser'
-
-tap 'golangci/tap'
-brew 'golangci/tap/golangci-lint'
+brew 'gopls'
+brew 'golangci-lint'
 
 # lang/python
 

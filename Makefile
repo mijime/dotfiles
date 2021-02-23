@@ -16,12 +16,10 @@ gotools_install:
 		cuelang.org/go/cmd/cue \
 		github.com/cweill/gotests/gotests \
 		github.com/golang/protobuf/protoc-gen-go \
-		github.com/google/ko/cmd/ko \
 		github.com/k-saiki/mfa \
 		github.com/mattn/memo \
 		github.com/shpota/goxygen \
 		golang.org/x/lint/golint \
-		golang.org/x/tools/gopls/... \
 		golang.org/x/tools/... \
 		./gotools/...
 
