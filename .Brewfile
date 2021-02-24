@@ -146,4 +146,8 @@ if platform == :darwin
   cask 'firefox'
   cask 'google-chrome'
   cask 'keepassxc'
+
+  cask 'flutter'
+  cask 'android-sdk'
+  cask 'cocoapods'
 end
