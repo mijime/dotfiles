@@ -20,6 +20,7 @@ gotools_install:
 		github.com/mattn/memo \
 		github.com/shpota/goxygen \
 		golang.org/x/lint/golint \
+		github.com/jackc/sqlfmt/... \
 		golang.org/x/tools/... \
 		./gotools/...
 

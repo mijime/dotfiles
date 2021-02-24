@@ -1,6 +1,15 @@
+TODO.md
+.tmp/
 .mypy_cache/
 .envrc
 *.local
+*.orig
+
+# Source trail
+
+*.srctrlbm
+*.srctrldb
+*.srctrlprj
 
 ### https://raw.github.com/github/gitignore/c1faae44aebe587bbb90d60e21ca928e0116e8d4/Global/macOS.gitignore
 

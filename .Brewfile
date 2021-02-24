@@ -53,6 +53,7 @@ brew 'gh'
 # cloud/terraform
 
 brew 'tfenv'
+brew 'tflint'
 brew 'terraformer'
 
 # cloud/aws
@@ -137,6 +138,7 @@ brew 'yj'
 brew 'unzip' if platform == :darwin
 brew 'mkcert'
 brew 'translate-shell'
+brew 'efm-langserver'
 
 # misc/application
 

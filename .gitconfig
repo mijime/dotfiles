@@ -15,6 +15,7 @@
 	ds = diff --staged
 	l  = log --graph --abbrev-commit --pretty='%C(red)%h %C(reset)%s%C(yellow)%d %C(green)(%cd) %C(blue)<%an>' --date=short
 	ll = log --graph --abbrev-commit --pretty=full --stat
+	lc = log --reverse --abbrev-commit --pretty='%C(red)%h %C(reset)%s' --date=short
 [push]
 	default = simple
 [ghq]
