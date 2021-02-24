@@ -1,13 +1,12 @@
 Plug 'previm/previm', {'for':['markdown']} |
       \ Plug 'tyru/open-browser.vim'
+let g:previm_plantuml_imageprefix = 'http://plantuml.local.gd/svg/'
+
 augroup MyMarkdown
   au!
   autocmd FileType markdown setlocal sw=2 sts=2 ts=2 et
 augroup END
-let g:previm_plantuml_imageprefix = 'http://plantuml.local.gd/svg/'
 
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
 Plug 'tpope/vim-speeddating', {'for':['org']}
 Plug 'jceb/vim-orgmode', {'for':['org']}
 let g:org_agenda_files=['~/org/*.org']

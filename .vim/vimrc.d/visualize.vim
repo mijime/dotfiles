@@ -1,6 +1,6 @@
 Plug 'junegunn/seoul256.vim'
 Plug 'junegunn/goyo.vim', {'on':['Goyo']}
-augroup MyJunegunn
+augroup MyGoyoSettings
   au!
   function! s:goyo_enter()
     if executable('tmux') && strlen($TMUX)
@@ -30,20 +30,6 @@ Plug 'junegunn/limelight.vim', {'on':['Limelight']}
 let g:limelight_conceal_ctermfg = 'Gray'
 let g:limelight_default_coefficient = 0.2
 let g:limelight_paragraph_span = 1
-
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-augroup MyFzfSettings
-  autocmd!
-  command! -bang -nargs=* GGrep
-        \ call fzf#vim#grep(
-        \   'git grep --line-number '.shellescape(<q-args>), 0,
-        \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
-augroup END
-Plug 'junegunn/vim-easy-align', {'on':['EasyAlign']}
-Plug 'junegunn/gv.vim', {'on':['GV']}
-
-Plug 'tpope/vim-fugitive'
 
 Plug 'itchyny/lightline.vim'
 let g:lightline={
