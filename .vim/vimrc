@@ -6,6 +6,7 @@ set number ruler title laststatus=2
 set nocursorline nocursorcolumn
 set noshowcmd
 set scrolloff=999
+set showtabline=2
 
 " Encoding
 if &encoding !=? 'utf-8' | let &termencoding = &encoding | end
@@ -63,4 +64,3 @@ call plug#begin('~/.cache/vim/plugged')
 
   call map(sort(split(globpath(&runtimepath, 'vimrc.d/*.vim'))), {->[execute('exec "so" v:val')]})
 call plug#end()
-
