@@ -9,9 +9,10 @@ autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
 " sh settings
 autocmd Filetype sh setlocal sw=2 sts=2 expandtab
 
-Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-vinegar'
 
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
