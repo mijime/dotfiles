@@ -6,7 +6,7 @@ require (
 	cuelang.org/go v0.2.2 // indirect
 	github.com/PuerkitoBio/goquery v1.6.1
 	github.com/asticode/go-astisub v0.12.0
-	github.com/aws/aws-sdk-go v1.37.17
+	github.com/aws/aws-sdk-go v1.37.18
 	github.com/cweill/gotests v1.6.0 // indirect
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/jackc/sqlfmt v0.1.0 // indirect

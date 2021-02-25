@@ -4,17 +4,17 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@aws-amplify/cli": "^4.43.0",
-    "aws-cdk": "^1.89.0",
+    "@aws-amplify/cli": "^4.44.1",
+    "aws-cdk": "^1.91.0",
     "eslint": "^7.20.0",
-    "lighthouse": "^7.1.0",
+    "lighthouse": "^7.2.0",
     "prettier": "^2.2.1",
     "puppeteer": "^7.1.0",
-    "pyright": "^1.1.111",
+    "pyright": "^1.1.115",
     "textlint": "^11.8.2",
     "textlint-rule-preset-ja-technical-writing": "^4.0.1",
     "textlint-rule-preset-japanese": "^5.0.0",
-    "typescript": "^4.1.5"
+    "typescript": "^4.2.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
