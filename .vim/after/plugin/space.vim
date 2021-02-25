@@ -14,6 +14,5 @@ if has('syntax')
     autocmd!
     autocmd BufNew,BufRead * call JISX0208SpaceHilight()
     autocmd BufNew,BufRead * call ExtraWhitespaceHighlight()
-    autocmd BufWritePre    * :%s/\s\+$//ge
   augroup END
 end
