@@ -1,5 +1,21 @@
 {
+  "suggest.autoTrigger": "none",
+  "coc.preferences.formatOnSaveFiletypes": [
+    "*"
+  ],
   "languageserver": {
+    "terraform": {
+      "command": "terraform-ls",
+      "args": [
+        "serve"
+      ],
+      "filetypes": [
+        "terraform",
+        "tf"
+      ],
+      "initializationOptions": {},
+      "settings": {}
+    },
     "go": {
       "command": "gopls",
       "rootPatterns": [
