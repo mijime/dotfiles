@@ -2,8 +2,8 @@ Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['csv']
 
 " typescript settings
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
+Plug 'leafgarland/typescript-vim', {'for':['typescript','typescriptreact']}
+Plug 'peitalin/vim-jsx-typescript', {'for':['typescript','typescriptreact']}
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
 
 " sh settings

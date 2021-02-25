@@ -1,5 +1,5 @@
 Plug 'previm/previm', {'for':['markdown']} |
-      \ Plug 'tyru/open-browser.vim'
+      \ Plug 'tyru/open-browser.vim', {'for':['markdown']}
 let g:previm_plantuml_imageprefix = 'http://plantuml.local.gd/svg/'
 
 augroup MyMarkdown
