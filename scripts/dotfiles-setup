@@ -35,8 +35,9 @@ install_dotfiles() {
     done
 
   mkdir -p "${HOME}/.config"
-  for config in $(find "${basedir}/.config/" -maxdepth 1); do
-    cp -rv "${config}" "${HOME}/.config/"
+  for config in $(find "${basedir}/.config/" -type f | sed -e "s%${basedir}/%%"); do
+    mkdir -p "$(dirname "${HOME}/${config}")"
+    ln -sf "${basedir}/${config}" "${HOME}/${config}"
   done
 
   if [[ -f ~/.tmux.conf.local ]]; then
