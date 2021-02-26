@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "coc-cfn-lint": ">=0.1.1",
     "coc-go": ">=0.13.3",
     "coc-json": ">=1.3.4",
     "coc-pyright": ">=1.1.114",
