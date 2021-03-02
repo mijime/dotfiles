@@ -56,9 +56,14 @@ brew 'tfenv'
 brew 'tflint'
 brew 'terraformer'
 
+tap 'hashicorp/tap'
+brew 'hashicorp/tap/terraform-ls'
+
 # cloud/aws
 
 brew 'awscli'
+brew 'cfn-lint'
+brew 'rain'
 
 # cloud/azure
 
@@ -139,6 +144,7 @@ brew 'unzip' if platform == :darwin
 brew 'mkcert'
 brew 'translate-shell'
 brew 'efm-langserver'
+brew 'xsv'
 
 # misc/application
 
