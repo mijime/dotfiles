@@ -79,7 +79,9 @@ brew 'go'
 brew 'gofumpt'
 brew 'goreleaser'
 brew 'gopls'
-brew 'golangci-lint'
+
+tap 'golangci/tap'
+brew 'golangci/tap/golangci-lint'
 
 # lang/python
 
