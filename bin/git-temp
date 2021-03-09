@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+set -ueo pipefail
+
+git_temp_suffix=${GIT_TEMP_SUFFIX:-".temp"}
+__search_git_temp_dir() {
+  if [[ -z $1 ]]; then
+    git rev-parse --show-toplevel || pwd
+    return
+  fi
+
+  if [[ -d "${1%${git_temp_suffix}}${git_temp_suffix}" ]]; then
+    echo "${1%${git_temp_suffix}}"
+    return
+  fi
+
+  __search_git_temp_dir "${1%/*}"
+}
+
+__commit_git_temp_dir() {
+  cd "${git_temp_dir}"
+  git add "${act_target}"
+  echo "# Update ${act_target}" >"${git_temp_dir}/.git/COMMIT_EDITMSG.tmpl"
+  git commit --template="${git_temp_dir}/.git/COMMIT_EDITMSG.tmpl"
+}
+
+git_temp_dir=${GIT_TEMP_DIR:-$(__search_git_temp_dir "$(pwd)")}${git_temp_suffix}
+git_temp_subdir=$(date +"${GIT_TEMP_DIR_FMT:-"src/%Y/%m/%d"}")
+
+act=init
+act_target=
+while [[ $# -gt 0 ]]; do
+  case $1 in
+  e | edit)
+    act=edit
+    act_target=${2:-"${git_temp_subdir}/${GIT_TEMP_INDEX_MD:-index.md}"}
+    break
+    ;;
+  s | shell)
+    act=shell
+    act_target=${2:-"${git_temp_subdir}"}
+    break
+    ;;
+  *)
+    act=$1
+    shift || true
+    act_target=$*
+    break
+    ;;
+  esac
+  shift
+done
+
+case ${act} in
+edit)
+  mkdir -p "$(dirname "${git_temp_dir}/${act_target}")"
+  ${EDITOR:-vim} "${git_temp_dir}/${act_target}"
+
+  __commit_git_temp_dir
+  ;;
+shell)
+  mkdir -p "${git_temp_dir}/${act_target}"
+  cd "${git_temp_dir}/${act_target}"
+  GIT_TEMP_DIR=${git_temp_dir} PATH="${PATH}:${git_temp_dir}/bin" ${GIT_TEMP_SHELL_CMD:-${SHELL}}
+
+  __commit_git_temp_dir
+  ;;
+init)
+  git init "${git_temp_dir}" ${act_target[@]}
+  ;;
+log)
+  cd "${git_temp_dir}"
+  git log ${act_target[@]}
+  ;;
+ls-files)
+  cd "${git_temp_dir}"
+  git ls-files ${act_target[@]}
+  ;;
+*)
+  echo "$0: unsupported command: ${act}" >&2
+  exit 1
+  ;;
+esac
