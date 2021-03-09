@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -ueo pipefail
+set -Eeuo pipefail
 
 git_temp_suffix=${GIT_TEMP_SUFFIX:-".temp"}
 __search_git_temp_dir() {
@@ -24,7 +24,7 @@ __commit_git_temp_dir() {
   git commit --template="${git_temp_dir}/.git/COMMIT_EDITMSG.tmpl"
 }
 
-git_temp_dir=${GIT_TEMP_DIR:-$(__search_git_temp_dir "$(pwd)")}${git_temp_suffix}
+git_temp_dir=${GIT_TEMP_DIR:-$(__search_git_temp_dir "$(pwd)")${git_temp_suffix}}
 git_temp_subdir=$(date +"${GIT_TEMP_DIR_FMT:-"src/%Y/%m/%d"}")
 
 act=init
