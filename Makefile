@@ -12,7 +12,8 @@ brew_update:
 
 gotools_install:
 	test -f go.mod || go mod init github.com/mijime/dotfiles
-	go get -v \
+	cd $(shell git rev-parse --show-toplevel) && \
+		go get -v \
 		cuelang.org/go/cmd/cue \
 		github.com/cweill/gotests/gotests \
 		github.com/golang/protobuf/protoc-gen-go \
