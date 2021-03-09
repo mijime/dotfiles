@@ -11,7 +11,7 @@ let g:ale_fixers = {
       \ 'go':              ['gofmt', 'goimports'],
       \ 'graphql':         ['prettier'],
       \ 'javascript':      ['prettier', 'eslint'],
-      \ 'markdown':        ['prettier', 'textlint'],
+      \ 'markdown':        ['prettier'],
       \ 'python':          ['black'],
       \ 'sh':              ['shfmt'],
       \ 'sql':             ['sqlformat'],
