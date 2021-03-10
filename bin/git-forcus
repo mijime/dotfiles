@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+if [[ -n ${GIT_FORCUS_MSG:-""} ]]; then
+  echo "$0: current status: ${GIT_FORCUS_MSG}" >&2
+  exit 1
+fi
+
+git_dir="$(git rev-parse --show-toplevel)"
+git_shell=${GIT_FORCUS_SHELL:-${SHELL}}
+git_commit_message=$*
+
+if [[ -z ${git_commit_message} ]]; then
+  echo "# " >"${git_dir}/.git/COMMIT_EDITMSG"
+  ${EDITOR:-vim} "${git_dir}/.git/COMMIT_EDITMSG"
+  mv "${git_dir}/.git/COMMIT_EDITMSG"{,.tmpl}
+  git_commit_message=$(head -n 1 "${git_dir}/.git/COMMIT_EDITMSG.tmpl")
+else
+  echo "# ${git_commit_message}" >"${git_dir}/.git/COMMIT_EDITMSG.tmpl"
+fi
+
+GIT_FORCUS_MSG="${git_commit_message}" ${git_shell} || true
+
+git add -A
+git commit --template="${git_dir}/.git/COMMIT_EDITMSG.tmpl"

@@ -1,4 +1,3 @@
-TODO.md
 .tmp/
 .mypy_cache/
 .envrc
@@ -39,5 +38,3 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-
-

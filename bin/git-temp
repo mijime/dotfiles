@@ -59,9 +59,14 @@ edit)
   __commit_git_temp_dir
   ;;
 shell)
+  if [[ -n ${GIT_TEMP_DIR:-""} ]]; then
+    echo "$0: already to execute shell: ${GIT_TEMP_DIR}" >&2
+    exit 1
+  fi
+
   mkdir -p "${git_temp_dir}/${act_target}"
   cd "${git_temp_dir}/${act_target}"
-  GIT_TEMP_DIR=${git_temp_dir} PATH="${PATH}:${git_temp_dir}/bin" ${GIT_TEMP_SHELL_CMD:-${SHELL}}
+  GIT_TEMP_DIR=${git_temp_dir} PATH="${PATH}:${git_temp_dir}/bin" ${GIT_TEMP_SHELL:-${SHELL}} || true
 
   __commit_git_temp_dir
   ;;
