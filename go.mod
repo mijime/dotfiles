@@ -11,6 +11,7 @@ require (
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/k-saiki/mfa v0.0.3 // indirect
 	github.com/mattn/memo v0.0.13 // indirect
+	github.com/mijime/beareq v1.1.1 // indirect
 	github.com/mmcdole/gofeed v1.1.0
 	github.com/shpota/goxygen v0.3.5 // indirect
 	golang.org/x/lint v0.0.0-20201208152925-83fdc39ff7b5 // indirect
