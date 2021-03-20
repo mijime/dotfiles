@@ -24,6 +24,7 @@ gotools_install:
 		golang.org/x/lint/golint \
 		github.com/jackc/sqlfmt/... \
 		golang.org/x/tools/... \
+		github.com/mijime/beareq/... \
 		./gotools/...
 
 gotools_update:

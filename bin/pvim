@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+suffix=txt
+while [[ $# -gt 0 ]]; do
+  case $1 in
+  --suffix=*)
+    suffix=${1#*=}
+    ;;
+  *)
+    exit 1
+    ;;
+  esac
+  shift
+done
+
+tempfile=$(mktemp --suffix=".${suffix}")
+trap 'rm ${tempfile}' EXIT
+cat >"${tempfile}"
+${EDITOR:-vim} "${tempfile}" </dev/tty >/dev/tty
+cat <"${tempfile}"

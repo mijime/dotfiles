@@ -2,8 +2,11 @@
 
 set -Eeuo pipefail
 
+color_red="\e[0;91m"
+color_green="\e[0;92m"
+color_reset="\e[0m"
 if [[ -n ${GIT_FORCUS_MSG:-""} ]]; then
-  echo "$0: current status: ${GIT_FORCUS_MSG}" >&2
+  echo -e "$0: already executed\n${color_red}Status: ${color_green}${GIT_FORCUS_MSG}${color_reset}" >&2
   exit 1
 fi
 

@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+latest_cache=/tmp/$(basename "${0}").dat
+aws_cache_key=$(date +%F)-${AWS_PROFILE:-""}
+aws_with_cache() {
+  cache_file="/tmp/$(basename "${0}")-$(
+    echo "$* ${aws_cache_key}" |
+      md5sum |
+      awk '{print$1}'
+  ).dat"
+  if [[ ! -f "${cache_file}" ]]; then
+    aws "${@}" |
+      tee "${cache_file}" |
+      tee "${latest_cache}"
+  else
+    cat "${cache_file}" |
+      tee "${latest_cache}"
+  fi
+}
+
+job_name=
+job_type=pythonshell
+run_id=
+next_token=
+max_items=50
+cmd=logs
+while [[ $# -gt 0 ]]; do
+  case ${1} in
+  --job-name=*)
+    job_name=${1#*=}
+    ;;
+  --job-type=*)
+    job_type=${1#*=}
+    ;;
+  --run-id=*)
+    run_id=${1#*=}
+    ;;
+  jobs | job | runs | runs-all | run | logs)
+    cmd=${1}
+    ;;
+  --next-token=*)
+    next_token=${1#*=}
+    ;;
+  --max-items=*)
+    max_items=${1#*=}
+    ;;
+  *)
+    echo "Unsupported Arguments: $*" >&2
+    exit 1
+    ;;
+  esac
+  shift
+done
+
+case ${cmd} in
+jobs)
+  aws_with_cache glue get-jobs |
+    jq -rc ".Jobs[]|[.Command.Name,.Name]|@tsv"
+  exit
+  ;;
+esac
+
+if [[ -z ${job_name} ]]; then
+  resp=$(
+    aws_with_cache glue get-jobs |
+      jq -rc ".Jobs[]|[.Command.Name,.Name]|@tsv" |
+      fzf
+  )
+  job_type=$(echo "${resp}" | awk -F"\t" '{print$1}')
+  job_name=$(echo "${resp}" | awk -F"\t" '{print$2}')
+fi
+
+case ${job_type} in
+pythonshell)
+  log_group_name=/aws-glue/python-jobs/output
+  ;;
+glueetl)
+  log_group_name=/aws-glue/jobs/output
+  ;;
+esac
+
+__aws_glue_get_job_runs() {
+  if [[ -z ${next_token} ]]; then
+    aws_with_cache glue get-job-runs \
+      --job-name "${job_name}" \
+      --max-items="${max_items}"
+  else
+    aws_with_cache glue get-job-runs \
+      --job-name "${job_name}" \
+      --max-items="${max_items}" \
+      --starting-token="${next_token}"
+  fi
+}
+
+case ${cmd} in
+job)
+  aws_with_cache glue get-job \
+    --job-name "${job_name}"
+  exit
+  ;;
+runs)
+  __aws_glue_get_job_runs |
+    jq -rc ".JobRuns[]|[.Id,.StartedOn,.JobRunState,.ExecutionTime]|@tsv"
+  exit
+  ;;
+runs-all)
+  while true; do
+    if [[ ${next_token} == "null" ]]; then
+      break
+    fi
+
+    __aws_glue_get_job_runs |
+      jq -rc ".JobRuns[]|[.Id,.StartedOn,.JobRunState,.ExecutionTime]|@tsv"
+    next_token=$(jq -rS .NextToken <"${latest_cache}")
+    sleep 3
+  done
+  exit
+  ;;
+esac
+
+while [[ -z ${run_id} ]]; do
+  run_id=$(
+    {
+      __aws_glue_get_job_runs |
+        jq -rc ".JobRuns[]|[.Id,.StartedOn,.JobRunState,.ExecutionTime]|@tsv"
+      echo -e "\tNext"
+    } |
+      fzf |
+      awk -F"\t" '{print$1}'
+  )
+  next_token=$(jq -rS .NextToken <"${latest_cache}")
+done
+
+case ${cmd} in
+run)
+  aws_with_cache glue get-job-run \
+    --job-name "${job_name}" \
+    --run-id "${run_id}"
+  ;;
+logs)
+  aws_with_cache logs get-log-events \
+    --log-group-name "${log_group_name}" \
+    --log-stream-name "${run_id}" |
+    jq -rc '.events[] | .message'
+  ;;
+*)
+  echo "Unsupported Arguments: $*" >&2
+  exit 1
+  ;;
+esac

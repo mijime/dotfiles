@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+latest_cache=/tmp/$(basename "${0}").dat
+aws_cache_key=$(date +%F)-${AWS_PROFILE:-""}
+aws_with_cache() {
+  cache_file="/tmp/$(basename "${0}")-$(
+    echo "$* ${aws_cache_key}" |
+      md5sum |
+      awk '{print$1}'
+  ).dat"
+  if [[ ! -f "${cache_file}" ]]; then
+    aws "${@}" |
+      tee "${cache_file}" |
+      tee "${latest_cache}"
+  else
+    cat "${cache_file}" |
+      tee "${latest_cache}"
+  fi
+}
+
+function_name=
+cmd=logs
+next_token=
+max_items=100
+while [[ $# -gt 0 ]]; do
+  case ${1} in
+  --function-name=*)
+    function_name=${1#*=}
+    ;;
+  --next-token=*)
+    next_token=${1#*=}
+    ;;
+  --max-items=*)
+    max_items=${1#*=}
+    ;;
+  invoke | logs)
+    cmd=${1}
+    ;;
+  *)
+    echo "Unsupported Arguments: $*" >&2
+    exit 2
+    ;;
+  esac
+  shift
+done
+
+__aws_lambda_list_functions() {
+  if [[ -z ${next_token} ]]; then
+    aws_with_cache lambda list-functions \
+      --max-items="${max_items}"
+  else
+    aws_with_cache lambda list-functions \
+      --max-items="${max_items}" \
+      --starting-token="${next_token}"
+  fi
+}
+
+while [[ -z ${function_name} ]]; do
+  resp=$({
+    __aws_lambda_list_functions |
+      jq -rc '.Functions[]|[.Runtime,.LastModified,.FunctionName]|@tsv'
+    echo -e "Next"
+  })
+  function_name=$(echo "${resp}" | fzf --ansi --reverse | awk -F"\t" '{print$3}')
+  next_token=$(jq -rcS .NextToken <"${latest_cache}")
+done
+
+case "${cmd}" in
+invoke)
+  echo -e "[I] aws_with_cache lambda invoke --function-name ${function_name}" >&2
+  echo -ne "input payload: "
+  read -r function_payload
+
+  aws lambda invoke \
+    --function-name "${function_name}" \
+    --payload "${function_payload}" \
+    --cli-binary-format raw-in-base64-out \
+    "${latest_cache}".invoke.dat
+  ;;
+
+logs)
+  echo -e "[I] aws_with_cache logs tail /aws/lambda/${function_name}" >&2
+  aws logs tail "/aws/lambda/${function_name}"
+  ;;
+esac
