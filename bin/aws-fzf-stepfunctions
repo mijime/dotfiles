@@ -1,0 +1,120 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+latest_cache=/tmp/$(basename "${0}").dat
+aws_cache_key=$(date +%F)-${AWS_PROFILE:-""}
+aws_with_cache() {
+  cache_file="/tmp/$(basename "${0}")-$(
+    echo "$* ${aws_cache_key}" |
+      md5sum |
+      awk '{print$1}'
+  ).dat"
+  if [[ ! -f "${cache_file}" ]]; then
+    aws "${@}" |
+      tee "${cache_file}" |
+      tee "${latest_cache}"
+  else
+    cat "${cache_file}" |
+      tee "${latest_cache}"
+  fi
+}
+
+state_machine_arn=
+execution_arn=
+next_token=
+max_items=1000
+cmd=history
+while [[ $# -gt 0 ]]; do
+  case ${1} in
+  -m=* | --state-machine-arn=*)
+    state_machine_arn=${1#*=}
+    ;;
+  -e=* | --execution-arn=*)
+    execution_arn=${1#*=}
+    ;;
+  --next-token=*)
+    next_token=${1#*=}
+    ;;
+  --max-items=*)
+    max_items=${1#*=}
+    ;;
+  machines | executions | history | history-all)
+    cmd=${1}
+    ;;
+  *)
+    echo "Unsupported Arguments: $*" >&2
+    exit 1
+    ;;
+  esac
+  shift
+done
+
+case ${cmd} in
+machines)
+  aws_with_cache stepfunctions list-state-machines |
+    jq -rcS ".stateMachines[]|[.stateMachineArn,.name]|@tsv"
+  exit
+  ;;
+esac
+
+if [[ -z ${state_machine_arn} ]]; then
+  resp=$(
+    aws_with_cache stepfunctions list-state-machines |
+      jq -rcS ".stateMachines[]|[.stateMachineArn,.name]|@tsv"
+  )
+  state_machine_arn=$(echo "${resp}" | fzf | awk '{print$1}')
+fi
+
+case ${cmd} in
+executions)
+  aws_with_cache stepfunctions list-executions \
+    --state-machine-arn "${state_machine_arn}" |
+    jq -rcS ".executions[]|[.executionArn,.status]|@tsv"
+  exit
+  ;;
+esac
+
+if [[ -z ${execution_arn} ]]; then
+  resp=$(
+    aws_with_cache stepfunctions list-executions \
+      --state-machine-arn "${state_machine_arn}" |
+      jq -rcS ".executions[]|[.executionArn,.status]|@tsv"
+  )
+  execution_arn=$(echo "${resp}" | fzf | awk '{print$1}')
+fi
+
+__aws_stepfunctions_get_execution_history() {
+  if [[ -z ${next_token} ]]; then
+    aws_with_cache stepfunctions get-execution-history \
+      --execution-arn "${execution_arn}" \
+      --max-items "${max_items}"
+  else
+    aws_with_cache stepfunctions get-execution-history \
+      --execution-arn "${execution_arn}" \
+      --max-items "${max_items}" \
+      --starting-token "${next_token}"
+  fi
+}
+
+case ${cmd} in
+history)
+  __aws_stepfunctions_get_execution_history
+  ;;
+history-all)
+  while true; do
+    if [[ ${next_token} == "null" ]]; then
+      break
+    fi
+
+    __aws_stepfunctions_get_execution_history
+    next_token=$(jq -rcS .NextToken <"${latest_cache}")
+    sleep 3
+  done
+  exit
+  ;;
+*)
+  echo "Unsupported Arguments: $*" >&2
+  exit 1
+  ;;
+esac
