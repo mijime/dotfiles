@@ -10,10 +10,17 @@ require (
 	github.com/cweill/gotests v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.1 // indirect
 	github.com/k-saiki/mfa v0.0.3 // indirect
+	github.com/kr/pretty v0.1.0 // indirect
 	github.com/mattn/memo v0.0.13 // indirect
 	github.com/mijime/beareq v1.2.0 // indirect
 	github.com/mmcdole/gofeed v1.1.0
+	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
+	github.com/modern-go/reflect2 v1.0.1 // indirect
+	github.com/rogpeppe/testscript v1.1.0 // indirect
 	github.com/shpota/goxygen v0.3.5 // indirect
+	github.com/shurcooL/octiconssvg v0.0.0-20180217052449-91d14858bf81 // indirect
 	golang.org/x/lint v0.0.0-20201208152925-83fdc39ff7b5 // indirect
 	golang.org/x/tools v0.1.0 // indirect
+	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
+	gopkg.in/yaml.v2 v2.3.0 // indirect
 )
