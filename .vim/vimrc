@@ -50,17 +50,17 @@ syntax on
 let g:netrw_liststyle = 3
 
 if has('vim_starting')
-  set rtp+=~/.cache/vim/plugged/vim-plug
-  if !isdirectory(expand('~/.cache/vim/plugged/vim-plug'))
+  set rtp+=~/.config/vim/plugged/vim-plug
+  if !isdirectory(expand('~/.config/vim/plugged/vim-plug'))
     echo 'install vim-plug...'
-    call system('mkdir -p ~/.cache/vim/plugged/vim-plug')
-    call system('git clone https://github.com/junegunn/vim-plug.git ~/.cache/vim/plugged/vim-plug/autoload')
+    call system('mkdir -p ~/.config/vim/plugged/vim-plug')
+    call system('git clone https://github.com/junegunn/vim-plug.git ~/.config/vim/plugged/vim-plug/autoload')
   end
 endif
 
-call plug#begin('~/.cache/vim/plugged')
+call plug#begin('~/.config/vim/plugged')
   Plug 'junegunn/vim-plug',
-        \ {'dir': '~/.cache/vim/plugged/vim-plug/autoload'}
+        \ {'dir': '~/.config/vim/plugged/vim-plug/autoload'}
 
   call map(sort(split(globpath(&runtimepath, 'vimrc.d/*.vim'))), {->[execute('exec "so" v:val')]})
 call plug#end()

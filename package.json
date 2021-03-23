@@ -14,7 +14,7 @@
     "puppeteer": "^8.0.0",
     "pyright": "^1.1.123",
     "semantic-release": "^17.4.2",
-    "textlint": "^11.8.3",
+    "textlint": "^11.9.0",
     "textlint-rule-preset-ja-technical-writing": "^4.0.1",
     "textlint-rule-preset-japanese": "^5.0.0",
     "typescript": "^4.2.3"
