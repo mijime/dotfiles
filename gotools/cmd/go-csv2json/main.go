@@ -13,13 +13,16 @@ import (
 )
 
 func main() {
+	var delimiter string
 	var quiet bool
 
 	flag.BoolVar(&quiet, "quiet", false, "")
+	flag.StringVar(&delimiter, "delimiter", ",", "")
 	flag.Parse()
 
 	ctx := context{
-		Quiet: quiet,
+		Quiet:     quiet,
+		Delimiter: rune(delimiter[0]),
 	}
 
 	err := ctx.csv2json(os.Stdout, os.Stdin)
@@ -29,11 +32,13 @@ func main() {
 }
 
 type context struct {
-	Quiet bool
+	Quiet     bool
+	Delimiter rune
 }
 
 func (ctx context) csv2json(out io.Writer, in io.Reader) error {
 	r := csv.NewReader(bufio.NewReader(in))
+	r.Comma = ctx.Delimiter
 
 	header, err := r.Read()
 	if err != nil {

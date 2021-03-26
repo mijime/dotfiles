@@ -27,7 +27,7 @@ __commit_git_temp_dir() {
 git_temp_dir=${GIT_TEMP_DIR:-$(__search_git_temp_dir "$(pwd)")${git_temp_suffix}}
 git_temp_subdir=$(date +"${GIT_TEMP_DIR_FMT:-"src/%Y/%m/%d"}")
 
-act=init
+act=shell
 act_target=
 while [[ $# -gt 0 ]]; do
   case $1 in
