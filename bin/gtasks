@@ -85,12 +85,12 @@ gtasks_done() {
   gtasks_patch "{\"status\":\"completed\"}"
 }
 
-profile=${GTASKS_PROFILE:-"default"}
-tasklist=${GTASKS_TASKLIST:-""}
-task=${GTASKS_TASK:-""}
+profile=${GTASKS_GOOGLE_BEAREQ_PROFILE:-${GOOGLE_BEAREQ_PROFILE:-"default"}}
+tasklist=${GTASKS_GOOGLE_TASKLIST:-${GOOGLE_TASKLIST:-""}}
+task=
 title=
 due=
-cmd=${GTASKS_CMD:-""}
+cmd=list
 while [[ $# -gt 0 ]]; do
   case $1 in
   --profile=*)
@@ -108,16 +108,23 @@ while [[ $# -gt 0 ]]; do
   --due=*)
     due=$(date --rfc-3339=seconds --date "${1#*=}" | sed -e 's/ /T/')
     ;;
-  add | list | edit | show | delete | done)
+  tasklist | add | list | edit | show | delete | done)
     cmd=$1
     ;;
   *)
-    echo "$*" >&2
+    echo "unsupport args: $*" >&2
     exit 1
     ;;
   esac
   shift
 done
+
+case ${cmd} in
+tasklist)
+  gtasks_tasklist
+  exit
+  ;;
+esac
 
 if [[ -z ${tasklist} ]]; then
   resp=$(gtasks_tasklist)
