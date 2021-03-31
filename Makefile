@@ -1,7 +1,7 @@
 install: brew_install gotools_install npm_install vim_install python_install
 
 update: brew_update gotools_update npm_update vim_update python_update
-	git commit -m "Update package version" . || true
+	git commit -m "chore: update package version" . || true
 
 brew_install:
 	brew bundle install --global --verbose
