@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# API: https://github.com/toggl/toggl_api_docs
+
+toggl_workspace_id=${TOGGL_WORKSPACE_ID:-""}
+toggl_api_token=${TOGGL_API_TOKEN:-""}
+
+toggl_show_entry() {
+  time_entry_id=$1
+  curl \
+    -sSL \
+    --fail \
+    --user "${toggl_api_token}:api_token" \
+    --header "Content-Type: application/json" \
+    "https://api.track.toggl.com/api/v8/time_entries/${time_entry_id}"
+}
+
+toggl_start_entry() {
+  ascii_text=$(echo -ne "$*" | perl -C7 -ne 'for(split(//)){print sprintf("\\u%04X",ord)}')
+  echo -e "{\"time_entry\":{\"description\":\"${ascii_text}\",\"wid\":${toggl_workspace_id},\"created_with\":\"curl\"}}" |
+    curl \
+      -sSL \
+      --fail \
+      --user "${toggl_api_token}:api_token" \
+      --header "Content-Type: application/json" \
+      --data @- \
+      --request POST \
+      "https://api.track.toggl.com/api/v8/time_entries/start"
+}
+
+toggl_stop_entry() {
+  time_entry_id=$1
+  curl \
+    -sSL \
+    --fail \
+    --user "${toggl_api_token}:api_token" \
+    --header "Content-Type: application/json" \
+    --request PUT \
+    "https://api.track.toggl.com/api/v8/time_entries/${time_entry_id}/stop"
+}
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+  -w | --workspace)
+    toggl_workspace_id=$2
+    shift
+    ;;
+  -t | --token)
+    toggl_api_token=$2
+    shift
+    ;;
+  -i | --id)
+    time_entry_id=$2
+    shift
+    ;;
+  -m | --message)
+    time_entry_message=$2
+    shift
+    ;;
+  show | stop | start)
+    cmd=$1
+    ;;
+  *)
+    time_entry_id=$1
+    time_entry_message=$1
+    ;;
+  esac
+  shift
+done
+
+case ${cmd} in
+start)
+  toggl_start_entry "${time_entry_message}" | jq -r .data.id
+  ;;
+stop)
+  toggl_stop_entry "${time_entry_id}"
+  ;;
+show)
+  toggl_show_entry "${time_entry_id}"
+  ;;
+esac

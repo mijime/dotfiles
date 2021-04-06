@@ -29,7 +29,10 @@ gtasks_add() {
   due=${due:-$(date --rfc-3339=seconds --date "7days" | sed -e 's/ /T/')}
   echo "{\"title\":\"${title}\",\"notes\":\"\",\"due\":\"${due}\"}" |
     yj -jt >"${tmpfile}"
-  ${EDITOR:-vim} "${tmpfile}"
+
+  if [[ -n ${is_edit} ]]; then
+    ${EDITOR:-vim} "${tmpfile}"
+  fi
 
   beareq --profile="${profile}" \
     --header="Content-type: application/json" \
@@ -76,7 +79,10 @@ gtasks_edit() {
   resp=$(gtasks_show)
   echo "${resp}" |
     yj -jt >"${tmpfile}"
-  ${EDITOR:-vim} "${tmpfile}"
+
+  if [[ -n ${is_edit} ]]; then
+    ${EDITOR:-vim} "${tmpfile}"
+  fi
 
   gtasks_update "$(yj -tj <"${tmpfile}")"
 }
@@ -91,22 +97,49 @@ task=
 title=
 due=
 cmd=list
+is_edit=1
 while [[ $# -gt 0 ]]; do
   case $1 in
+  --profile)
+    profile=$2
+    shift
+    ;;
   --profile=*)
     profile=${1#*=}
+    ;;
+  --tasklist)
+    tasklist=$2
+    shift
     ;;
   --tasklist=*)
     tasklist=${1#*=}
     ;;
+  --task)
+    task=$2
+    shift
+    ;;
   --task=*)
     task=${1#*=}
+    ;;
+  --title)
+    title=$2
+    shift
     ;;
   --title=*)
     title=${1#*=}
     ;;
+  --due)
+    due=$2
+    shift
+    ;;
   --due=*)
     due=$(date --rfc-3339=seconds --date "${1#*=}" | sed -e 's/ /T/')
+    ;;
+  --edit)
+    is_edit=1
+    ;;
+  --no-edit)
+    is_edit=
     ;;
   tasklist | add | list | edit | show | delete | done)
     cmd=$1
