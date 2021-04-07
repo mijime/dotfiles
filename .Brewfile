@@ -64,6 +64,7 @@ brew 'hashicorp/tap/terraform-ls'
 
 brew 'awscli'
 brew 'cfn-lint'
+brew 'cloudformation-guard'
 brew 'rain'
 
 # cloud/azure
