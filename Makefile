@@ -18,13 +18,14 @@ gotools_install:
 		cuelang.org/go/cmd/cue \
 		github.com/cweill/gotests/gotests \
 		github.com/golang/protobuf/protoc-gen-go \
+		github.com/googleapis/gnostic/... \
+		github.com/jackc/sqlfmt/... \
 		github.com/k-saiki/mfa \
 		github.com/mattn/memo \
+		github.com/mijime/beareq/... \
 		github.com/shpota/goxygen \
 		golang.org/x/lint/golint \
-		github.com/jackc/sqlfmt/... \
 		golang.org/x/tools/... \
-		github.com/mijime/beareq/... \
 		./gotools/...
 
 gotools_update:
