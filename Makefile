@@ -1,7 +1,7 @@
 install: brew_install gotools_install npm_install vim_install python_install
 
 update: brew_update gotools_update npm_update vim_update python_update
-	git commit -m "Update package version" . || true
+	git commit -m "chore: update package version" . || true
 
 brew_install:
 	brew bundle install --global --verbose
@@ -18,13 +18,14 @@ gotools_install:
 		cuelang.org/go/cmd/cue \
 		github.com/cweill/gotests/gotests \
 		github.com/golang/protobuf/protoc-gen-go \
+		github.com/googleapis/gnostic/... \
+		github.com/jackc/sqlfmt/... \
 		github.com/k-saiki/mfa \
 		github.com/mattn/memo \
+		github.com/mijime/beareq/... \
 		github.com/shpota/goxygen \
 		golang.org/x/lint/golint \
-		github.com/jackc/sqlfmt/... \
 		golang.org/x/tools/... \
-		github.com/mijime/beareq/... \
 		./gotools/...
 
 gotools_update:

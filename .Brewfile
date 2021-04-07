@@ -31,6 +31,7 @@ brew 'rsync'
 brew 'ripgrep'
 brew 'grex'
 brew 'coreutils'
+brew 'oauth2l'
 
 tap 'itchyny/tap'
 brew 'itchyny/tap/mmv'
@@ -63,6 +64,7 @@ brew 'hashicorp/tap/terraform-ls'
 
 brew 'awscli'
 brew 'cfn-lint'
+brew 'cloudformation-guard'
 brew 'rain'
 
 # cloud/azure
@@ -95,6 +97,7 @@ brew 'pyenv'
 
 brew 'elm'
 brew 'volta'
+brew 'deno'
 
 # lang/shell
 
@@ -148,6 +151,7 @@ brew 'mkcert'
 brew 'translate-shell'
 brew 'efm-langserver'
 brew 'xsv'
+brew 'terminal-notifier' if platform == :darwin
 
 # misc/application
 
