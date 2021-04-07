@@ -151,6 +151,7 @@ brew 'mkcert'
 brew 'translate-shell'
 brew 'efm-langserver'
 brew 'xsv'
+brew 'terminal-notifier' if platform == :darwin
 
 # misc/application
 
