@@ -97,6 +97,7 @@ brew 'pyenv'
 
 brew 'elm'
 brew 'volta'
+brew 'deno'
 
 # lang/shell
 
