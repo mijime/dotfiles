@@ -1,5 +1,62 @@
 add_newline = false
 
+format = """
+$username\
+$hostname\
+$shlvl\
+$kubernetes\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$hg_branch\
+$docker_context\
+$package\
+$cmake\
+$dart\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$golang\
+$helm\
+$java\
+$julia\
+$kotlin\
+$nim\
+$nodejs\
+$ocaml\
+$perl\
+$php\
+$purescript\
+$python\
+$ruby\
+$rust\
+$scala\
+$swift\
+$terraform\
+$vagrant\
+$zig\
+$nix_shell\
+$conda\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$env_var\
+$crystal\
+$custom\
+$time\
+$cmd_duration\
+$lua\
+$jobs\
+$battery\
+$line_break\
+$status\
+$shell\
+$character"""
+
 [git_branch]
 symbol = "🌱 "
 
@@ -10,7 +67,15 @@ error_symbol = "[\\$](red)"
 [shlvl]
 disabled = false
 
+[memory_usage]
+disabled = false
+format = "via $symbol [${ram_pct}(| ${swap_pct})]($style) "
+
 [battery]
 full_symbol = "🔋 "
 charging_symbol = "⚡️ "
 discharging_symbol = "💀 "
+
+[time]
+disabled = false
+time_format = "%F %T"
