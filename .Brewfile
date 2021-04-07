@@ -31,6 +31,7 @@ brew 'rsync'
 brew 'ripgrep'
 brew 'grex'
 brew 'coreutils'
+brew 'oauth2l'
 
 tap 'itchyny/tap'
 brew 'itchyny/tap/mmv'
