@@ -12,87 +12,89 @@ beareq_with_cache() {
 }
 
 gtasks_tasklist() {
-  beareq_with_cache --profile="${profile}" \
+  beareq_with_cache --profile="${google_profile}" \
     "https://tasks.googleapis.com/tasks/v1/users/@me/lists" |
     jq -rc '.items[] | [.id,.title] | @tsv'
 }
 
 gtasks_list() {
-  beareq --profile="${profile}" \
-    "https://tasks.googleapis.com/tasks/v1/lists/${tasklist}/tasks?showCompleted=false" |
+  beareq --profile="${google_profile}" \
+    "https://tasks.googleapis.com/tasks/v1/lists/${google_tasklist}/tasks?showCompleted=false" |
     jq -rc '.items[] | [.id,.due,.title] | @tsv'
 }
 
 gtasks_add() {
-  tmpfile=$(mktemp --suffix=.toml)
-  trap 'rm "${tmpfile}"' EXIT
   due=${due:-$(date --rfc-3339=seconds --date "7days" | sed -e 's/ /T/')}
-  echo "{\"title\":\"${title}\",\"notes\":\"\",\"due\":\"${due}\"}" |
-    yj -jt >"${tmpfile}"
+  req="{\"title\":\"${title}\",\"notes\":\"\",\"due\":\"${due}\"}"
 
-  if [[ -n ${is_edit} ]]; then
+  if [[ -n ${is_edit} ]] || [[ -z ${title} ]]; then
+    tmpfile=$(mktemp --suffix=.toml)
+    trap 'rm ${tmpfile}' EXIT
+
+    echo "${req}" | yj -jt >"${tmpfile}"
     ${EDITOR:-vim} "${tmpfile}"
+    req=$(yj -tj <"${tmpfile}")
   fi
 
-  beareq --profile="${profile}" \
+  beareq \
+    --profile="${google_profile}" \
     --header="Content-type: application/json" \
     --request="POST" \
-    --data="$(yj -tj <"${tmpfile}")" \
-    "https://tasks.googleapis.com/tasks/v1/lists/${tasklist}/tasks" |
+    --data="${req}" \
+    "https://tasks.googleapis.com/tasks/v1/lists/${google_tasklist}/tasks" |
     jq -rS
 }
 
 gtasks_show() {
-  beareq --profile="${profile}" \
-    "https://tasks.googleapis.com/tasks/v1/lists/${tasklist}/tasks/${task}" |
+  beareq --profile="${google_profile}" \
+    "https://tasks.googleapis.com/tasks/v1/lists/${google_tasklist}/tasks/${task}" |
     jq -rS
 }
 
 gtasks_delete() {
-  beareq --profile="${profile}" \
+  beareq --profile="${google_profile}" \
     --request="DELETE" \
-    "https://tasks.googleapis.com/tasks/v1/lists/${tasklist}/tasks/${task}" |
+    "https://tasks.googleapis.com/tasks/v1/lists/${google_tasklist}/tasks/${task}" |
     jq -rS
 }
 
 gtasks_patch() {
-  beareq --profile="${profile}" \
+  beareq --profile="${google_profile}" \
     --header="Content-type: application/json" \
     --request="PATCH" \
     --data="$*" \
-    "https://tasks.googleapis.com/tasks/v1/lists/${tasklist}/tasks/${task}" |
+    "https://tasks.googleapis.com/tasks/v1/lists/${google_tasklist}/tasks/${task}" |
     jq -rS
 }
 
 gtasks_update() {
-  beareq --profile="${profile}" \
+  beareq --profile="${google_profile}" \
     --header="Content-type: application/json" \
     --request="PUT" \
     --data="$*" \
-    "https://tasks.googleapis.com/tasks/v1/lists/${tasklist}/tasks/${task}" |
+    "https://tasks.googleapis.com/tasks/v1/lists/${google_tasklist}/tasks/${task}" |
     jq -rS
 }
 
 gtasks_edit() {
+  req=$(gtasks_show)
+
   tmpfile=$(mktemp --suffix=.toml)
-  trap 'rm "${tmpfile}"' EXIT
-  resp=$(gtasks_show)
-  echo "${resp}" |
-    yj -jt >"${tmpfile}"
+  trap 'rm ${tmpfile}' EXIT
 
-  if [[ -n ${is_edit} ]]; then
-    ${EDITOR:-vim} "${tmpfile}"
-  fi
+  echo "${req}" | yj -jt >"${tmpfile}"
+  ${EDITOR:-vim} "${tmpfile}"
+  req=$(yj -tj <"${tmpfile}")
 
-  gtasks_update "$(yj -tj <"${tmpfile}")"
+  gtasks_update "${req}"
 }
 
 gtasks_done() {
   gtasks_patch "{\"status\":\"completed\"}"
 }
 
-profile=${GTASKS_GOOGLE_BEAREQ_PROFILE:-${GOOGLE_BEAREQ_PROFILE:-"default"}}
-tasklist=${GTASKS_GOOGLE_TASKLIST:-${GOOGLE_TASKLIST:-""}}
+google_profile=${GTASKS_GOOGLE_BEAREQ_PROFILE:-${GOOGLE_BEAREQ_PROFILE:-"default"}}
+google_tasklist=${GTASKS_GOOGLE_TASKLIST:-${GOOGLE_TASKLIST:-""}}
 task=
 title=
 due=
@@ -100,50 +102,20 @@ cmd=list
 is_edit=1
 while [[ $# -gt 0 ]]; do
   case $1 in
-  --profile)
-    profile=$2
-    shift
-    ;;
-  --profile=*)
-    profile=${1#*=}
-    ;;
-  --tasklist)
-    tasklist=$2
-    shift
-    ;;
-  --tasklist=*)
-    tasklist=${1#*=}
-    ;;
-  --task)
-    task=$2
-    shift
-    ;;
-  --task=*)
-    task=${1#*=}
-    ;;
-  --title)
-    title=$2
-    shift
-    ;;
-  --title=*)
-    title=${1#*=}
-    ;;
-  --due)
-    due=$2
-    shift
-    ;;
-  --due=*)
-    due=$(date --rfc-3339=seconds --date "${1#*=}" | sed -e 's/ /T/')
-    ;;
-  --edit)
-    is_edit=1
-    ;;
-  --no-edit)
-    is_edit=
-    ;;
-  tasklist | add | list | edit | show | delete | done)
-    cmd=$1
-    ;;
+  --profile) google_profile=$2 && shift ;;
+  --profile=*) google_profile=${1#*=} ;;
+  --tasklist) google_tasklist=$2 && shift ;;
+  --tasklist=*) google_tasklist=${1#*=} ;;
+  --task) task=$2 && shift ;;
+  --task=*) task=${1#*=} ;;
+  --title) title=$2 && shift ;;
+  --title=*) title=${1#*=} ;;
+  --due) due=$(date --rfc-3339=seconds --date "$2" | sed -e 's/ /T/') && shift ;;
+  --due=*) due=$(date --rfc-3339=seconds --date "${1#*=}" | sed -e 's/ /T/') ;;
+  --edit) is_edit=1 ;;
+  --no-edit) is_edit= ;;
+  tasklist | add | list | edit | show | delete | done) cmd=$1 ;;
+
   *)
     echo "unsupport args: $*" >&2
     exit 1
@@ -159,9 +131,9 @@ tasklist)
   ;;
 esac
 
-if [[ -z ${tasklist} ]]; then
+if [[ -z ${google_tasklist} ]]; then
   resp=$(gtasks_tasklist)
-  tasklist=$(echo "${resp}" | fzf --select-1 | awk -F"\t" '{print$1}')
+  google_tasklist=$(echo "${resp}" | fzf --select-1 | awk -F"\t" '{print$1}')
 fi
 
 case ${cmd} in

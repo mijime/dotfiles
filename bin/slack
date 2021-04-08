@@ -196,7 +196,11 @@ chat_post_message() {
   fi
 
   if [[ -n ${slack_message_edit} ]]; then
-    text=$(echo "${text:-""}" | pvim --suffix=md)
+    tmpfile=$(mktemp --suffix=.md)
+    echo "${text:-""}" >"${tmpfile}"
+    ${EDITOR:-vim} "${tmpfile}"
+    text=$(cat <"${tmpfile}")
+    rm "${tmpfile}"
   fi
 
   if [[ -z ${text} ]]; then
@@ -247,58 +251,30 @@ slack_emoji=
 slack_expired=
 while [[ $# -gt 0 ]]; do
   case $1 in
-  --page)
-    slack_page=$2
-    shift
-    ;;
-  --limit)
-    slack_limit=$2
-    shift
-    ;;
-  -p | --profile)
-    slack_profile=$2
-    shift
-    ;;
-  -c | --channel)
-    slack_channel=$2
-    shift
-    ;;
-  -m | --message)
-    slack_message=$2
-    shift
-    ;;
-  --emoji)
-    slack_emoji=$2
-    shift
-    ;;
-  -t | --timestamp)
-    slack_message_ts=$2
-    shift
-    ;;
-  --expired)
-    slack_expired=$2
-    shift
-    ;;
-  -e | --edit)
-    slack_message_edit=1
-    ;;
+  --page) slack_page=$2 && shift ;;
+  --limit) slack_limit=$2 && shift ;;
+  -p | --profile) slack_profile=$2 && shift ;;
+  -c | --channel) slack_channel=$2 && shift ;;
+  -m | --message) slack_message=$2 && shift ;;
+  -e | --emoji) slack_emoji=$2 && shift ;;
+  -t | --timestamp) slack_message_ts=$2 && shift ;;
+  --expired) slack_expired=$2 && shift ;;
+  --edit) slack_message_edit=1 ;;
+
   -*)
     echo "[E] unsupported $*" >&2
     exit 1
     ;;
+
   status) slack_cmd=user_profiles_set ;;
   channels) slack_cmd=users_conversations ;;
   search) slack_cmd=search_messages ;;
-
   post) slack_cmd=chat_post_message ;;
   messages) slack_cmd=conversations_history ;;
-
   replies) slack_cmd=conversations_replies ;;
   reaction) slack_cmd=reactions_add ;;
   reply) slack_cmd=chat_post_message__reply ;;
-  *)
-    slack_message=$1
-    ;;
+  *) slack_message=$1 ;;
   esac
   shift
 done
