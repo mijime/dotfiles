@@ -2,7 +2,7 @@ package main
 
 import (
 	"bufio"
-	"crypto/md5"
+	"crypto/sha256"
 	"fmt"
 	"io"
 	"log"
@@ -17,11 +17,11 @@ func main() {
 
 func uniqline(out io.Writer, in io.Reader) error {
 	sc := bufio.NewScanner(in)
-	mem := make(map[[16]byte]struct{}, 1024)
+	mem := make(map[[32]byte]struct{}, 1024)
 
 	for sc.Scan() {
 		b := sc.Bytes()
-		h := md5.Sum(b)
+		h := sha256.Sum256(b)
 
 		if _, ok := mem[h]; !ok {
 			mem[h] = struct{}{}

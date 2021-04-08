@@ -13,8 +13,10 @@ import (
 )
 
 func main() {
-	var delimiter string
-	var quiet bool
+	var (
+		delimiter string
+		quiet     bool
+	)
 
 	flag.BoolVar(&quiet, "quiet", false, "")
 	flag.StringVar(&delimiter, "delimiter", ",", "")

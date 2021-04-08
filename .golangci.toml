@@ -3,7 +3,6 @@ tests = false
 
 [linters]
 enable-all = true
-disable = ["gci"]
 
 [linters-settings.gocognit]
 min-complexity = 10

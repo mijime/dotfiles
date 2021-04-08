@@ -79,7 +79,7 @@ func readTokenCode() (string, error) {
 
 	token, err := r.ReadString('\n')
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("failed to read token: %w", err)
 	}
 
 	return strings.TrimSpace(token), nil
