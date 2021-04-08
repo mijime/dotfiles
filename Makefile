@@ -29,7 +29,8 @@ gotools_install:
 		./gotools/...
 
 gotools_update:
-	go mod tidy
+	cd $(shell git rev-parse --show-toplevel) && \
+		go mod tidy
 	make gotools_install
 
 npm_install:
