@@ -69,7 +69,7 @@ disabled = false
 
 [memory_usage]
 disabled = false
-format = "via $symbol [${ram_pct}(| ${swap_pct})]($style) "
+format = "via $symbol[${ram_pct}(|${swap_pct})]($style) "
 
 [battery]
 full_symbol = "🔋 "
@@ -78,4 +78,4 @@ discharging_symbol = "💀 "
 
 [time]
 disabled = false
-time_format = "%F %T"
+time_format = "%FT%T%z"
