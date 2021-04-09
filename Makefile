@@ -20,6 +20,7 @@ gotools_install:
 		github.com/golang/protobuf/protoc-gen-go \
 		github.com/googleapis/gnostic/... \
 		github.com/jackc/sqlfmt/... \
+		github.com/jfeliu007/goplantuml/cmd/goplantuml \
 		github.com/k-saiki/mfa \
 		github.com/mattn/memo \
 		github.com/mijime/beareq/... \

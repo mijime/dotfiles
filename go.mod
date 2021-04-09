@@ -13,6 +13,7 @@ require (
 	github.com/cweill/gotests v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/googleapis/gnostic v0.5.4 // indirect
+	github.com/jfeliu007/goplantuml v1.5.2 // indirect
 	github.com/k-saiki/mfa v0.0.3 // indirect
 	github.com/mattn/memo v0.0.13 // indirect
 	github.com/mmcdole/gofeed v1.1.0
