@@ -19,6 +19,7 @@ sumy = "^0.8.1"
 tinysegmenter = "^0.4"
 numpy = "^1.19.4"
 sqlfluff = "^0.3.6"
+online-judge-tools = "^11.2.0"
 
 [tool.poetry.dev-dependencies]
 
