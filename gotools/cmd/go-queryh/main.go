@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -35,22 +36,22 @@ func queryHTML(out io.Writer, in io.Reader, query, attr string) error {
 	doc.Find(query).Each(func(i int, s *goquery.Selection) {
 		switch attr {
 		case "text":
-			fmt.Fprintln(out, s.Text())
+			fmt.Fprintln(out, strings.TrimSpace(s.Text()))
 
 		case "html":
-			res, err := s.Html()
+			res, err := goquery.OuterHtml(s)
 			if err != nil {
 				log.Println(err)
 
 				return
 			}
 
-			fmt.Fprintln(out, res)
+			fmt.Fprintln(out, strings.TrimSpace(res))
 
 		default:
 			res, ok := s.Attr(attr)
 			if ok {
-				fmt.Fprintln(out, res)
+				fmt.Fprintln(out, strings.TrimSpace(res))
 			}
 		}
 	})

@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+list_contests() {
+  curl -sSL "https://atcoder.jp/contests" |
+    go-queryh \
+      -query '#contest-table-recent > div > div > table > tbody > tr > td:nth-child(2) a' --attr href
+}
+
+download_contest() {
+  curl -sSL "https://atcoder.jp/contests/${contest}/tasks" |
+    go-queryh \
+      -query ".row table tbody tr td:nth-child(2)" |
+    while read -r anchor; do
+      href="$(echo "${anchor}" | go-queryh -query a -attr href)"
+      mkdir -p "${basedir}${href}"
+      download_contest_task "${basedir}${href}" "https://atcoder.jp${href}"
+    done
+}
+
+download_contest_task() {
+  curl -sSL "${2}" -o "${1}/index.html"
+
+  parse_question "${1}"
+  parse_sample_testcase "${1}" 1
+  parse_sample_testcase "${1}" 2
+  parse_sample_testcase "${1}" 3
+}
+
+parse_question() {
+  go-queryh \
+    -query '#task-statement .lang-ja .part:nth-child(-n+6)' \
+    -attr text \
+    <"${1}/index.html" \
+    >"${1}/question.txt"
+}
+
+parse_sample_testcase() {
+  go-queryh -query "#task-statement .lang-ja .part:nth-child(n+7) section" \
+    <"${1}/index.html" |
+    go-queryh -query "section:nth-child($((${2} * 2 - 1))) pre" \
+      -attr text \
+      >"${1}/sample-${2}.in"
+  go-queryh -query "#task-statement .lang-ja .part:nth-child(n+7) section" \
+    <"${1}/index.html" |
+    go-queryh -query "section:nth-child($((${2} * 2))) pre" \
+      -attr text \
+      >"${1}/sample-${2}.out"
+}
+
+basedir=~/src/atcoder.jp
+while [[ $# -gt 0 ]]; do
+  case ${1} in
+  -b | --basedir)
+    basedir=${2}
+    shift
+    ;;
+  -c | --contest)
+    contest=${2}
+    shift
+    ;;
+  list | download)
+    cmd=$1
+    ;;
+  *)
+    echo "unsupported: $*" >&2
+    exit 1
+    ;;
+  esac
+  shift
+done
+
+case ${cmd} in
+list)
+  list_contests
+  ;;
+download)
+  download_contest
+  ;;
+esac
