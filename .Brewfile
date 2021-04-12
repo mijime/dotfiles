@@ -97,7 +97,7 @@ brew 'pyenv'
 
 brew 'elm'
 brew 'volta'
-brew 'deno'
+brew 'deno' if platform == :darwin
 
 # lang/shell
 
@@ -111,7 +111,7 @@ brew 'rustup-init'
 
 # lang/c
 
-brew 'clang-format'
+brew 'clang-format' if platform == :darwin
 
 # docker
 
