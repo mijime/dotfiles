@@ -11,6 +11,7 @@ require (
 	github.com/aws/constructs-go/constructs/v3 v3.3.71
 	github.com/aws/jsii-runtime-go v1.27.0
 	github.com/cweill/gotests v1.6.0 // indirect
+	github.com/golang/mock v1.5.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/googleapis/gnostic v0.5.4 // indirect
 	github.com/jaytaylor/html2text v0.0.0-20200412013138-3577fbdbcff7
