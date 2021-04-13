@@ -43,25 +43,11 @@ toggl_stop_entry() {
 
 while [[ $# -gt 0 ]]; do
   case $1 in
-  -w | --workspace)
-    toggl_workspace_id=$2
-    shift
-    ;;
-  -t | --token)
-    toggl_api_token=$2
-    shift
-    ;;
-  -i | --id)
-    time_entry_id=$2
-    shift
-    ;;
-  -m | --message)
-    time_entry_message=$2
-    shift
-    ;;
-  show | stop | start)
-    cmd=$1
-    ;;
+  -w | --workspace) toggl_workspace_id=$2 && shift ;;
+  -t | --token) toggl_api_token=$2 && shift ;;
+  -i | --id) time_entry_id=$2 && shift ;;
+  -m | --message) time_entry_message=$2 && shift ;;
+  show | stop | start) cmd=$1 ;;
   *)
     time_entry_id=$1
     time_entry_message=$1

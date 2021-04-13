@@ -20,6 +20,7 @@ gotools_install:
 		github.com/golang/protobuf/protoc-gen-go \
 		github.com/googleapis/gnostic/... \
 		github.com/jackc/sqlfmt/... \
+		github.com/jfeliu007/goplantuml/cmd/goplantuml \
 		github.com/k-saiki/mfa \
 		github.com/mattn/memo \
 		github.com/mijime/beareq/... \
@@ -29,7 +30,8 @@ gotools_install:
 		./gotools/...
 
 gotools_update:
-	go mod tidy
+	cd $(shell git rev-parse --show-toplevel) && \
+		go mod tidy
 	make gotools_install
 
 npm_install:
