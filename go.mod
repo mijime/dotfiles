@@ -13,12 +13,15 @@ require (
 	github.com/cweill/gotests v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/googleapis/gnostic v0.5.4 // indirect
+	github.com/jaytaylor/html2text v0.0.0-20200412013138-3577fbdbcff7
 	github.com/jfeliu007/goplantuml v1.5.2 // indirect
 	github.com/k-saiki/mfa v0.0.3 // indirect
 	github.com/mattn/memo v0.0.13 // indirect
 	github.com/mmcdole/gofeed v1.1.0
+	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/shpota/goxygen v0.3.5 // indirect
 	github.com/shurcooL/octiconssvg v0.0.0-20180217052449-91d14858bf81 // indirect
+	github.com/ssor/bom v0.0.0-20170718123548-6386211fdfcf // indirect
 	github.com/stretchr/testify v1.6.1
 	github.com/tidwall/gjson v1.7.4
 	golang.org/x/lint v0.0.0-20201208152925-83fdc39ff7b5 // indirect
