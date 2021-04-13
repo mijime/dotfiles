@@ -17,6 +17,7 @@ gotools_install:
 		go get -v \
 		cuelang.org/go/cmd/cue \
 		github.com/cweill/gotests/gotests \
+		github.com/golang/mock/mockgen \
 		github.com/golang/protobuf/protoc-gen-go \
 		github.com/googleapis/gnostic/... \
 		github.com/jackc/sqlfmt/... \

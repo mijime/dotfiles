@@ -67,7 +67,7 @@ test_contest_task() {
     fi
 
     output=${input%.in}.out
-    if diff -ur <(${test_cmd[@]} <"${input}") "${output}"; then
+    if diff -ur "${output}" <(${test_cmd[@]} <"${input}"); then
       echo "succeed ${input}"
     else
       echo "failed ${input}"
