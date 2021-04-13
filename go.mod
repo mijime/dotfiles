@@ -8,6 +8,9 @@ require (
 	github.com/asticode/go-astisub v0.12.0
 	github.com/aws/aws-cdk-go/awscdk v1.98.0-devpreview
 	github.com/aws/aws-sdk-go v1.38.15
+	github.com/aws/aws-sdk-go-v2/config v1.1.5
+	github.com/aws/aws-sdk-go-v2/credentials v1.1.5
+	github.com/aws/aws-sdk-go-v2/service/sts v1.2.2
 	github.com/aws/constructs-go/constructs/v3 v3.3.71
 	github.com/aws/jsii-runtime-go v1.27.0
 	github.com/cweill/gotests v1.6.0 // indirect
