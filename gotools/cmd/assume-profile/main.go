@@ -55,7 +55,7 @@ func main() {
 		config.WithAssumeRoleCredentialOptions(
 			func(op *stscreds.AssumeRoleOptions) {
 				op.Duration = duration
-				op.TokenProvider = stscreds.StdinTokenProvider
+				op.TokenProvider = stdinTokenProvider
 			},
 		),
 	)
@@ -79,4 +79,17 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to build template: %s", err)
 	}
+}
+
+func stdinTokenProvider() (string, error) {
+	fmt.Fprintf(os.Stderr, "Assume Role MFA token code: ")
+
+	var v string
+
+	_, err := fmt.Fscanln(os.Stdin, &v)
+	if err != nil {
+		return v, fmt.Errorf("failed to scan mfa token: %w", err)
+	}
+
+	return v, nil
 }
