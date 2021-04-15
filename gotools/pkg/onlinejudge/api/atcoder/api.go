@@ -35,20 +35,20 @@ func (a *API) FetchContest(ctx context.Context, contestID string) (onlinejudge.C
 
 	defer resp.Body.Close()
 
-	taskIDs, err := parseContest(resp.Body)
+	problemIDs, err := parseContest(resp.Body)
 	if err != nil {
 		return onlinejudge.Contest{}, fmt.Errorf("%w", err)
 	}
 
-	problems := make(map[string]onlinejudge.Problem, len(taskIDs))
+	problems := make(map[string]onlinejudge.Problem, len(problemIDs))
 
-	for _, taskID := range taskIDs {
-		problem, err := a.FetchProblem(ctx, taskID)
+	for _, problemID := range problemIDs {
+		problem, err := a.FetchProblem(ctx, problemID)
 		if err != nil {
 			return onlinejudge.Contest{}, fmt.Errorf("%w", err)
 		}
 
-		problems[taskID] = problem
+		problems[problemID] = problem
 	}
 
 	return onlinejudge.Contest{
