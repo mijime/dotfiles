@@ -8,11 +8,11 @@ import (
 	"github.com/mijime/dotfiles/gotools/pkg/onlinejudge"
 )
 
-type fakeExistFS struct {
+type fakeNotExistFS struct {
 	osFS
 }
 
-func (fakeExistFS) Stat(path string) (fs.FileInfo, error) {
+func (fakeNotExistFS) Stat(path string) (fs.FileInfo, error) {
 	return nil, os.ErrNotExist
 }
 
@@ -24,8 +24,9 @@ func TestCommand_generateProblem(t *testing.T) {
 		dstFS     argsFS
 	}
 	type args struct {
-		p   onlinejudge.Problem
-		dir string
+		p         onlinejudge.Problem
+		problemID string
+		dir       string
 	}
 	tests := []struct {
 		name    string
@@ -38,14 +39,14 @@ func TestCommand_generateProblem(t *testing.T) {
 				srcFS: argsFS{FS: osFS("_test/templates")},
 				dstFS: argsFS{FS: osFS("_test")},
 			},
-			args: args{p: onlinejudge.Problem{}, dir: "."},
+			args: args{p: onlinejudge.Problem{Text: "NotOverWrite"}, dir: "."},
 		},
 		{
 			fields: fields{
 				srcFS: argsFS{FS: osFS("_test/templates")},
-				dstFS: argsFS{FS: fakeExistFS{osFS: osFS("_test")}},
+				dstFS: argsFS{FS: fakeNotExistFS{osFS: osFS("_test")}},
 			},
-			args: args{p: onlinejudge.Problem{}, dir: "."},
+			args: args{p: onlinejudge.Problem{Text: "OverWrite"}, dir: "."},
 		},
 	}
 	for _, tt := range tests {
@@ -56,7 +57,7 @@ func TestCommand_generateProblem(t *testing.T) {
 				srcFS:     tt.fields.srcFS,
 				dstFS:     tt.fields.dstFS,
 			}
-			if err := cmd.generateProblem(tt.args.p, tt.args.dir); (err != nil) != tt.wantErr {
+			if err := cmd.generateProblem(tt.args.p, tt.args.problemID, tt.args.dir); (err != nil) != tt.wantErr {
 				t.Errorf("Command.generateProblem() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
