@@ -9,7 +9,7 @@ func Test_resolve(t *testing.T) {
 	for _, tt := range []struct {
 		name, input, expected string
 	}{
-		{{- range $i, $v := .SampleTestCase }}
+		{{- range $i, $v := .Problem.SampleTestCase }}
 		{
 			name: "sample-{{ $i }}",
 			input: `{{ $v.Input }}`,

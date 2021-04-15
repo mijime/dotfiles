@@ -110,7 +110,7 @@ func (cmd *Command) Execute(orgAPI onlinejudge.API) error {
 			return fmt.Errorf("failed to fetch problem: %w", err)
 		}
 
-		return cmd.generateProblem(p, ".")
+		return cmd.generateProblem(p, cmd.problemID, ".")
 	}
 
 	if api, ok := orgAPI.(fetchContestAPI); ok && len(cmd.contestID) > 0 {
@@ -127,7 +127,7 @@ func (cmd *Command) Execute(orgAPI onlinejudge.API) error {
 
 func (cmd *Command) generateContest(c onlinejudge.Contest) error {
 	for id, p := range c.Problems {
-		if err := cmd.generateProblem(p, id); err != nil {
+		if err := cmd.generateProblem(p, id, id); err != nil {
 			return err
 		}
 	}
@@ -135,7 +135,7 @@ func (cmd *Command) generateContest(c onlinejudge.Contest) error {
 	return nil
 }
 
-func (cmd *Command) generateProblem(p onlinejudge.Problem, dir string) error {
+func (cmd *Command) generateProblem(p onlinejudge.Problem, problemID, dir string) error {
 	tmplfiles, err := template.ParseFS(cmd.srcFS, "**.tpl")
 	if err != nil {
 		return fmt.Errorf("failed to parse template: %w", err)
@@ -159,7 +159,13 @@ func (cmd *Command) generateProblem(p onlinejudge.Problem, dir string) error {
 			return fmt.Errorf("failed to create file: %w", err)
 		}
 
-		if err := tmpl.Execute(fp, p); err != nil {
+		if err := tmpl.Execute(fp, struct {
+			ProblemID string
+			onlinejudge.Problem
+		}{
+			ProblemID: problemID,
+			Problem:   p,
+		}); err != nil {
 			return fmt.Errorf("failed to execute template: %w", err)
 		}
 
