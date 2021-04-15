@@ -27,7 +27,14 @@ func Test_parseContest(t *testing.T) {
 			args: args{
 				r: bytes.NewReader(contestHTML),
 			},
-			want: []string{"abc196_a", "abc196_b", "abc196_c", "abc196_d", "abc196_e", "abc196_f"},
+			want: []string{
+				"abc196/tasks/abc196_a",
+				"abc196/tasks/abc196_b",
+				"abc196/tasks/abc196_c",
+				"abc196/tasks/abc196_d",
+				"abc196/tasks/abc196_e",
+				"abc196/tasks/abc196_f",
+			},
 		},
 	}
 	for _, tt := range tests {

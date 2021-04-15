@@ -90,7 +90,7 @@ func (c *Client) FetchContest(ctx context.Context, contestID string) (onlinejudg
 	return c.API.FetchContest(ctx, contestID)
 }
 
-func (c *Client) FetchProblem(ctx context.Context, contestID, problemID string) (onlinejudge.Problem, error) {
+func (c *Client) FetchProblem(ctx context.Context, problemID string) (onlinejudge.Problem, error) {
 	defer func() {
 		err := c.Close()
 		if err != nil {
@@ -98,7 +98,7 @@ func (c *Client) FetchProblem(ctx context.Context, contestID, problemID string) 
 		}
 	}()
 
-	return c.API.FetchProblem(ctx, contestID, problemID)
+	return c.API.FetchProblem(ctx, problemID)
 }
 
 func (c *Client) LoginUseUsernameAndPassword(ctx context.Context, username, password string) error {

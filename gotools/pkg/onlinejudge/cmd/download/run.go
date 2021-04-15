@@ -18,7 +18,7 @@ type fetchContestAPI interface {
 }
 
 type fetchProblemAPI interface {
-	FetchProblem(ctx context.Context, contestID, problemID string) (onlinejudge.Problem, error)
+	FetchProblem(ctx context.Context, problemID string) (onlinejudge.Problem, error)
 }
 
 type Command struct {
@@ -41,8 +41,8 @@ func (cmd *Command) NewFlagSet() *flag.FlagSet {
 func (cmd *Command) Execute(orgAPI onlinejudge.API) error {
 	ctx := context.Background()
 
-	if api, ok := orgAPI.(fetchProblemAPI); ok && len(cmd.contestID) > 0 && len(cmd.problemID) > 0 {
-		p, err := api.FetchProblem(ctx, cmd.contestID, cmd.problemID)
+	if api, ok := orgAPI.(fetchProblemAPI); ok && len(cmd.problemID) > 0 {
+		p, err := api.FetchProblem(ctx, cmd.problemID)
 		if err != nil {
 			return fmt.Errorf("failed to fetch problem: %w", err)
 		}

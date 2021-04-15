@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"path"
 	"strconv"
 	"strings"
 
@@ -44,7 +43,7 @@ func (a *API) FetchContest(ctx context.Context, contestID string) (onlinejudge.C
 	problems := make(map[string]onlinejudge.Problem, len(taskIDs))
 
 	for _, taskID := range taskIDs {
-		problem, err := a.FetchProblem(ctx, contestID, taskID)
+		problem, err := a.FetchProblem(ctx, taskID)
 		if err != nil {
 			return onlinejudge.Contest{}, fmt.Errorf("%w", err)
 		}
@@ -57,8 +56,8 @@ func (a *API) FetchContest(ctx context.Context, contestID string) (onlinejudge.C
 	}, nil
 }
 
-func (a *API) FetchProblem(ctx context.Context, contestID, problemID string) (onlinejudge.Problem, error) {
-	url := strings.Join([]string{"https://atcoder.jp/contests", contestID, "tasks", problemID}, "/")
+func (a *API) FetchProblem(ctx context.Context, problemID string) (onlinejudge.Problem, error) {
+	url := strings.Join([]string{"https://atcoder.jp/contests", problemID}, "/")
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
@@ -143,7 +142,7 @@ func parseContest(r io.Reader) ([]string, error) {
 			return
 		}
 
-		problemIDs = append(problemIDs, path.Base(href))
+		problemIDs = append(problemIDs, strings.TrimPrefix(href, "/contests/"))
 	})
 
 	if err != nil {
