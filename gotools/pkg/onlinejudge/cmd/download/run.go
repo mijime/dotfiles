@@ -28,13 +28,17 @@ type Command struct {
 	contestID string
 	problemID string
 
-	templateFS *argsFS
-	downloadFS *argsFS
+	templateFS argsFS
+	downloadFS argsFS
 }
 
 type argsFS struct{ FS }
 
 func (a *argsFS) String() string {
+	if a == nil || a.FS == nil {
+		return ""
+	}
+
 	return a.FS.String()
 }
 
@@ -82,15 +86,15 @@ var errNotSupportedAPI = errors.New("not supported api")
 
 func New() *Command {
 	return &Command{
-		templateFS: &argsFS{FS: osFS(path.Join(os.Getenv("HOME"), ".config", "gojt", "templates"))},
-		downloadFS: &argsFS{FS: osFS(".")},
+		templateFS: argsFS{FS: osFS(path.Join(os.Getenv("HOME"), ".config", "gojt", "templates"))},
+		downloadFS: argsFS{FS: osFS(".")},
 	}
 }
 
 func (cmd *Command) NewFlagSet() *flag.FlagSet {
 	fs := flag.NewFlagSet("download", flag.ExitOnError)
-	fs.Var(cmd.templateFS, "template", "")
-	fs.Var(cmd.downloadFS, "download", "")
+	fs.Var(&cmd.templateFS, "template", "")
+	fs.Var(&cmd.downloadFS, "download", "")
 	fs.StringVar(&cmd.contestID, "contest", "", "")
 	fs.StringVar(&cmd.problemID, "problem", "", "")
 

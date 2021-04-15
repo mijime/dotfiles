@@ -77,7 +77,7 @@ func main() {
 			log.Fatal(err)
 		}
 	case "d", "download":
-		if err := cmdExec(gopts, &download.Command{}, args[1:]); err != nil {
+		if err := cmdExec(gopts, download.New(), args[1:]); err != nil {
 			log.Fatal(err)
 		}
 	}
