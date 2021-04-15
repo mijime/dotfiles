@@ -136,13 +136,14 @@ func (cmd *Command) generateContest(c onlinejudge.Contest) error {
 }
 
 func (cmd *Command) generateProblem(p onlinejudge.Problem, dir string) error {
-	tmplfiles, err := template.ParseFS(cmd.templateFS, "**.*")
+	tmplfiles, err := template.ParseFS(cmd.templateFS, "**.tpl")
 	if err != nil {
 		return fmt.Errorf("failed to parse template: %w", err)
 	}
 
 	for _, tmpl := range tmplfiles.Templates() {
-		filepath := path.Join(dir, tmpl.Name())
+		filepath := strings.TrimSuffix(path.Join(dir, tmpl.Name()), ".tpl")
+
 		if _, err := cmd.downloadFS.FS.Stat(filepath); err == nil {
 			log.Printf("already exists: %+v", filepath)
 
@@ -153,7 +154,7 @@ func (cmd *Command) generateProblem(p onlinejudge.Problem, dir string) error {
 			return fmt.Errorf("failed to make directory: %w", err)
 		}
 
-		fp, err := cmd.downloadFS.Create(strings.TrimSuffix(filepath, ".tpl"))
+		fp, err := cmd.downloadFS.Create(filepath)
 		if err != nil {
 			return fmt.Errorf("failed to create file: %w", err)
 		}
