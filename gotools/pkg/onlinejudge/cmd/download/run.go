@@ -28,8 +28,8 @@ type Command struct {
 	contestID string
 	problemID string
 
-	templateFS argsFS
-	downloadFS argsFS
+	srcFS argsFS
+	dstFS argsFS
 }
 
 type argsFS struct{ FS }
@@ -86,15 +86,15 @@ var errNotSupportedAPI = errors.New("not supported api")
 
 func New() *Command {
 	return &Command{
-		templateFS: argsFS{FS: osFS(path.Join(os.Getenv("HOME"), ".config", "gojt", "templates"))},
-		downloadFS: argsFS{FS: osFS(".")},
+		srcFS: argsFS{FS: osFS(path.Join(os.Getenv("HOME"), ".config", "gojt", "templates"))},
+		dstFS: argsFS{FS: osFS(".")},
 	}
 }
 
 func (cmd *Command) NewFlagSet() *flag.FlagSet {
 	fs := flag.NewFlagSet("download", flag.ExitOnError)
-	fs.Var(&cmd.templateFS, "template", "")
-	fs.Var(&cmd.downloadFS, "download", "")
+	fs.Var(&cmd.srcFS, "template", "")
+	fs.Var(&cmd.dstFS, "download", "")
 	fs.StringVar(&cmd.contestID, "contest", "", "")
 	fs.StringVar(&cmd.problemID, "problem", "", "")
 
@@ -136,7 +136,7 @@ func (cmd *Command) generateContest(c onlinejudge.Contest) error {
 }
 
 func (cmd *Command) generateProblem(p onlinejudge.Problem, dir string) error {
-	tmplfiles, err := template.ParseFS(cmd.templateFS, "**.tpl")
+	tmplfiles, err := template.ParseFS(cmd.srcFS, "**.tpl")
 	if err != nil {
 		return fmt.Errorf("failed to parse template: %w", err)
 	}
@@ -144,17 +144,17 @@ func (cmd *Command) generateProblem(p onlinejudge.Problem, dir string) error {
 	for _, tmpl := range tmplfiles.Templates() {
 		filepath := strings.TrimSuffix(path.Join(dir, tmpl.Name()), ".tpl")
 
-		if _, err := cmd.downloadFS.FS.Stat(filepath); err == nil {
+		if _, err := cmd.dstFS.FS.Stat(filepath); err == nil {
 			log.Printf("already exists: %+v", filepath)
 
 			continue
 		}
 
-		if err := cmd.downloadFS.MkdirAll(path.Dir(filepath), os.ModePerm); err != nil {
+		if err := cmd.dstFS.MkdirAll(path.Dir(filepath), os.ModePerm); err != nil {
 			return fmt.Errorf("failed to make directory: %w", err)
 		}
 
-		fp, err := cmd.downloadFS.Create(filepath)
+		fp, err := cmd.dstFS.Create(filepath)
 		if err != nil {
 			return fmt.Errorf("failed to create file: %w", err)
 		}
