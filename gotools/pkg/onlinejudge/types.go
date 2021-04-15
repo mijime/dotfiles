@@ -2,6 +2,7 @@ package onlinejudge
 
 import (
 	"flag"
+	"io"
 )
 
 type Contest struct {
@@ -23,4 +24,10 @@ type API interface{}
 type Command interface {
 	NewFlagSet() *flag.FlagSet
 	Execute(API) error
+}
+
+type SubmitInput struct {
+	ProblemID string
+	Lang      string
+	File      io.Reader
 }

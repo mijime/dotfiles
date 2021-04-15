@@ -80,7 +80,17 @@ func (a *API) FetchProblem(ctx context.Context, problemID string) (onlinejudge.P
 }
 
 func (a *API) LoginUseUsernameAndPassword(ctx context.Context, username, password string) error {
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "https://atcoder.jp/login", nil)
+	data := make(url.Values)
+	data.Add("username", username)
+	data.Add("password", password)
+
+	u := "https://atcoder.jp/login"
+
+	return a.postForm(ctx, u, data)
+}
+
+func (a *API) postForm(ctx context.Context, u string, data url.Values) error {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u, nil)
 	if err != nil {
 		return fmt.Errorf("failed to create request: %w", err)
 	}
@@ -92,6 +102,10 @@ func (a *API) LoginUseUsernameAndPassword(ctx context.Context, username, passwor
 
 	defer respGet.Body.Close()
 
+	if respGet.StatusCode >= http.StatusBadRequest {
+		return errors.New("failed to get request")
+	}
+
 	doc, err := goquery.NewDocumentFromReader(respGet.Body)
 	if err != nil {
 		return fmt.Errorf("failed to read goquery: %w", err)
@@ -102,12 +116,16 @@ func (a *API) LoginUseUsernameAndPassword(ctx context.Context, username, passwor
 		return errors.New("not found csrf token")
 	}
 
-	data := make(url.Values)
 	data.Add("csrf_token", csrfToken)
-	data.Add("username", username)
-	data.Add("password", password)
 
-	respPost, err := a.Client.PostForm("https://atcoder.jp/login", data)
+	reqPost, err := http.NewRequestWithContext(ctx, http.MethodPost, u, strings.NewReader(data.Encode()))
+	if err != nil {
+		return fmt.Errorf("failed to create request: %w", err)
+	}
+
+	reqPost.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
+	respPost, err := a.Client.Do(reqPost)
 	if err != nil {
 		return fmt.Errorf("failed to post login page: %w", err)
 	}
@@ -122,7 +140,7 @@ func (a *API) LoginUseUsernameAndPassword(ctx context.Context, username, passwor
 	log.Println(text)
 
 	if respPost.StatusCode >= http.StatusBadRequest {
-		return errors.New("failed to login")
+		return errors.New("failed to post request")
 	}
 
 	return nil

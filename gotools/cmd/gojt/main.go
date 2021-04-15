@@ -10,6 +10,7 @@ import (
 	"github.com/mijime/dotfiles/gotools/pkg/onlinejudge/api/atcoder"
 	"github.com/mijime/dotfiles/gotools/pkg/onlinejudge/cmd/download"
 	"github.com/mijime/dotfiles/gotools/pkg/onlinejudge/cmd/login"
+	"github.com/mijime/dotfiles/gotools/pkg/onlinejudge/cmd/submit"
 )
 
 type globalOpt struct {
@@ -71,7 +72,9 @@ func main() {
 
 	switch args[0] {
 	case "submit":
-		// TODO Add submit command
+		if err := cmdExec(gopts, &submit.Command{}, args[1:]); err != nil {
+			log.Fatal(err)
+		}
 	case "login":
 		if err := cmdExec(gopts, &login.Command{}, args[1:]); err != nil {
 			log.Fatal(err)
