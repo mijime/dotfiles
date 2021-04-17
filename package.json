@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@aws-amplify/cli": "^4.47.1",
+    "@aws-amplify/cli": "^4.48.0",
     "aws-cdk": "^1.98.0",
     "eslint": "^7.24.0",
     "lighthouse": "^7.3.0",
