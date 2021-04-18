@@ -24,7 +24,7 @@ require (
 	github.com/mattn/memo v0.0.13 // indirect
 	github.com/mmcdole/gofeed v1.1.0
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
-	github.com/shpota/goxygen v0.3.5 // indirect
+	github.com/shpota/goxygen v0.3.6 // indirect
 	github.com/shurcooL/octiconssvg v0.0.0-20180217052449-91d14858bf81 // indirect
 	github.com/ssor/bom v0.0.0-20170718123548-6386211fdfcf // indirect
 	github.com/stretchr/testify v1.6.1

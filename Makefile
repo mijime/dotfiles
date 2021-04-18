@@ -14,6 +14,7 @@ brew_update:
 gotools_install:
 	test -f go.mod || go mod init github.com/mijime/dotfiles
 	cd $(shell git rev-parse --show-toplevel) && \
+		CGO_ENABLED=0 \
 		go get -v \
 		cuelang.org/go/cmd/cue \
 		github.com/cweill/gotests/gotests \
