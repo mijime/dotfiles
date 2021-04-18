@@ -93,10 +93,14 @@ func New() *Command {
 
 func (cmd *Command) NewFlagSet() *flag.FlagSet {
 	fs := flag.NewFlagSet("download", flag.ExitOnError)
-	fs.Var(&cmd.srcFS, "template", "")
-	fs.Var(&cmd.dstFS, "download", "")
 	fs.StringVar(&cmd.contestID, "contest", "", "")
+	fs.StringVar(&cmd.contestID, "c", "", "")
 	fs.StringVar(&cmd.problemID, "problem", "", "")
+	fs.StringVar(&cmd.problemID, "p", "", "")
+	fs.Var(&cmd.dstFS, "dst", "")
+	fs.Var(&cmd.dstFS, "d", "")
+	fs.Var(&cmd.srcFS, "src", "")
+	fs.Var(&cmd.srcFS, "s", "")
 
 	return fs
 }
