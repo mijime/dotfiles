@@ -33,6 +33,9 @@ brew 'grex'
 brew 'coreutils'
 brew 'oauth2l'
 
+tap 'yudai/gotty'
+brew 'yudai/gotty/gotty'
+
 tap 'itchyny/tap'
 brew 'itchyny/tap/mmv'
 

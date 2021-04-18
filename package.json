@@ -4,17 +4,18 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@aws-amplify/cli": "^4.47.1",
+    "@aws-amplify/cli": "^4.48.0",
     "aws-cdk": "^1.98.0",
     "eslint": "^7.24.0",
     "lighthouse": "^7.3.0",
     "prettier": "^2.2.1",
     "puppeteer": "^8.0.0",
-    "pyright": "^1.1.130",
+    "pyright": "^1.1.132",
     "semantic-release": "^17.4.2",
     "textlint": "^11.9.0",
     "textlint-rule-preset-ja-technical-writing": "^4.0.1",
     "textlint-rule-preset-japanese": "^5.0.0",
+    "textlint-rule-preset-jtf-style": "^2.3.8",
     "typescript": "^4.2.4"
   },
   "scripts": {

@@ -18,8 +18,21 @@ gtasks_tasklist() {
 }
 
 gtasks_list() {
+  query="showCompleted=${gtasks_list__show_completed}"
+  if [[ -n ${gtasks_list__due_max} ]]; then
+    query="${query}&dueMax=${gtasks_list__due_max}"
+  fi
+  if [[ -n ${gtasks_list__due_min} ]]; then
+    query="${query}&dueMin=${gtasks_list__due_min}"
+  fi
+  if [[ -n ${gtasks_list__completed_max} ]]; then
+    query="${query}&completedMax=${gtasks_list__completed_max}"
+  fi
+  if [[ -n ${gtasks_list__completed_min} ]]; then
+    query="${query}&completedMin=${gtasks_list__completed_min}"
+  fi
   beareq --profile="${google_profile}" \
-    "https://tasks.googleapis.com/tasks/v1/lists/${google_tasklist}/tasks?showCompleted=false" |
+    "https://tasks.googleapis.com/tasks/v1/lists/${google_tasklist}/tasks?${query}" |
     jq -rc '.items[] | [.id,.due,.title] | @tsv'
 }
 
@@ -100,6 +113,12 @@ title=
 due=
 cmd=list
 is_edit=1
+gtasks_list__show_completed=false
+gtasks_list__due_max=
+gtasks_list__due_min=
+gtasks_list__completed_max=
+gtasks_list__completed_min=
+
 while [[ $# -gt 0 ]]; do
   case $1 in
   --profile) google_profile=$2 && shift ;;
@@ -110,10 +129,15 @@ while [[ $# -gt 0 ]]; do
   --task=*) task=${1#*=} ;;
   --title) title=$2 && shift ;;
   --title=*) title=${1#*=} ;;
-  --due) due=$(date --rfc-3339=seconds --date "$2" | sed -e 's/ /T/') && shift ;;
-  --due=*) due=$(date --rfc-3339=seconds --date "${1#*=}" | sed -e 's/ /T/') ;;
+  --due) due=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
+  --due=*) due=$(date +"%FT%TZ" --utc --date "${1#*=}") ;;
   --edit) is_edit=1 ;;
   --no-edit) is_edit= ;;
+  --completed) gtasks_list__show_completed=true ;;
+  --due-max) gtasks_list__due_max=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
+  --due-min) gtasks_list__due_min=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
+  --completed-max) gtasks_list__show_completed=true && gtasks_list__completed_max=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
+  --completed-min) gtasks_list__show_completed=true && gtasks_list__completed_min=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
   tasklist | add | list | edit | show | delete | done) cmd=$1 ;;
 
   *)
