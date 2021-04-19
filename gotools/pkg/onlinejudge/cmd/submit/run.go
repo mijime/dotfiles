@@ -44,8 +44,11 @@ var errNotSupportedAPI = errors.New("not supoorted api")
 
 func (cmd *Command) NewFlagSet() *flag.FlagSet {
 	fs := flag.NewFlagSet("submit", flag.ExitOnError)
+	fs.Var(&cmd.file, "f", "")
 	fs.Var(&cmd.file, "file", "")
+	fs.StringVar(&cmd.lang, "l", os.Getenv("GOJT_LANG"), "")
 	fs.StringVar(&cmd.lang, "lang", os.Getenv("GOJT_LANG"), "")
+	fs.StringVar(&cmd.problemID, "p", "", "")
 	fs.StringVar(&cmd.problemID, "problem", "", "")
 
 	return fs

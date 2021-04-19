@@ -21,8 +21,11 @@ var errNotSupportedAPI = errors.New("not supoorted api")
 
 func (cmd *Command) NewFlagSet() *flag.FlagSet {
 	fs := flag.NewFlagSet("login", flag.ExitOnError)
+	fs.StringVar(&cmd.username, "u", "", "")
 	fs.StringVar(&cmd.username, "username", "", "")
+	fs.StringVar(&cmd.password, "p", "", "")
 	fs.StringVar(&cmd.password, "password", "", "")
+	fs.StringVar(&cmd.token, "t", "", "")
 	fs.StringVar(&cmd.token, "token", "", "")
 
 	return fs
