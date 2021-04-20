@@ -20,7 +20,7 @@ func Test_resolve(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			actual := resolve(strings.NewReader(tt.input))
 			if tt.expected != actual {
-				t.Errorf("needs %s but got %s", tt.expected, actual)
+				t.Errorf("input %s needs %s but got %s", tt.input, tt.expected, actual)
 			}
 		})
 	}
