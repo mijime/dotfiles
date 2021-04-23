@@ -48,3 +48,7 @@ function! FilePathForLightline()
   endif
   return path
 endfunction
+
+Plug 'junegunn/vim-emoji'
+set completefunc=emoji#complete
+command -range Emojify <line1>,<line2>s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g

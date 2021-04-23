@@ -12,132 +12,130 @@ beareq_with_cache() {
 }
 
 gtasks_tasklist() {
-  beareq_with_cache --profile="${google_profile}" \
-    "https://tasks.googleapis.com/tasks/v1/users/@me/lists" |
-    jq -rc '.items[] | [.id,.title] | @tsv'
+  beareq_with_cache \
+    --profile="${gtasks__google_profile}" \
+    --jq ".items[] | [.id,.title] | @tsv" \
+    "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
 }
 
 gtasks_list() {
-  query="showCompleted=${gtasks_list__show_completed}"
-  if [[ -n ${gtasks_list__due_max} ]]; then
-    query="${query}&dueMax=${gtasks_list__due_max}"
+  query="showCompleted=${gtasks__show_completed}"
+  if [[ -n ${gtasks__due_max} ]]; then
+    query="${query}&dueMax=${gtasks__due_max}"
   fi
-  if [[ -n ${gtasks_list__due_min} ]]; then
-    query="${query}&dueMin=${gtasks_list__due_min}"
+  if [[ -n ${gtasks__due_min} ]]; then
+    query="${query}&dueMin=${gtasks__due_min}"
   fi
-  if [[ -n ${gtasks_list__completed_max} ]]; then
-    query="${query}&completedMax=${gtasks_list__completed_max}"
+  if [[ -n ${gtasks__completed_max} ]]; then
+    query="${query}&completedMax=${gtasks__completed_max}"
   fi
-  if [[ -n ${gtasks_list__completed_min} ]]; then
-    query="${query}&completedMin=${gtasks_list__completed_min}"
-  fi
-  beareq --profile="${google_profile}" \
-    "https://tasks.googleapis.com/tasks/v1/lists/${google_tasklist}/tasks?${query}" |
-    jq -rc '.items[] | [.id,.due,.title] | @tsv'
-}
-
-gtasks_add() {
-  due=${due:-$(date --rfc-3339=seconds --date "7days" | sed -e 's/ /T/')}
-  req="{\"title\":\"${title}\",\"notes\":\"\",\"due\":\"${due}\"}"
-
-  if [[ -n ${is_edit} ]] || [[ -z ${title} ]]; then
-    tmpfile=$(mktemp --suffix=.toml)
-    trap 'rm ${tmpfile}' EXIT
-
-    echo "${req}" | yj -jt >"${tmpfile}"
-    ${EDITOR:-vim} "${tmpfile}"
-    req=$(yj -tj <"${tmpfile}")
+  if [[ -n ${gtasks__completed_min} ]]; then
+    query="${query}&completedMin=${gtasks__completed_min}"
   fi
 
   beareq \
-    --profile="${google_profile}" \
-    --header="Content-type: application/json" \
-    --request="POST" \
-    --data="${req}" \
-    "https://tasks.googleapis.com/tasks/v1/lists/${google_tasklist}/tasks" |
-    jq -rS
+    --profile="${gtasks__google_profile}" \
+    --jq ".items[] | [.id,.due,.title] | @tsv" \
+    "https://tasks.googleapis.com/tasks/v1/lists/${gtasks__tasklist_id}/tasks?${query}"
+}
+
+gtasks_add() {
+  if [[ -z ${gtasks__title} ]]; then
+    tmpfile=$(mktemp --suffix=.md)
+    ${EDITOR:-vim} "${tmpfile}"
+    gtasks__title=$(cat "${tmpfile}")
+    rm "${tmpfile}"
+  fi
+
+  if [[ -z ${gtasks__due} ]]; then
+    gtasks__due=$(date +"%FT%TZ" --utc --date 7days)
+  fi
+
+  beareq \
+    --profile="${gtasks__google_profile}" \
+    --header "Content-type: application/json" \
+    --request "POST" \
+    --jo "title=${gtasks__title}" \
+    --jo "notes=${gtasks__notes}" \
+    --jo "due=${gtasks__due}" \
+    "https://tasks.googleapis.com/tasks/v1/lists/${gtasks__tasklist_id}/tasks"
 }
 
 gtasks_show() {
-  beareq --profile="${google_profile}" \
-    "https://tasks.googleapis.com/tasks/v1/lists/${google_tasklist}/tasks/${task}" |
-    jq -rS
+  beareq \
+    --profile="${gtasks__google_profile}" \
+    "https://tasks.googleapis.com/tasks/v1/lists/${gtasks__tasklist_id}/tasks/${gtasks__task_id}"
 }
 
 gtasks_delete() {
-  beareq --profile="${google_profile}" \
-    --request="DELETE" \
-    "https://tasks.googleapis.com/tasks/v1/lists/${google_tasklist}/tasks/${task}" |
-    jq -rS
-}
-
-gtasks_patch() {
-  beareq --profile="${google_profile}" \
-    --header="Content-type: application/json" \
-    --request="PATCH" \
-    --data="$*" \
-    "https://tasks.googleapis.com/tasks/v1/lists/${google_tasklist}/tasks/${task}" |
-    jq -rS
-}
-
-gtasks_update() {
-  beareq --profile="${google_profile}" \
-    --header="Content-type: application/json" \
-    --request="PUT" \
-    --data="$*" \
-    "https://tasks.googleapis.com/tasks/v1/lists/${google_tasklist}/tasks/${task}" |
-    jq -rS
+  beareq \
+    --profile "${gtasks__google_profile}" \
+    --request "DELETE" \
+    "https://tasks.googleapis.com/tasks/v1/lists/${gtasks__tasklist_id}/tasks/${gtasks__task_id}"
 }
 
 gtasks_edit() {
-  req=$(gtasks_show)
+  resp=$(gtasks_show)
 
-  tmpfile=$(mktemp --suffix=.toml)
-  trap 'rm ${tmpfile}' EXIT
+  if [[ -z ${gtasks__title} ]]; then
+    tmpfile=$(mktemp --suffix=.md)
+    echo "${resp}" | jq -rc .title >"${tmpfile}"
+    ${EDITOR:-vim} "${tmpfile}"
+    gtasks__title=$(cat "${tmpfile}")
+    rm "${tmpfile}"
+  fi
 
-  echo "${req}" | yj -jt >"${tmpfile}"
-  ${EDITOR:-vim} "${tmpfile}"
-  req=$(yj -tj <"${tmpfile}")
-
-  gtasks_update "${req}"
+  beareq \
+    --profile "${gtasks__google_profile}" \
+    --header "Content-type: application/json" \
+    --request "PATCH" \
+    --jo "title=${gtasks__title}" \
+    --jo "notes=${gtasks__notes:-$(echo "${resp}" | jq -rc .notes)}" \
+    --jo "due=${gtasks__due:-$(echo "${resp}" | jq -rc .due)}" \
+    "https://tasks.googleapis.com/tasks/v1/lists/${gtasks__tasklist_id}/tasks/${gtasks__task_id}"
 }
 
 gtasks_done() {
-  gtasks_patch "{\"status\":\"completed\"}"
+  beareq \
+    --profile "${gtasks__google_profile}" \
+    --header "Content-type: application/json" \
+    --request "PATCH" \
+    --jo "status=completed" \
+    "https://tasks.googleapis.com/tasks/v1/lists/${gtasks__tasklist_id}/tasks/${gtasks__task_id}"
 }
 
-google_profile=${GTASKS_GOOGLE_BEAREQ_PROFILE:-${GOOGLE_BEAREQ_PROFILE:-"default"}}
-google_tasklist=${GTASKS_GOOGLE_TASKLIST:-${GOOGLE_TASKLIST:-""}}
-task=
-title=
-due=
+gtasks__google_profile=${GTASKS_GOOGLE_BEAREQ_PROFILE:-${GOOGLE_BEAREQ_PROFILE:-"default"}}
+gtasks__tasklist_id=${GTASKS_GOOGLE_TASKLIST:-${GOOGLE_TASKLIST:-""}}
+gtasks__task_id=
+gtasks__title=
+gtasks__notes=
+gtasks__due=
 cmd=list
-is_edit=1
-gtasks_list__show_completed=false
-gtasks_list__due_max=
-gtasks_list__due_min=
-gtasks_list__completed_max=
-gtasks_list__completed_min=
+gtasks__show_completed=false
+gtasks__due_max=
+gtasks__due_min=
+gtasks__completed_max=
+gtasks__completed_min=
 
 while [[ $# -gt 0 ]]; do
   case $1 in
-  --profile) google_profile=$2 && shift ;;
-  --profile=*) google_profile=${1#*=} ;;
-  --tasklist) google_tasklist=$2 && shift ;;
-  --tasklist=*) google_tasklist=${1#*=} ;;
-  --task) task=$2 && shift ;;
-  --task=*) task=${1#*=} ;;
-  --title) title=$2 && shift ;;
-  --title=*) title=${1#*=} ;;
-  --due) due=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
-  --due=*) due=$(date +"%FT%TZ" --utc --date "${1#*=}") ;;
-  --edit) is_edit=1 ;;
-  --no-edit) is_edit= ;;
-  --completed) gtasks_list__show_completed=true ;;
-  --due-max) gtasks_list__due_max=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
-  --due-min) gtasks_list__due_min=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
-  --completed-max) gtasks_list__show_completed=true && gtasks_list__completed_max=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
-  --completed-min) gtasks_list__show_completed=true && gtasks_list__completed_min=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
+  --profile) gtasks__google_profile=$2 && shift ;;
+  --profile=*) gtasks__google_profile=${1#*=} ;;
+  --tasklist) gtasks__tasklist_id=$2 && shift ;;
+  --tasklist=*) gtasks__tasklist_id=${1#*=} ;;
+  --task) gtasks__task_id=$2 && shift ;;
+  --task=*) gtasks__task_id=${1#*=} ;;
+  --title) gtasks__title=$2 && shift ;;
+  --title=*) gtasks__title=${1#*=} ;;
+  --notes) gtasks__notes=$2 && shift ;;
+  --notes=*) gtasks__notes=${1#*=} ;;
+  --due) gtasks__due=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
+  --due=*) gtasks__due=$(date +"%FT%TZ" --utc --date "${1#*=}") ;;
+  --completed) gtasks__show_completed=true ;;
+  --due-max) gtasks__due_max=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
+  --due-min) gtasks__due_min=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
+  --completed-max) gtasks__show_completed=true && gtasks__completed_max=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
+  --completed-min) gtasks__show_completed=true && gtasks__completed_min=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
   tasklist | add | list | edit | show | delete | done) cmd=$1 ;;
 
   *)
@@ -155,9 +153,13 @@ tasklist)
   ;;
 esac
 
-if [[ -z ${google_tasklist} ]]; then
+if [[ -z ${gtasks__tasklist_id} ]]; then
   resp=$(gtasks_tasklist)
-  google_tasklist=$(echo "${resp}" | fzf --select-1 | awk -F"\t" '{print$1}')
+  gtasks__tasklist_id=$(echo "${resp}" | fzf --select-1 | awk -F"\t" '{print$1}')
+fi
+
+if [[ -p /dev/stdin ]] && [[ -z ${gtasks__title} ]]; then
+  gtasks__title=$(cat)
 fi
 
 case ${cmd} in
@@ -172,13 +174,9 @@ list)
   ;;
 esac
 
-if [[ -z "${task}" ]]; then
+if [[ -z "${gtasks__task_id}" ]]; then
   resp=$(gtasks_list)
-  task=$(echo "${resp}" | fzf --select-1 | awk -F"\t" '{print$1}')
-fi
-
-if [[ -z "${cmd}" ]]; then
-  cmd=$(echo -e "show\nedit\ndone\ndelete\n" | fzf)
+  gtasks__task_id=$(echo "${resp}" | fzf --select-1 | awk -F"\t" '{print$1}')
 fi
 
 case ${cmd} in

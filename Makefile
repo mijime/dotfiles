@@ -15,7 +15,7 @@ gotools_install:
 	test -f go.mod || go mod init github.com/mijime/dotfiles
 	cd $(shell git rev-parse --show-toplevel) && \
 		CGO_ENABLED=0 \
-		go get -v \
+		go get -u -v \
 		cuelang.org/go/cmd/cue \
 		github.com/cweill/gotests/gotests \
 		github.com/golang/mock/mockgen \
@@ -25,9 +25,10 @@ gotools_install:
 		github.com/jfeliu007/goplantuml/cmd/goplantuml \
 		github.com/k-saiki/mfa \
 		github.com/mattn/memo \
-		github.com/mijime/beareq/... \
+		github.com/mijime/beareq/cmd/beareq/... \
 		github.com/shpota/goxygen \
 		golang.org/x/lint/golint \
+		github.com/sonatype-nexus-community/nancy \
 		golang.org/x/tools/... \
 		./gotools/...
 
