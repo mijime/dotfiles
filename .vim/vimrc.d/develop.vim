@@ -6,6 +6,9 @@ Plug 'leafgarland/typescript-vim', {'for':['typescript','typescriptreact']}
 Plug 'peitalin/vim-jsx-typescript', {'for':['typescript','typescriptreact']}
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
 
+"go testtings
+Plug 'buoto/gotests-vim', {'on': ['GoTests', 'GoTestsAll'], 'for': ['go']}
+
 " sh settings
 autocmd Filetype sh setlocal sw=2 sts=2 expandtab
 
