@@ -23,8 +23,7 @@ type usersProfileSetRequest struct {
 	} `json:"profile"`
 }
 
-type usersProfileSetResponse struct {
-}
+type usersProfileSetResponse struct{}
 
 func (c *usersProfileSet) Parse(args []string) error {
 	s := flag.NewFlagSet("post", flag.ExitOnError)

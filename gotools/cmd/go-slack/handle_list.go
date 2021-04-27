@@ -21,9 +21,7 @@ func handleListResponse(ctx context.Context, resp *http.Response, resv listRespo
 	out := bufio.NewWriter(os.Stdout)
 	defer out.Flush()
 
-	var (
-		errResv errorResponse
-	)
+	var errResv errorResponse
 
 	er, ew := io.Pipe()
 
