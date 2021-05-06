@@ -6,6 +6,7 @@ require (
 	cuelang.org/go v0.3.2 // indirect
 	github.com/PuerkitoBio/goquery v1.6.1
 	github.com/andybalholm/cascadia v1.2.0 // indirect
+	github.com/asticode/go-astikit v0.21.1 // indirect
 	github.com/asticode/go-astisub v0.12.1
 	github.com/aws/aws-cdk-go/awscdk v1.100.0-devpreview
 	github.com/aws/aws-sdk-go-v2 v1.3.4
@@ -54,7 +55,7 @@ require (
 	github.com/shurcooL/octiconssvg v0.0.0-20180217052449-91d14858bf81 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/sonatype-nexus-community/go-sona-types v0.1.1 // indirect
-	github.com/sonatype-nexus-community/nancy v1.0.17 // indirect
+	github.com/sonatype-nexus-community/nancy v1.0.20 // indirect
 	github.com/spf13/afero v1.6.0 // indirect
 	github.com/spf13/cobra v1.1.3 // indirect
 	github.com/ssor/bom v0.0.0-20170718123548-6386211fdfcf // indirect
@@ -63,15 +64,15 @@ require (
 	github.com/ulikunitz/xz v0.5.10 // indirect
 	github.com/urfave/cli/v2 v2.3.0 // indirect
 	github.com/yuin/goldmark v1.3.5 // indirect
-	golang.org/x/crypto v0.0.0-20210421170649-83a5a9bb288b // indirect
+	golang.org/x/crypto v0.0.0-20210505212654-3497b51f5e64 // indirect
 	golang.org/x/lint v0.0.0-20201208152925-83fdc39ff7b5 // indirect
 	golang.org/x/mod v0.4.2 // indirect
-	golang.org/x/net v0.0.0-20210427231257-85d9c07bbe3a // indirect
+	golang.org/x/net v0.0.0-20210505214959-0714010a04ed // indirect
 	golang.org/x/oauth2 v0.0.0-20210427180440-81ed05c6b58c // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
-	golang.org/x/sys v0.0.0-20210426230700-d19ff857e887 // indirect
+	golang.org/x/sys v0.0.0-20210503173754-0981d6026fa6 // indirect
 	golang.org/x/tools v0.1.0 // indirect
-	google.golang.org/genproto v0.0.0-20210427215850-f767ed18ee4d // indirect
+	google.golang.org/genproto v0.0.0-20210505142820-a42aa055cf76 // indirect
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	k8s.io/client-go v0.21.0
 )
