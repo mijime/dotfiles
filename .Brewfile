@@ -34,6 +34,7 @@ brew 'coreutils'
 brew 'oauth2l'
 brew 'emojify'
 brew 'grpcurl'
+brew 'lab'
 
 tap 'yudai/gotty'
 brew 'yudai/gotty/gotty'
