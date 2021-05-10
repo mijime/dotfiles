@@ -9,10 +9,10 @@ require (
 	github.com/asticode/go-astikit v0.21.1 // indirect
 	github.com/asticode/go-astisub v0.12.1
 	github.com/aws/aws-cdk-go/awscdk v1.100.0-devpreview
-	github.com/aws/aws-sdk-go-v2 v1.3.4
-	github.com/aws/aws-sdk-go-v2/config v1.1.6
-	github.com/aws/aws-sdk-go-v2/credentials v1.1.6
-	github.com/aws/aws-sdk-go-v2/service/sqs v1.3.1
+	github.com/aws/aws-sdk-go-v2 v1.4.0
+	github.com/aws/aws-sdk-go-v2/config v1.1.7
+	github.com/aws/aws-sdk-go-v2/credentials v1.1.7
+	github.com/aws/aws-sdk-go-v2/service/sqs v1.3.2
 	github.com/aws/constructs-go/constructs/v3 v3.3.75
 	github.com/aws/jsii-runtime-go v1.29.0
 	github.com/boombuler/barcode v1.0.1 // indirect
@@ -64,15 +64,15 @@ require (
 	github.com/ulikunitz/xz v0.5.10 // indirect
 	github.com/urfave/cli/v2 v2.3.0 // indirect
 	github.com/yuin/goldmark v1.3.5 // indirect
-	golang.org/x/crypto v0.0.0-20210505212654-3497b51f5e64 // indirect
-	golang.org/x/lint v0.0.0-20201208152925-83fdc39ff7b5 // indirect
+	golang.org/x/crypto v0.0.0-20210506145944-38f3c27a63bf // indirect
+	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616 // indirect
 	golang.org/x/mod v0.4.2 // indirect
-	golang.org/x/net v0.0.0-20210505214959-0714010a04ed // indirect
+	golang.org/x/net v0.0.0-20210508051633-16afe75a6701 // indirect
 	golang.org/x/oauth2 v0.0.0-20210427180440-81ed05c6b58c // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
-	golang.org/x/sys v0.0.0-20210503173754-0981d6026fa6 // indirect
+	golang.org/x/sys v0.0.0-20210507161434-a76c4d0a0096 // indirect
 	golang.org/x/tools v0.1.0 // indirect
-	google.golang.org/genproto v0.0.0-20210505142820-a42aa055cf76 // indirect
+	google.golang.org/genproto v0.0.0-20210506142907-4a47615972c2 // indirect
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	k8s.io/client-go v0.21.0
 )
