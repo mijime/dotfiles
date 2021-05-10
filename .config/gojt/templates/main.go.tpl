@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"io"
 	"os"
@@ -13,5 +14,10 @@ func resolve(stdin io.Reader) string {
 }
 
 func main() {
-	fmt.Fprintln(os.Stdout, resolve(os.Stdin))
+	in := bufio.NewReader(os.Stdin)
+	out := bufio.NewWriter(os.Stdout)
+
+	defer out.Flush()
+
+	fmt.Fprintln(out, resolve(in))
 }

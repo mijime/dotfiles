@@ -32,6 +32,9 @@ brew 'ripgrep'
 brew 'grex'
 brew 'coreutils'
 brew 'oauth2l'
+brew 'emojify'
+brew 'grpcurl'
+brew 'lab'
 
 tap 'yudai/gotty'
 brew 'yudai/gotty/gotty'
@@ -137,6 +140,7 @@ brew 'sqlparse'
 
 # misc
 
+brew 'gnupg'
 brew 'ghq'
 brew 'jq'
 brew 'gojq'

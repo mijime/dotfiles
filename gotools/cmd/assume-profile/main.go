@@ -34,11 +34,13 @@ unset AWS_SECURITY_TOKEN;
 func main() {
 	var (
 		profile  string
+		roleArn  string
 		duration time.Duration
 		unset    bool
 	)
 
 	flag.StringVar(&profile, "profile", "", "")
+	flag.StringVar(&roleArn, "role-arn", "", "")
 	flag.DurationVar(&duration, "duration", time.Hour, "")
 	flag.BoolVar(&unset, "unset", false, "")
 	flag.Parse()
@@ -56,6 +58,10 @@ func main() {
 			func(op *stscreds.AssumeRoleOptions) {
 				op.Duration = duration
 				op.TokenProvider = stdinTokenProvider
+
+				if len(roleArn) > 0 {
+					op.RoleARN = roleArn
+				}
 			},
 		),
 	)

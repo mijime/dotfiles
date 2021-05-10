@@ -47,6 +47,11 @@ gtasks_add() {
     rm "${tmpfile}"
   fi
 
+  if [[ -z ${gtasks__title} ]]; then
+    echo "[E] require title"
+    return 1
+  fi
+
   if [[ -z ${gtasks__due} ]]; then
     gtasks__due=$(date +"%FT%TZ" --utc --date 7days)
   fi
