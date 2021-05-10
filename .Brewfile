@@ -137,6 +137,7 @@ brew 'sqlparse'
 
 # misc
 
+brew 'gnupg'
 brew 'ghq'
 brew 'jq'
 brew 'gojq'
