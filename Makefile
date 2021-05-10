@@ -4,12 +4,12 @@ update: brew_update gotools_update npm_update vim_update python_update
 	git commit -m "chore: update package version" . || true
 
 brew_install:
-	brew bundle install --global --verbose
+	brew bundle install --global
 
 brew_update:
 	brew update
 	make brew_install
-	brew bundle cleanup --global --verbose
+	brew bundle cleanup --global
 
 gotools_install:
 	test -f go.mod || go mod init github.com/mijime/dotfiles
