@@ -33,6 +33,7 @@ brew 'grex'
 brew 'coreutils'
 brew 'oauth2l'
 brew 'emojify'
+brew 'grpcurl'
 
 tap 'yudai/gotty'
 brew 'yudai/gotty/gotty'
