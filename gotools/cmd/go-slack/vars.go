@@ -42,6 +42,8 @@ func (t *TimeVar) Set(v string) error {
 		}
 
 		t.Time = tp
+
+		return nil
 	}
 
 	return errors.New("failed to parse time layout")
