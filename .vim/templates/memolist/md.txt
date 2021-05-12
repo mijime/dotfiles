@@ -1,7 +1,1 @@
----
-Tags: [{{_tags_}}]
-CreatedAt: {{_date_}}
-Draft: true
----
-
 # {{_title_}}
