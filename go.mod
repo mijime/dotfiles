@@ -4,9 +4,6 @@ go 1.16
 
 require (
 	cuelang.org/go v0.3.2
-	github.com/aws/aws-cdk-go/awscdk v1.102.0-devpreview
-	github.com/aws/constructs-go/constructs/v3 v3.3.75
-	github.com/aws/jsii-runtime-go v1.29.0
 	github.com/boombuler/barcode v1.0.1 // indirect
 	github.com/cockroachdb/apd/v2 v2.0.2 // indirect
 	github.com/cweill/gotests v1.6.0
@@ -27,7 +24,7 @@ require (
 	github.com/microcosm-cc/bluemonday v1.0.9 // indirect
 	github.com/mijime/beareq v1.6.0
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
-	github.com/pelletier/go-toml v1.9.0 // indirect
+	github.com/pelletier/go-toml v1.9.1 // indirect
 	github.com/pkg/browser v0.0.0-20210115035449-ce105d075bb4 // indirect
 	github.com/pquerna/otp v1.3.0 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
@@ -41,15 +38,15 @@ require (
 	github.com/sonatype-nexus-community/nancy v1.0.20
 	github.com/spf13/afero v1.6.0 // indirect
 	github.com/spf13/cobra v1.1.3 // indirect
-	github.com/stretchr/testify v1.7.0
-	github.com/tidwall/gjson v1.7.5
+	github.com/stretchr/testify v1.7.0 // indirect
 	github.com/ulikunitz/xz v0.5.10 // indirect
 	github.com/urfave/cli/v2 v2.3.0 // indirect
 	golang.org/x/crypto v0.0.0-20210506145944-38f3c27a63bf // indirect
 	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616
 	golang.org/x/net v0.0.0-20210510120150-4163338589ed // indirect
 	golang.org/x/oauth2 v0.0.0-20210427180440-81ed05c6b58c // indirect
-	golang.org/x/sys v0.0.0-20210510120138-977fb7262007 // indirect
+	golang.org/x/sys v0.0.0-20210511113859-b0526f3d8744 // indirect
+	golang.org/x/tools v0.1.1 // indirect
 	golang.org/x/tools/gopls v0.6.11
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	honnef.co/go/tools v0.1.4 // indirect
