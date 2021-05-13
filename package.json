@@ -10,7 +10,7 @@
     "prettier": "^2.3.0",
     "puppeteer": "^9.1.1",
     "pyright": "^1.1.138",
-    "semantic-release": "^17.4.2",
+    "semantic-release": "^17.4.3",
     "textlint": "^11.9.1",
     "textlint-rule-preset-ja-technical-writing": "^6.0.0",
     "textlint-rule-preset-japanese": "^6.0.1",
