@@ -21,6 +21,7 @@
 	root = ~/src
 [commit]
 	verbose = true
+	gpgsign = true
 [merge]
 	ff = false
 [pull]
