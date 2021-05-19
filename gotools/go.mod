@@ -7,10 +7,10 @@ require (
 	github.com/andybalholm/cascadia v1.2.0 // indirect
 	github.com/asticode/go-astikit v0.21.1 // indirect
 	github.com/asticode/go-astisub v0.12.1
-	github.com/aws/aws-sdk-go-v2 v1.4.0
-	github.com/aws/aws-sdk-go-v2/config v1.1.7
-	github.com/aws/aws-sdk-go-v2/credentials v1.1.7
-	github.com/aws/aws-sdk-go-v2/service/sqs v1.3.2
+	github.com/aws/aws-sdk-go-v2 v1.5.0
+	github.com/aws/aws-sdk-go-v2/config v1.2.0
+	github.com/aws/aws-sdk-go-v2/credentials v1.2.0
+	github.com/aws/aws-sdk-go-v2/service/sqs v1.4.0
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/jaytaylor/html2text v0.0.0-20200412013138-3577fbdbcff7
 	github.com/json-iterator/go v1.1.11 // indirect
@@ -23,7 +23,7 @@ require (
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/ssor/bom v0.0.0-20170718123548-6386211fdfcf // indirect
 	golang.org/x/net v0.0.0-20210510120150-4163338589ed // indirect
-	golang.org/x/oauth2 v0.0.0-20210427180440-81ed05c6b58c // indirect
+	golang.org/x/oauth2 v0.0.0-20210514164344-f6687ab2804c // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
 	k8s.io/client-go v0.21.0
 )
