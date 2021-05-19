@@ -1,11 +1,11 @@
 func! JISX0208SpaceHilight()
-  syntax match JISX0208Space '　' display containedin=ALL
   highlight JISX0208Space term=underline ctermbg=LightCyan
+  syntax match JISX0208Space '　' display containedin=ALL
 endf
 
 func! ExtraWhitespaceHighlight()
-  match ExtraWhitespace /\s\+$/
   highlight ExtraWhitespace ctermbg=red guibg=red
+  syntax match ExtraWhitespace /\s\+$/
 endf
 
 if has('syntax')
