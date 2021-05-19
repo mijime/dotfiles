@@ -67,10 +67,6 @@ error_symbol = "[\\$](red)"
 [shlvl]
 disabled = false
 
-[memory_usage]
-disabled = false
-format = "via $symbol[${ram_pct}(|${swap_pct})]($style) "
-
 [battery]
 full_symbol = "🔋 "
 charging_symbol = "⚡️ "
