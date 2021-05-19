@@ -25,5 +25,5 @@ require (
 	golang.org/x/net v0.0.0-20210510120150-4163338589ed // indirect
 	golang.org/x/oauth2 v0.0.0-20210514164344-f6687ab2804c // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
-	k8s.io/client-go v0.21.0
+	k8s.io/client-go v0.21.1
 )

@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@aws-amplify/cli": "^4.51.0",
+    "@aws-amplify/cli": "^4.51.1",
     "eslint": "^7.26.0",
-    "lighthouse": "^7.4.0",
+    "lighthouse": "^7.5.0",
     "prettier": "^2.3.0",
     "puppeteer": "^9.1.1",
     "pyright": "^1.1.140",

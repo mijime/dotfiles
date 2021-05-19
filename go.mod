@@ -35,7 +35,7 @@ require (
 	github.com/shurcooL/github_flavored_markdown v0.0.0-20210228213109-c3a9aa474629 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/sonatype-nexus-community/go-sona-types v0.1.1 // indirect
-	github.com/sonatype-nexus-community/nancy v1.0.20
+	github.com/sonatype-nexus-community/nancy v1.0.21
 	github.com/spf13/afero v1.6.0 // indirect
 	github.com/spf13/cobra v1.1.3 // indirect
 	github.com/stretchr/testify v1.7.0 // indirect
