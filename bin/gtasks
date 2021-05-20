@@ -113,6 +113,7 @@ gtasks__google_profile=${GTASKS_GOOGLE_BEAREQ_PROFILE:-${GOOGLE_BEAREQ_PROFILE:-
 gtasks__tasklist_id=${GTASKS_GOOGLE_TASKLIST:-${GOOGLE_TASKLIST:-""}}
 gtasks__task_id=
 gtasks__title=
+gtasks__title_file=
 gtasks__notes=
 gtasks__due=
 cmd=list
@@ -132,6 +133,8 @@ while [[ $# -gt 0 ]]; do
   --task=*) gtasks__task_id=${1#*=} ;;
   --title) gtasks__title=$2 && shift ;;
   --title=*) gtasks__title=${1#*=} ;;
+  --file) gtasks__title_file=$2 && shift ;;
+  --file=*) gtasks__title_file=${1#*=} ;;
   --notes) gtasks__notes=$2 && shift ;;
   --notes=*) gtasks__notes=${1#*=} ;;
   --due) gtasks__due=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
@@ -163,8 +166,12 @@ if [[ -z ${gtasks__tasklist_id} ]]; then
   gtasks__tasklist_id=$(echo "${resp}" | fzf --select-1 | awk -F"\t" '{print$1}')
 fi
 
-if [[ -p /dev/stdin ]] && [[ -z ${gtasks__title} ]]; then
-  gtasks__title=$(cat)
+if [[ -z ${gtasks__title} ]]; then
+  if [[ -n ${gtasks__title_file} ]]; then
+    gtasks__title=$(cat "${gtasks__title_file}")
+  elif [[ -p /dev/stdin ]]; then
+    gtasks__title=$(cat)
+  fi
 fi
 
 case ${cmd} in
