@@ -7,9 +7,10 @@ import (
 	"os"
 
 	"github.com/mijime/dotfiles/gotools/pkg/onlinejudge"
-	"github.com/mijime/dotfiles/gotools/pkg/onlinejudge/api/atcoder"
+	"github.com/mijime/dotfiles/gotools/pkg/onlinejudge/providers/atcoder"
 	"github.com/mijime/dotfiles/gotools/pkg/onlinejudge/cmd/download"
 	"github.com/mijime/dotfiles/gotools/pkg/onlinejudge/cmd/login"
+	"github.com/mijime/dotfiles/gotools/pkg/onlinejudge/cmd/submissions"
 	"github.com/mijime/dotfiles/gotools/pkg/onlinejudge/cmd/submit"
 )
 
@@ -77,6 +78,10 @@ func main() {
 		}
 	case "login":
 		if err := cmdExec(gopts, &login.Command{}, args[1:]); err != nil {
+			log.Fatal(err)
+		}
+	case "submissions":
+		if err := cmdExec(gopts, submissions.New(), args[1:]); err != nil {
 			log.Fatal(err)
 		}
 	case "d", "download":

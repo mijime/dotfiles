@@ -19,15 +19,24 @@ type TestCase struct {
 	Output string
 }
 
+type SubmitInput struct {
+	ProblemID string
+	Lang      string
+	File      io.Reader
+}
+
+type Submission struct {
+	ProblemID string
+	Status    string
+}
+
+type SubmissionsInput struct {
+	ContestID string
+}
+
 type API interface{}
 
 type Command interface {
 	NewFlagSet() *flag.FlagSet
 	Execute(API) error
-}
-
-type SubmitInput struct {
-	ProblemID string
-	Lang      string
-	File      io.Reader
 }
