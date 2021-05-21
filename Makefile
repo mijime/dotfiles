@@ -11,6 +11,7 @@ GOTOOLS = cuelang.org/go/cmd/cue \
 					github.com/shpota/goxygen \
 					github.com/sonatype-nexus-community/nancy \
 					golang.org/x/lint/golint \
+					golang.org/x/tools/cmd/... \
 					golang.org/x/tools/gopls
 
 install: brew_install gotools_install npm_install vim_install python_install
