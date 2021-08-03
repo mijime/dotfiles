@@ -19,7 +19,7 @@ func main() {
 	)
 
 	flag.BoolVar(&quiet, "quiet", false, "")
-	flag.StringVar(&delimiter, "delimiter", ",", "")
+	flag.StringVar(&delimiter, "delimiter", "\t", "")
 	flag.Parse()
 
 	ctx := context{

@@ -1,18 +1,13 @@
-GOTOOLS = cuelang.org/go/cmd/cue \
-					github.com/cweill/gotests/gotests \
-					github.com/golang/mock/mockgen \
-					github.com/golang/protobuf/protoc-gen-go \
-					github.com/googleapis/gnostic \
-					github.com/jackc/sqlfmt/cmd/sqlfmt \
-					github.com/jfeliu007/goplantuml/cmd/goplantuml \
-					github.com/k-saiki/mfa \
-					github.com/mattn/memo \
-					github.com/mijime/beareq/cmd/beareq \
-					github.com/shpota/goxygen \
-					github.com/sonatype-nexus-community/nancy \
-					golang.org/x/lint/golint \
-					golang.org/x/tools/cmd/... \
-					golang.org/x/tools/gopls
+GOTOOLS = github.com/cweill/gotests/gotests@latest \
+					github.com/golang/mock/mockgen@latest \
+					github.com/googleapis/gnostic@latest \
+					github.com/jackc/sqlfmt/cmd/sqlfmt@latest \
+					github.com/jfeliu007/goplantuml/cmd/goplantuml@latest \
+					github.com/k-saiki/mfa@latest \
+					github.com/mattn/memo@latest \
+					github.com/mijime/beareq/v2/cmd/beareq@latest \
+					github.com/shpota/goxygen@latest \
+					golang.org/x/tools/cmd/...@latest
 
 install: brew_install gotools_install npm_install vim_install python_install
 
@@ -28,21 +23,20 @@ brew_update:
 	brew bundle cleanup --global
 
 gotools_install:
-	test -f go.mod || go mod init github.com/mijime/dotfiles
 	cd $(shell git rev-parse --show-toplevel) && \
-		CGO_ENABLED=0 \
-		go get -v $(GOTOOLS)
+		for gotool in $(GOTOOLS); do \
+		CGO_ENABLED=0 go install -v $$gotool; \
+		done
 	cd $(shell git rev-parse --show-toplevel)/gotools && \
-		CGO_ENABLED=0 \
-		go get -v ./...
+		CGO_ENABLED=0 go install -v ./...
 
 gotools_update:
 	cd $(shell git rev-parse --show-toplevel) && \
-		CGO_ENABLED=0 \
-		go get -u -v $(GOTOOLS) && go mod tidy
+		for gotool in $(GOTOOLS); do \
+		CGO_ENABLED=0 go install -v $$gotool; \
+		done
 	cd $(shell git rev-parse --show-toplevel)/gotools && \
-		CGO_ENABLED=0 \
-		go get -u -v ./... && go mod tidy
+		CGO_ENABLED=0 go get -u -v ./... && go mod tidy
 
 npm_install:
 	npm install
