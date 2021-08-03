@@ -38,7 +38,7 @@ func (r conversationsHistoryResponse) NextCursor() string {
 
 func (c *conversationsHistory) Parse(args []string) error {
 	s := flag.NewFlagSet("messages", flag.ExitOnError)
-	s.StringVar(&c.Channel, "channel", os.Getenv("SLACK_CHANNEL"), "")
+	s.StringVar(&c.Channel, "channel", os.Getenv("SLACK_BEAREQ_CHANNEL"), "")
 	s.IntVar(&c.Limit, "limit", 10, "")
 	s.StringVar(&c.Cursor, "cursor", "", "")
 

@@ -42,7 +42,7 @@ func (r conversationsRepliesResponse) NextCursor() string {
 
 func (c *conversationsReplies) Parse(args []string) error {
 	s := flag.NewFlagSet("replies", flag.ExitOnError)
-	s.StringVar(&c.Channel, "channel", os.Getenv("SLACK_CHANNEL"), "")
+	s.StringVar(&c.Channel, "channel", os.Getenv("SLACK_BEAREQ_CHANNEL"), "")
 	s.StringVar(&c.Timestamp, "timestamp", "", "")
 	s.IntVar(&c.Limit, "limit", 10, "")
 	s.StringVar(&c.Cursor, "cursor", "", "")

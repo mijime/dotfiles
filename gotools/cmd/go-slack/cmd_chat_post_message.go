@@ -21,7 +21,7 @@ type chatPostMessageResponse struct{}
 
 func (c *chatPostMessage) Parse(args []string) error {
 	s := flag.NewFlagSet("post", flag.ExitOnError)
-	s.StringVar(&c.Channel, "channel", os.Getenv("SLACK_CHANNEL"), "")
+	s.StringVar(&c.Channel, "channel", os.Getenv("SLACK_BEAREQ_CHANNEL"), "")
 	s.StringVar(&c.Timestamp, "timestamp", "", "")
 	s.StringVar(&c.Text, "text", "", "")
 
