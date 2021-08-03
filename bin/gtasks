@@ -2,6 +2,9 @@
 
 set -Eeuo pipefail
 
+gtasks__google_profile=${GTASKS_BEAREQ_PROFILE:-"default"}
+gtasks__tasklist_id=${GTASKS_BEAREQ_TASKLIST:-""}
+
 beareq_cache_key=$(date +%F)
 beareq_with_cache() {
   cache_file="/tmp/$(basename "$0")-$(echo "$* ${beareq_cache_key}" | md5sum | awk '{print$1}').dat"
@@ -100,17 +103,16 @@ gtasks_edit() {
     "https://tasks.googleapis.com/tasks/v1/lists/${gtasks__tasklist_id}/tasks/${gtasks__task_id}"
 }
 
-gtasks_done() {
+gtasks_complete() {
   beareq \
     --profile "${gtasks__google_profile}" \
     --header "Content-type: application/json" \
     --request "PATCH" \
     --jo "status=completed" \
+    --jo "hidden=true" \
     "https://tasks.googleapis.com/tasks/v1/lists/${gtasks__tasklist_id}/tasks/${gtasks__task_id}"
 }
 
-gtasks__google_profile=${GTASKS_GOOGLE_BEAREQ_PROFILE:-${GOOGLE_BEAREQ_PROFILE:-"default"}}
-gtasks__tasklist_id=${GTASKS_GOOGLE_TASKLIST:-${GOOGLE_TASKLIST:-""}}
 gtasks__task_id=
 gtasks__title=
 gtasks__title_file=
@@ -144,7 +146,7 @@ while [[ $# -gt 0 ]]; do
   --due-min) gtasks__due_min=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
   --completed-max) gtasks__show_completed=true && gtasks__completed_max=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
   --completed-min) gtasks__show_completed=true && gtasks__completed_min=$(date +"%FT%TZ" --utc --date "$2") && shift ;;
-  tasklist | add | list | edit | show | delete | done) cmd=$1 ;;
+  tasklist | add | list | edit | show | delete | complete) cmd=$1 ;;
 
   *)
     echo "unsupport args: $*" >&2
@@ -193,7 +195,7 @@ fi
 
 case ${cmd} in
 edit) gtasks_edit ;;
-done) gtasks_done ;;
+complete) gtasks_complete ;;
 show) gtasks_show ;;
 delete) gtasks_delete ;;
 esac
