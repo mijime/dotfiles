@@ -23,10 +23,7 @@ export PATH="${homebrew_prefix}/bin:${homebrew_prefix}/sbin:${PATH}"
 export PATH="${homebrew_prefix}/opt/openssl/bin:${PATH}"
 export PATH="${homebrew_prefix}/opt/coreutils/libexec/gnubin:${PATH}"
 export MANPATH="${homebrew_prefix}/opt/coreutils/libexec/gnuman:${MANPATH}"
-
-if [[ -r "${homebrew_prefix}/etc/profile.d/bash_completion.sh" ]]; then
-  source "${homebrew_prefix}/etc/profile.d/bash_completion.sh"
-fi
+for cmp in "${homebrew_prefix}/etc/bash_completion.d"/*; do source "${cmp}"; done
 
 export PATH="${PATH}:${HOME}/.dotfiles/bin:${HOME}/.dotfiles/node_modules/.bin"
 
@@ -37,33 +34,44 @@ alias ll='ls -l'
 export TRASH_DIR=${HOME}/.Trash
 alias rm='mv --backup=numbered --target-directory=${TRASH_DIR}'
 
-alias cd=__cd
-__cd() {
-  if [[ $# -eq 0 ]]; then
-    pushd ~ || return 1
-    return
-  fi
-  while [[ $# -gt 0 ]]; do
-    case $1 in
-    -)
-      popd 1>&2 || return 1
-      shift
-      ;;
-    -c | --clear)
-      dirs -c
-      shift
-      ;;
-    -l | --list)
-      dirs -v | awk 'p[$2]!=1{print}{p[$2]=1}'
-      shift
-      ;;
-    *)
-      pushd "$1" >/dev/null || return 1
-      shift
-      ;;
-    esac
-  done
+a9e_cd() {
+  case $1 in
+  -) popd >/dev/null || return 1 ;;
+  -v | -c) dirs "$@" ;;
+  --list | -l)
+    dirs -v | awk '!v[$NF]{v[$NF]=1;print$0}'
+    ;;
+  --save | -S)
+    dirs -v -l | awk '!v[$NF]{v[$NF]=1;print$NF}' | head -n 100 | tee -a "${HOME}/.cd_history"
+    ;;
+  --load | -L)
+    shift
+    for v in $(tail -n 1000 "${@:-"${HOME}/.cd_history"}" | awk '!v[$NF]{v[$NF]=1;print$NF}'); do
+      if [[ -d "$v" ]]; then
+        pushd -n "$v" >/dev/null || true
+      fi
+    done
+    ;;
+  --fzf | -F)
+    shift
+    pushd "$({
+      dirs -v -l | awk '!v[$NF]{v[$NF]=1;print$NF}'
+    } | fzf --select-1 --query "$*")" >/dev/null || return 1
+    ;;
+  -P)
+    shift
+    \cd "$@" >/dev/null || return 1
+    pushd . >/dev/null || return 1
+    ;;
+  *)
+    pushd "$@" >/dev/null || return 1
+    ;;
+  esac
 }
+
+trap "a9e_cd --save >/dev/null" EXIT
+a9e_cd --load >/dev/null
+alias cd=a9e_cd
 
 # ssh config
 
@@ -71,6 +79,7 @@ __create_ssh_private() {
   local ssh_project=${SSH_PROJECT:-~/.ssh/projects}
   local host=localhost
   local algo=ed25519
+  local comment=
 
   while [[ $# -gt 0 ]]; do
     case $1 in
@@ -81,6 +90,18 @@ __create_ssh_private() {
     -t)
       algo=$2
       shift 2 || return 1
+      ;;
+    -h | --host)
+      host=$2
+      shift 2 || return 1
+      ;;
+    -C | --comment)
+      comment=$2
+      shift 2 || return 1
+      ;;
+    -*)
+      echo "[ERROR] unsupported arguments: $1" >&2
+      return 1
       ;;
     *)
       host=$1
@@ -93,9 +114,7 @@ __create_ssh_private() {
   mkdir -p "${dir}"
 
   keyname=${dir}/id_${algo}
-  if [[ ! -f ${keyname} ]]; then
-    ssh-keygen -t "${algo}" -f "${keyname}" -N "" -C ""
-  fi
+  ssh-keygen -t "${algo}" -f "${keyname}" -N "" -C "${comment}"
 
   ssh_config=${dir}/ssh_config
   if [[ ! -f ${ssh_config} ]]; then
@@ -104,6 +123,13 @@ Host ${host}
   IdentityFile ${keyname}
 EOF
   fi
+
+  (
+    cd "${ssh_project}" || return 1
+    git init || true
+    git add -A
+    git commit --allow-empty --message "Add ${host}"
+  )
 }
 
 __create_ssh_config() {
@@ -114,12 +140,12 @@ __create_ssh_config() {
     case $1 in
     --project | -p)
       ssh_project=$2
-      shift 2 || return 2
+      shift 2 || return 1
       ;;
 
     --config | -c)
       ssh_config=$2
-      shift 2 || return 2
+      shift 2 || return 1
       ;;
 
     *)
@@ -131,7 +157,7 @@ __create_ssh_config() {
 
   mkdir -p "${ssh_project}"
   find "${ssh_project}" -name ssh_config |
-    sort |
+    sort -r |
     xargs cat >"${ssh_config}"
 }
 
@@ -146,14 +172,14 @@ share_history() {
   history -r
 }
 PROMPT_COMMAND='share_history'
-HISTSIZE=100000
-HISTFILESIZE=100000
+HISTSIZE=1000000000
+HISTFILESIZE=1000000000
 HISTTIMEFORMAT='[%F %T %Z]  '
-HISTIGNORE='l[sla]:history*:pwd:exit:cd:[bf]g:jobs'
+HISTIGNORE='l[sla]:history:pwd:exit:cd:[bf]g:jobs'
 HISTCONTROL='ignoredups:ignorespace:erasedups'
 
 export FZF_CTRL_T_COMMAND='git ls-files 2>/dev/null || rg --files --hidden --follow --glob "!.git/*"'
-export FZF_CTRL_T_OPTS='--preview "bat  --color=always --style=header,grid --line-range :100 {}"'
+export FZF_CTRL_T_OPTS='--preview "bat --color=always --style=header,grid --line-range :100 {}"'
 
 for localrc in ~/.bashrc.local ~/.dockerrc; do
   if [[ -f ${localrc} ]]; then

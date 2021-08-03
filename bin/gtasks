@@ -5,19 +5,19 @@ set -Eeuo pipefail
 gtasks__google_profile=${GTASKS_BEAREQ_PROFILE:-"default"}
 gtasks__tasklist_id=${GTASKS_BEAREQ_TASKLIST:-""}
 
-beareq_cache_key=$(date +%F)
-beareq_with_cache() {
-  cache_file="/tmp/$(basename "$0")-$(echo "$* ${beareq_cache_key}" | md5sum | awk '{print$1}').dat"
+cache_key=$(date +%F)
+with_cache() {
+  cache_file="/tmp/$(basename "$0")-$(echo "$* ${cache_key}" | md5sum | awk '{print$1}').dat"
   if [[ ! -f "${cache_file}" ]]; then
-    beareq "${@}" >"${cache_file}"
+    "${@}" >"${cache_file}"
   fi
   cat "${cache_file}"
 }
 
 gtasks_tasklist() {
-  beareq_with_cache \
+  with_cache beareq \
     --profile="${gtasks__google_profile}" \
-    --jq ".items[] | [.id,.title] | @tsv" \
+    --jq ".items[]|[.id,.title]|@tsv" \
     "https://tasks.googleapis.com/tasks/v1/users/@me/lists"
 }
 
@@ -38,8 +38,11 @@ gtasks_list() {
 
   beareq \
     --profile="${gtasks__google_profile}" \
-    --jq ".items[] | [.id,.due,.title] | @tsv" \
-    "https://tasks.googleapis.com/tasks/v1/lists/${gtasks__tasklist_id}/tasks?${query}"
+    --jq ".items[]|[.id,.due,.parent,.title]|@tsv" \
+    "https://tasks.googleapis.com/tasks/v1/lists/${gtasks__tasklist_id}/tasks?${query}" |
+    awk -F"\t" -v OFS="\t" '{i[$1]=NR;d[$1]=$2;p[$1]=$3;t[$1]=$4}END{for(k in p){if(p[k]==""){vt=t[k]}else{vt=t[p[k]]" | "t[k]};print i[k],k,d[k],vt}}' |
+    sort -n |
+    awk -F"\t" -v OFS="\t" '{print$2,$3,$4}'
 }
 
 gtasks_add() {

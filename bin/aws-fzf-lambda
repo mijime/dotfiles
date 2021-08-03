@@ -15,8 +15,7 @@ aws_with_cache() {
       tee "${cache_file}" |
       tee "${latest_cache}"
   else
-    cat "${cache_file}" |
-      tee "${latest_cache}"
+    tee "${latest_cache}" <"${cache_file}"
   fi
 }
 
@@ -35,7 +34,7 @@ while [[ $# -gt 0 ]]; do
   --max-items=*)
     max_items=${1#*=}
     ;;
-  invoke | logs)
+  invoke | inspect | logs)
     cmd=${1}
     ;;
   *)
@@ -69,7 +68,7 @@ done
 
 case "${cmd}" in
 invoke)
-  echo -e "[I] aws_with_cache lambda invoke --function-name ${function_name}" >&2
+  echo -e "[I] aws lambda invoke --function-name ${function_name}" >&2
   echo -ne "input payload: "
   read -r function_payload
 
@@ -80,8 +79,13 @@ invoke)
     "${latest_cache}".invoke.dat
   ;;
 
+inspect)
+  aws lambda get-function \
+    --function-name "${function_name}"
+  ;;
+
 logs)
-  echo -e "[I] aws_with_cache logs tail /aws/lambda/${function_name}" >&2
+  echo -e "[I] aws logs tail /aws/lambda/${function_name}" >&2
   aws logs tail "/aws/lambda/${function_name}"
   ;;
 esac

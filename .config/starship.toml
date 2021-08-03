@@ -1,10 +1,10 @@
 add_newline = false
 
 format = """
+$env_var\
 $username\
 $hostname\
 $shlvl\
-$kubernetes\
 $directory\
 $git_branch\
 $git_commit\
@@ -43,8 +43,8 @@ $conda\
 $memory_usage\
 $aws\
 $gcloud\
+$kubernetes\
 $openstack\
-$env_var\
 $crystal\
 $custom\
 $time\
@@ -67,6 +67,9 @@ error_symbol = "[\\$](red)"
 [shlvl]
 disabled = false
 
+[kubernetes]
+disabled = false
+
 [battery]
 full_symbol = "🔋 "
 charging_symbol = "⚡️ "
@@ -74,4 +77,7 @@ discharging_symbol = "💀 "
 
 [time]
 disabled = false
-time_format = "%FT%T%z"
+time_format = "%T"
+
+[env_var.POMO_COMMIT_MSG]
+format = "[🎯 $env_value]($style)\n"

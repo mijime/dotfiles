@@ -17,6 +17,9 @@ done
 
 tempfile=$(mktemp --suffix=".${suffix}")
 trap 'rm ${tempfile}' EXIT
-cat >"${tempfile}"
+if [[ -p /dev/stdin ]]; then
+  cat >"${tempfile}"
+fi
+
 ${EDITOR:-vim} "${tempfile}" </dev/tty >/dev/tty
 cat <"${tempfile}"
