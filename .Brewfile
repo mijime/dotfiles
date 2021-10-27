@@ -59,9 +59,10 @@ brew 'gh'
 
 # cloud/terraform
 
+brew 'terraformer'
 brew 'tfenv'
 brew 'tflint'
-brew 'terraformer'
+brew 'tfsec'
 
 tap 'hashicorp/tap'
 brew 'hashicorp/tap/terraform-ls'
@@ -69,9 +70,13 @@ brew 'hashicorp/tap/terraform-ls'
 # cloud/aws
 
 brew 'awscli'
+brew 'cfn-format'
 brew 'cfn-lint'
 brew 'cloudformation-guard'
 brew 'rain'
+
+tap 'aws/tap'
+brew 'aws/tap/aws-sam-cli'
 
 # cloud/azure
 
@@ -87,9 +92,7 @@ brew 'go'
 brew 'gofumpt'
 brew 'goreleaser'
 brew 'gopls'
-
-tap 'golangci/tap'
-brew 'golangci/tap/golangci-lint'
+brew 'golangci-lint'
 
 # lang/python
 
@@ -121,33 +124,49 @@ brew 'clang-format' if platform == :darwin
 
 # docker
 
-cask 'docker' if platform == :darwin
+brew 'docker'
 brew 'hadolint'
-brew 'docker-compose' if platform == :linux
+brew 'docker-compose'
+brew 'buildkit'
+brew 'hyperkit' if platform == :darwin
+
+# containers
+
+brew 'podman'
+brew 'lima' if platform == :darwin
 
 # k8s
 
+brew 'minikube'
 brew 'kind'
-brew 'kubernetes-cli' if platform == :linux
+brew 'kubernetes-cli'
 brew 'kustomize'
 brew 'helm'
 brew 'skaffold'
 brew 'stern'
+brew 'glooctl'
 
 # sql
 
 brew 'sqlparse'
 
+# protobuf
+
+brew 'protobuf'
+brew 'protoc-gen-go'
+brew 'protoc-gen-go-grpc'
+
 # misc
+
+brew 'gojq'
+brew 'gojo'
 
 brew 'gnupg'
 brew 'ghq'
 brew 'jq'
-brew 'gojq'
 brew 'yj'
 brew 'nkf'
 brew 'imagemagick'
-brew 'protobuf'
 brew 'vegeta'
 brew 'plantuml'
 brew 'youtube-dl'
@@ -166,6 +185,9 @@ if platform == :darwin
   cask 'firefox'
   cask 'google-chrome'
   cask 'keepassxc'
+
+  cask 'visual-studio-code'
+  cask 'rectangle'
 
   cask 'flutter'
   cask 'android-sdk'
