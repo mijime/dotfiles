@@ -1,9 +1,12 @@
 Plug 'previm/previm', {'for':['markdown']} |
       \ Plug 'tyru/open-browser.vim', {'for':['markdown']}
 let g:previm_plantuml_imageprefix = 'http://plantuml.local.gd/svg/'
+Plug 'masukomi/vim-markdown-folding', {'for':['markdown']}
+let g:markdown_fold_override_foldtext = 0
+let g:markdown_fold_style = 'nested'
 
 augroup MyMarkdown
-  au!
+  autocmd!
   autocmd FileType markdown setlocal sw=2 sts=2 ts=2 et
 augroup END
 
@@ -16,4 +19,5 @@ let g:memolist_path = '$HOME/.config/memo/_posts'
 let g:memolist_fzf = 1
 let g:memolist_template_dir_path = "~/.vim/templates/memolist"
 let g:memolist_memo_date = '%Y-%m-%dT%H:%M:%S%z'
+let g:memolist_filename_date = '%Y/%m/%d/'
 let g:memolist_memo_suffix = "md"

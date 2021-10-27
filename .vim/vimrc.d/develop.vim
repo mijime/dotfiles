@@ -12,6 +12,7 @@ Plug 'buoto/gotests-vim', {'on': ['GoTests', 'GoTestsAll'], 'for': ['go']}
 " sh settings
 autocmd Filetype sh setlocal sw=2 sts=2 expandtab
 
+Plug 'ruanyl/vim-gh-line'
 Plug 'tpope/vim-fugitive' | Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -28,3 +29,7 @@ augroup MyFzfSettings
 augroup END
 Plug 'junegunn/vim-easy-align', {'on':['EasyAlign']}
 Plug 'junegunn/gv.vim', {'on':['GV']}
+
+Plug 'mattn/vim-sonictemplate', {'on':['Template']}
+
+Plug 'tpope/vim-fireplace', {'for': 'clojure'}

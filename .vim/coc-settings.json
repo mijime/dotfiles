@@ -1,24 +1,10 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": [
-    "*"
-  ],
   "languageserver": {
-    "go": {
-      "command": "gopls",
-      "filetypes": [
-        "go"
-      ],
-      "rootPatterns": [
-        "go.mod",
-        ".git",
-        ".vim"
-      ]
-    },
     "terraform": {
+      "command": "terraform-ls",
       "args": [
         "serve"
       ],
-      "command": "terraform-ls",
       "filetypes": [
         "terraform",
         "tf"
@@ -26,6 +12,5 @@
       "initializationOptions": {},
       "settings": {}
     }
-  },
-  "suggest.autoTrigger": "none"
+  }
 }

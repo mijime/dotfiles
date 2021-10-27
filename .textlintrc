@@ -1,8 +1,6 @@
 {
   "rules": {
     "preset-japanese": true,
-    "preset-ja-technical-writing": true,
-    "preset-jtf-style": true,
-    "jtf-style/3.1.1.全角文字と半角文字の間": false
+    "preset-ja-technical-writing": true
   }
 }

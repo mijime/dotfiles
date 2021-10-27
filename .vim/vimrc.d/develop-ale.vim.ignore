@@ -1,25 +1,41 @@
 Plug 'dense-analysis/ale'
+
+let g:ale_fix_on_save = 1
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_insert_leave = 0
-let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_save = 1
-let g:ale_fix_on_save = 1
-let g:ale_linters = {
-      \ 'go': ['govet', 'golint', 'golangci-lint'],
-      \ }
-let g:ale_fixers = {
-      \ 'go':              ['gofmt', 'goimports'],
-      \ 'graphql':         ['prettier'],
-      \ 'javascript':      ['prettier', 'eslint'],
-      \ 'markdown':        ['prettier'],
-      \ 'python':          ['black'],
-      \ 'sh':              ['shfmt'],
-      \ 'sql':             ['sqlformat'],
-      \ 'terraform':       ['terraform', 'remove_trailing_lines', 'trim_whitespace'],
-      \ 'typescript':      ['prettier', 'eslint'],
-      \ 'typescriptreact': ['prettier', 'eslint'],
-      \ 'yaml':            ['prettier'],
-      \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-      \ }
-let g:ale_sh_shfmt_options      = '-i=2'
+let g:ale_lint_on_text_changed = 0
+
+let g:ale_keep_list_window_open = 0
+let g:ale_open_list = 1
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_sign_column_always = 0
+let g:ale_lint_delay = 1000
+
+let g:ale_completion_autoimport = 1
+let g:ale_completion_enabled = 1
+set omnifunc=ale#completion#OmniFunc
+
+let g:ale_go_golangci_lint_package = 1
+let g:ale_sh_shfmt_options = '-i=2'
 let g:ale_sql_sqlformat_options = '--reindent --indent_after_first --indent_columns --keywords upper --identifiers lower'
+
+augroup ALEConfig
+      autocmd!
+      nnoremap gd :ALEGoToDefinition<CR>
+      nnoremap K  :ALEHover<CR>
+      autocmd Filetype go let b:ale_fixers = ['gofmt', 'goimports']
+      autocmd Filetype go let b:ale_linters = ['gopls', 'govet', 'golangci_lint']
+      autocmd Filetype javascript,typescript,typescriptreact let b:ale_fixers = ['prettier', 'eslint']
+      autocmd Filetype javascript,typescript,typescriptreact let b:ale_linters = ['tsserver', 'eslint']
+      autocmd Filetype json,jsonc let b:ale_fixers = ['prettier']
+      autocmd Filetype json,jsonc let b:ale_linters = ['jq']
+      autocmd Filetype markdown let b:ale_fixers = ['prettier', 'textlint']
+      autocmd Filetype markdown let b:ale_linters = ['textlint']
+      autocmd Filetype sh let b:ale_fixers = ['shfmt']
+      autocmd Filetype sql let b:ale_fixers = ['sqlformat']
+      autocmd Filetype terraform let b:ale_fixers = ['terraform']
+
+      let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
+augroup END

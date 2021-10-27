@@ -1,6 +1,7 @@
 .tmp/
 .mypy_cache/
 .envrc
+.vimrc
 *.local
 *.orig
 
