@@ -4,6 +4,7 @@
 .vimrc
 *.local
 *.orig
+*.rej
 
 # Source trail
 

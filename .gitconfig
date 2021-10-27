@@ -5,6 +5,7 @@
 	autocrlf = input
 	excludesfile = ~/.gitignore.global
 	quotepath = false
+	ignorecase = false
 [color]
 	ui = auto
 [alias]
