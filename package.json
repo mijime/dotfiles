@@ -4,18 +4,17 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "eslint": "^7.32.0",
-    "lighthouse": "^8.1.0",
+    "aws-cdk": "^1.129.0",
+    "eslint": "^8.1.0",
+    "lighthouse": "^8.6.0",
     "pa11y": "^6.0.1",
-    "prettier": "^2.3.2",
-    "puppeteer": "^10.1.0",
-    "pyright": "^1.1.159",
-    "semantic-release": "^17.4.4",
+    "prettier": "^2.4.1",
+    "puppeteer": "^10.4.0",
+    "semantic-release": "^18.0.0",
     "textlint": "^12.0.2",
     "textlint-rule-preset-ja-technical-writing": "^7.0.0",
     "textlint-rule-preset-japanese": "^7.0.0",
-    "textlint-rule-preset-jtf-style": "^2.3.12",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -31,8 +30,7 @@
   },
   "homepage": "https://github.com/mijime/dotfiles#readme",
   "volta": {
-    "node": "16.6.0",
-    "npm": "7.20.3",
-    "yarn": "1.22.10"
+    "node": "16.13.0",
+    "yarn": "1.22.17"
   }
 }

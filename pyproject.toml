@@ -20,6 +20,7 @@ tinysegmenter = "^0.4"
 numpy = "^1.19.4"
 sqlfluff = "^0.3.6"
 online-judge-tools = "^11.2.0"
+podman-compose = "^0.1.5"
 
 [tool.poetry.dev-dependencies]
 
