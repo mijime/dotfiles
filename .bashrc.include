@@ -70,6 +70,7 @@ a9e_cd() {
 }
 
 trap "a9e_cd --save >/dev/null" EXIT
+touch ~/.cd_history
 a9e_cd --load >/dev/null
 alias cd=a9e_cd
 
