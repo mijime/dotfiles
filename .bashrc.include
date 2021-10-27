@@ -28,7 +28,7 @@ for cmp in "${homebrew_prefix}/etc/bash_completion.d"/*; do source "${cmp}"; don
 export PATH="${PATH}:${HOME}/.dotfiles/bin:${HOME}/.dotfiles/node_modules/.bin"
 
 if type exa >/dev/null 2>&1; then
-  alias ls='exa'
+  alias ls='exa --git'
 fi
 alias ll='ls -l'
 export TRASH_DIR=${HOME}/.Trash
