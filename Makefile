@@ -1,4 +1,7 @@
-GOTOOLS = github.com/cweill/gotests/gotests@latest \
+GOTOOLS = \
+					github.com/NYTimes/openapi2proto/cmd/openapi2proto@latest \
+					github.com/cweill/gotests/gotests@latest \
+					github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest \
 					github.com/golang/mock/mockgen@latest \
 					github.com/googleapis/gnostic@latest \
 					github.com/jackc/sqlfmt/cmd/sqlfmt@latest \
