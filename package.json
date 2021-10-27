@@ -9,7 +9,6 @@
     "lighthouse": "^8.6.0",
     "pa11y": "^6.0.1",
     "prettier": "^2.4.1",
-    "puppeteer": "^10.4.0",
     "semantic-release": "^18.0.0",
     "textlint": "^12.0.2",
     "textlint-rule-preset-ja-technical-writing": "^7.0.0",
