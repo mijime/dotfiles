@@ -31,7 +31,6 @@ brew 'rsync'
 brew 'ripgrep'
 brew 'grex'
 brew 'coreutils'
-brew 'oauth2l'
 brew 'emojify'
 brew 'grpcurl'
 
@@ -42,6 +41,9 @@ if platform == :darwin
 
   tap 'itchyny/tap'
   brew 'itchyny/tap/mmv'
+
+  tap 'hashicorp/tap'
+  brew 'hashicorp/tap/terraform-ls'
 end
 
 # git
@@ -60,9 +62,6 @@ brew 'terraformer'
 brew 'tfenv'
 brew 'tflint'
 brew 'tfsec'
-
-tap 'hashicorp/tap'
-brew 'hashicorp/tap/terraform-ls'
 
 # cloud/aws
 
