@@ -1,0 +1,4 @@
+*** Weekly <{{_expr_:strftime('%Y-%m-%d %a')}}>				:gtd:
+**** Review
+***** Good
+***** Bad

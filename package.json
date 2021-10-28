@@ -11,6 +11,7 @@
     "prettier": "^2.4.1",
     "semantic-release": "^18.0.0",
     "textlint": "^12.0.2",
+    "textlint-plugin-org": "^0.2.2",
     "textlint-rule-preset-ja-technical-writing": "^7.0.0",
     "textlint-rule-preset-japanese": "^7.0.0",
     "typescript": "^4.4.4"
