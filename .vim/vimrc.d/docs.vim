@@ -21,7 +21,7 @@ augroup MyOrg
 augroup END
 
 Plug 'glidenote/memolist.vim', {'on':['MemoNew', 'MemoList', 'MemoGrep']}
-let g:memolist_path = '$HOME/.org/'
+let g:memolist_path = '$HOME/.org'
 let g:memolist_fzf = 1
 let g:memolist_template_dir_path = "~/.vim/templates/memolist"
 let g:memolist_memo_date = '%Y-%m-%dT%H:%M:%S%z'
