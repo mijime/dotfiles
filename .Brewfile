@@ -31,21 +31,19 @@ brew 'rsync'
 brew 'ripgrep'
 brew 'grex'
 brew 'coreutils'
-brew 'oauth2l'
 brew 'emojify'
 brew 'grpcurl'
-brew 'lab'
-
-tap 'yudai/gotty'
-brew 'yudai/gotty/gotty'
-
-tap 'itchyny/tap'
-brew 'itchyny/tap/mmv'
 
 if platform == :darwin
   brew 'bash'
   brew 'gawk'
   brew 'reattach-to-user-namespace'
+
+  tap 'itchyny/tap'
+  brew 'itchyny/tap/mmv'
+
+  tap 'hashicorp/tap'
+  brew 'hashicorp/tap/terraform-ls'
 end
 
 # git
@@ -53,9 +51,10 @@ end
 brew 'git'
 brew 'gibo'
 brew 'tig'
-brew 'hub'
 brew 'git-secret'
 brew 'gh'
+brew 'hub'
+brew 'lab'
 
 # cloud/terraform
 
@@ -63,9 +62,6 @@ brew 'terraformer'
 brew 'tfenv'
 brew 'tflint'
 brew 'tfsec'
-
-tap 'hashicorp/tap'
-brew 'hashicorp/tap/terraform-ls'
 
 # cloud/aws
 

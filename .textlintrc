@@ -2,5 +2,8 @@
   "rules": {
     "preset-japanese": true,
     "preset-ja-technical-writing": true
-  }
+  },
+  "plugins": [
+    "org"
+  ]
 }

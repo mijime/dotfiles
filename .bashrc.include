@@ -23,12 +23,13 @@ export PATH="${homebrew_prefix}/bin:${homebrew_prefix}/sbin:${PATH}"
 export PATH="${homebrew_prefix}/opt/openssl/bin:${PATH}"
 export PATH="${homebrew_prefix}/opt/coreutils/libexec/gnubin:${PATH}"
 export MANPATH="${homebrew_prefix}/opt/coreutils/libexec/gnuman:${MANPATH}"
-for cmp in "${homebrew_prefix}/etc/bash_completion.d"/*; do source "${cmp}"; done
+for src in "${homebrew_prefix}/etc/profile.d"/*.sh; do source "${src}"; done
+for src in "${homebrew_prefix}/etc/bash_completion.d"/*; do source "${src}"; done
 
 export PATH="${PATH}:${HOME}/.dotfiles/bin:${HOME}/.dotfiles/node_modules/.bin"
 
 if type exa >/dev/null 2>&1; then
-  alias ls='exa'
+  alias ls='exa --git'
 fi
 alias ll='ls -l'
 export TRASH_DIR=${HOME}/.Trash
@@ -70,6 +71,7 @@ a9e_cd() {
 }
 
 trap "a9e_cd --save >/dev/null" EXIT
+touch ~/.cd_history
 a9e_cd --load >/dev/null
 alias cd=a9e_cd
 

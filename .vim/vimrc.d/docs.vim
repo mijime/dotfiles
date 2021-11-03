@@ -12,12 +12,18 @@ augroup END
 
 Plug 'tpope/vim-speeddating', {'for':['org']}
 Plug 'jceb/vim-orgmode', {'for':['org']}
-let g:org_agenda_files=['~/org/*.org']
+let g:org_agenda_files=split(expand('$HOME/.org/**/*.org'), '\n')
+
+augroup MyOrg
+  autocmd!
+  autocmd FileType org let b:did_ftplugin=1
+  autocmd FileType org set conceallevel=0
+augroup END
 
 Plug 'glidenote/memolist.vim', {'on':['MemoNew', 'MemoList', 'MemoGrep']}
-let g:memolist_path = '$HOME/.config/memo/_posts'
+let g:memolist_path = '$HOME/.org'
 let g:memolist_fzf = 1
 let g:memolist_template_dir_path = "~/.vim/templates/memolist"
 let g:memolist_memo_date = '%Y-%m-%dT%H:%M:%S%z'
 let g:memolist_filename_date = '%Y/%m/%d/'
-let g:memolist_memo_suffix = "md"
+let g:memolist_memo_suffix = "org"

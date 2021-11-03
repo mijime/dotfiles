@@ -30,6 +30,10 @@ augroup END
 Plug 'junegunn/vim-easy-align', {'on':['EasyAlign']}
 Plug 'junegunn/gv.vim', {'on':['GV']}
 
-Plug 'mattn/vim-sonictemplate', {'on':['Template']}
+Plug 'mattn/vim-sonictemplate'
+ let g:sonictemplate_vim_template_dir = [
+  \ '$HOME/.vim/templates/sonic/',
+  \ '$HOME/.vim/templates/sonic.local/',
+  \ ]
 
 Plug 'tpope/vim-fireplace', {'for': 'clojure'}
