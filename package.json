@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "aws-cdk": "^1.129.0",
+    "aws-cdk": "^1.130.0",
     "eslint": "^8.1.0",
     "lighthouse": "^8.6.0",
     "pa11y": "^6.0.1",
