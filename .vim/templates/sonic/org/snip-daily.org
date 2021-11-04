@@ -1,1 +1,1 @@
-*** Daily <{{_expr_:strftime('%Y-%m-%d %a')}}> [0/0]				:gtd:
+*** <{{_expr_:strftime('%Y-%m-%d %a')}}>						:gtd:
