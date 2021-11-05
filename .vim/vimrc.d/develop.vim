@@ -37,3 +37,13 @@ Plug 'mattn/vim-sonictemplate'
   \ ]
 
 Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+
+augroup AutoSaveSettings
+      autocmd!
+      command AutoSaveEnable autocmd AutoSaveSettings BufWritePost *
+                        \ cd %:h |
+                        \ :silent execute system("git add ". expand("%"). " >/dev/null") |
+                        \ :silent execute system("git commit -m \"AutoSave ".expand("%:.")."\" ". expand("%"). " >/dev/null") |
+                        \ cd -
+      command AutoSaveDisable autocmd! AutoSaveSettings BufWritePost *
+augroup END
