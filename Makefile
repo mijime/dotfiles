@@ -32,6 +32,7 @@ gotools_install:
 		CGO_ENABLED=0 go install -v $$gotool; \
 		done
 	cd $(shell git rev-parse --show-toplevel)/gotools && \
+		CGO_ENABLED=0 go generate ./... \
 		CGO_ENABLED=0 go install -v ./...
 
 gotools_update:
