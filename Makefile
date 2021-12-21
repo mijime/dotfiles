@@ -22,7 +22,7 @@ brew_install:
 	brew bundle install --global
 
 brew_update:
-	brew upgrade
+	brew update --preinstall
 	make brew_install
 	brew bundle cleanup --global
 
