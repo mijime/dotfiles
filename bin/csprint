@@ -39,6 +39,7 @@ rest_breaking_time=${CSPRINT_REST_BREAKING_TIME:-60min}
 tasks_complete_icon=${CSPRINT_TASKS_COMPLETE_ICON:-white_check_mark}
 tasks_icon=${CSPRINT_TASKS_ICON:-pencil2}
 tasks_status=${CSPRINT_TASKS_STATUS:-needsAction}
+tasks_due=
 
 enable_status=${CSPRINT_ENABLE_STATUS:-1}
 enable_cache=${CSPRINT_ENABLE_CACHE:-1}
@@ -167,7 +168,8 @@ main() {
       time_box=month && shift
       ;;
     --due)
-      tasks_due=$2
+      tasks_due=$(date +%FT%T%z \
+        --date "$2")
       shift 2
       ;;
     --status)
@@ -247,10 +249,7 @@ main() {
 }
 pomodoro() {
   if [[ -z ${pomodoro_text} ]]; then
-    pomodoro_text=$({
-      echo "@misc XXX"
-      cmd:tasks:list
-    } |
+    pomodoro_text=$(cmd:tasks:list |
       util:text:select |
       util:text:input)
   fi
@@ -333,13 +332,12 @@ tasks() {
   cmd:tasks:list
 }
 tasks_add() {
-  local tasks_text_lines tasks_text tasks_due tasks_due_in_text
-  tasks_text_lines=$({
-    echo "@misc XXX"
-    cmd:tasks:list
-  } |
-    util:text:select |
-    util:text:input)
+  local tasks_text_lines tasks_text tasks_due_local tasks_due_in_text
+  tasks_text_lines=$(
+    cmd:tasks:list |
+      util:text:select |
+      util:text:input
+  )
   if [[ -z ${tasks_text_lines} ]]; then
     echo -ne "[E] require text\n" 1>&2
     return 1
@@ -347,18 +345,20 @@ tasks_add() {
   echo "${tasks_text_lines}" | while read -r tasks_text; do
     tasks_due_in_text=$(util:extract:due "${tasks_text}")
     if [[ -n ${tasks_due_in_text} ]]; then
-      tasks_due=$(date +%FT%T%z \
+      tasks_due_local=$(date +%FT%T%z \
         --date "${tasks_due_in_text}")
     else
-      if [[ -z ${tasks_due} ]]; then
-        tasks_due=$(date:sprint_curr_ended +%FT%T%z)
+      if [[ -n ${tasks_due} ]]; then
+        tasks_due_local=${tasks_due}
+      else
+        tasks_due_local=$(date:sprint_curr_ended +%FT%T%z)
       fi
     fi
     util:plugin:call "${plugins_tasks}" tasks:add \
       --icon "${tasks_icon}" \
       --text "${tasks_text}" \
       --project "$(util:extract:project "${tasks_text}")" \
-      --due "${tasks_due}"
+      --due "${tasks_due_local}"
   done
 }
 tasks_complete() {
