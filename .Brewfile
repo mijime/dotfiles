@@ -31,7 +31,6 @@ brew 'rsync'
 brew 'ripgrep'
 brew 'grex'
 brew 'coreutils'
-brew 'emojify'
 brew 'grpcurl'
 
 if platform == :darwin
