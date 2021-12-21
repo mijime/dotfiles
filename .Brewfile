@@ -141,6 +141,7 @@ brew 'helm'
 brew 'skaffold'
 brew 'stern'
 brew 'glooctl'
+brew 'kn'
 
 # sql
 
