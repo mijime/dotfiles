@@ -3,6 +3,7 @@ GOTOOLS = \
 					github.com/cweill/gotests/gotests@latest \
 					github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest \
 					github.com/golang/mock/mockgen@latest \
+					github.com/google/skicka@latest \
 					github.com/googleapis/gnostic@latest \
 					github.com/jackc/sqlfmt/cmd/sqlfmt@latest \
 					github.com/jfeliu007/goplantuml/cmd/goplantuml@latest \
