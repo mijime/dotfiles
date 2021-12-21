@@ -860,6 +860,7 @@ components:
             type: string
         pid:
           type: integer
+          minLength: 1
         created_with:
           type: string
           minLength: 1
