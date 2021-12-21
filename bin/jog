@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+
+set -ueo pipefail
+
+cmd="view"
+hist_dir=${JOG_HIST_PATH:-~/.jog_history.d}
+hist_size=${JOG_HIST_SIZE:-20}
+hook_action=jogfile
+while [[ $# -gt 0 ]]; do
+  case $1 in
+  view | hook)
+    cmd=$1
+    shift 1
+    ;;
+  -d | --dir)
+    hist_dir=$2
+    shift 2
+    ;;
+  -n | --number)
+    hist_size=$2
+    shift 2
+    ;;
+  -a | --action)
+    hook_action=$2
+    shift 2
+    ;;
+  --jogfile)
+    hook_action=jogfile
+    shift 1
+    ;;
+  --histfile)
+    hook_action=histfile
+    shift 1
+    ;;
+  --none)
+    hook_action=none
+    shift 1
+    ;;
+  *)
+    echo "[ERROR] unsupported flag: $*" >&2
+    exit 1
+    ;;
+  esac
+done
+
+case "${cmd}" in
+view)
+  tac "${hist_dir}/${PWD}.jog_history" | uniq | head -n "${hist_size}"
+  ;;
+hook)
+  case ${hook_action} in
+  jogfile)
+    cat <<EOF
+_jog_exec() {
+  mkdir -p "\$(dirname "${hist_dir}/\${PWD}")"
+  history 1 | sed -e "s/^ *[0-9]* *//g" >>"${hist_dir}/\${PWD}.jog_history"
+}
+EOF
+    ;;
+  histfile)
+    cat <<EOF
+_jog_exec() {
+  history -a
+  mkdir -p "\$(dirname "${hist_dir}/\${PWD}")"
+  export HISTFILE="${hist_dir}/\${PWD}.raw_history"
+  history -c
+  history -r
+}
+EOF
+    ;;
+  *)
+    cat <<EOF
+_jog_exec() { :; }
+EOF
+    ;;
+  esac
+  cat <<EOF
+_jog_hook() {
+  local previous_exit_status=\$?
+  trap -- '' SIGINT
+
+  _jog_exec
+
+  trap - SIGINT
+  return \${previous_exit_status}
+}
+if ! [[ "\${PROMPT_COMMAND:-}" =~ _jog_hook ]]; then
+  export PROMPT_COMMAND="\${PROMPT_COMMAND:+\${PROMPT_COMMAND};}_jog_hook"
+fi
+EOF
+  ;;
+esac
