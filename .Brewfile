@@ -31,7 +31,6 @@ brew 'rsync'
 brew 'ripgrep'
 brew 'grex'
 brew 'coreutils'
-brew 'emojify'
 brew 'grpcurl'
 
 if platform == :darwin
@@ -141,6 +140,7 @@ brew 'helm'
 brew 'skaffold'
 brew 'stern'
 brew 'glooctl'
+brew 'kn'
 
 # sql
 
@@ -174,6 +174,8 @@ brew 'translate-shell'
 brew 'efm-langserver'
 brew 'xsv'
 brew 'terminal-notifier' if platform == :darwin
+tap 'rhysd/hgrep'
+brew 'rhysd/hgrep/hgrep'
 
 # misc/application
 

@@ -3,6 +3,7 @@ GOTOOLS = \
 					github.com/cweill/gotests/gotests@latest \
 					github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest \
 					github.com/golang/mock/mockgen@latest \
+					github.com/google/skicka@latest \
 					github.com/googleapis/gnostic@latest \
 					github.com/jackc/sqlfmt/cmd/sqlfmt@latest \
 					github.com/jfeliu007/goplantuml/cmd/goplantuml@latest \
@@ -21,7 +22,7 @@ brew_install:
 	brew bundle install --global
 
 brew_update:
-	brew upgrade
+	brew update --preinstall
 	make brew_install
 	brew bundle cleanup --global
 
@@ -31,6 +32,7 @@ gotools_install:
 		CGO_ENABLED=0 go install -v $$gotool; \
 		done
 	cd $(shell git rev-parse --show-toplevel)/gotools && \
+		CGO_ENABLED=0 go generate ./... \
 		CGO_ENABLED=0 go install -v ./...
 
 gotools_update:

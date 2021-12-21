@@ -1,0 +1,427 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+time_box=${CSPRINT_TIME_BOX:-day}
+time_begin=${CSPRINT_TIME_BEGIN:-10:00}
+time_ended=${CSPRINT_TIME_ENDED:-19:00}
+format_due=${CSPRINT_FORMAT_DUE:-"<(\d{4}-\d{2}-\d{2}[ZT0-9:+]*)>"}
+format_project=${CSPRINT_FORMAT_PROJECT:-"@(\w+)"}
+
+plugins_check_in=${CSPRINT_PLUGINS_CHECK_IN:-}
+plugins_check_out=${CSPRINT_PLUGINS_CHECK_OUT:-${CSPRINT_PLUGINS_CHECK_IN:-}}
+plugins_comments=${CSPRINT_PLUGINS_COMMENTS:-}
+plugins_events=${CSPRINT_PLUGINS_EVENTS:-}
+plugins_pomodoro=${CSPRINT_PLUGINS_POMODORO:-}
+plugins_rest=${CSPRINT_PLUGINS_REST:-}
+plugins_status=${CSPRINT_PLUGINS_STATUS:-}
+plugins_tasks=${CSPRINT_PLUGINS_TASKS:-}
+
+check_in_icon=${CSPRINT_CHECK_IN_ICON:-sunrise}
+check_in_text=${CSPRINT_CHECK_IN_TEXT:-出勤}
+check_out_icon=${CSPRINT_CHECK_OUT_ICON:-city_sunset}
+check_out_text=${CSPRINT_CHECK_OUT_TEXT:-退勤}
+
+comments_file=${CSPRINT_COMMENTS_FILE:-}
+comments_text=${CSPRINT_COMMENTS_TEXT:-}
+
+pomodoro_breaking_icon=${CSPRINT_POMODORO_BREAKING_ICON:-coffee}
+pomodoro_breaking_time=${CSPRINT_POMODORO_BREAKING_TIME:-5min}
+pomodoro_command=${CSPRINT_COMMAND:-${SHELL}}
+pomodoro_running_icon=${CSPRINT_POMODORO_RUNNING_ICON:-dart}
+pomodoro_running_time=${CSPRINT_POMODORO_RUNNING_TIME:-25min}
+pomodoro_text=${CSPRINT_POMODORO_TEXT:-}
+
+rest_icon=${CSPRINT_REST_ICON:-coffee}
+rest_text=${CSPRINT_REST_TEXT:-休憩}
+rest_breaking_time=${CSPRINT_REST_BREAKING_TIME:-60min}
+
+tasks_complete_icon=${CSPRINT_TASKS_COMPLETE_ICON:-white_check_mark}
+tasks_icon=${CSPRINT_TASKS_ICON:-pencil2}
+tasks_status=${CSPRINT_TASKS_STATUS:-needsAction}
+
+enable_status=${CSPRINT_ENABLE_STATUS:-1}
+enable_cache=${CSPRINT_ENABLE_CACHE:-1}
+cache_key=$(date +%FT%H)
+
+check_in() {
+  util:plugin:call "${plugins_check_in}" check:in \
+    --icon "${check_in_icon}" \
+    --text "${check_in_text}" \
+    --project "$(util:extract:project "${check_in_text}")"
+}
+check_out() {
+  util:plugin:call "${plugins_check_out}" check:out \
+    --icon "${check_out_icon}" \
+    --text "${check_out_text}" \
+    --project "$(util:extract:project "${check_out_text}")"
+}
+cmd:tasks:list() {
+  util:plugin:call "${plugins_tasks}" tasks:list \
+    --status "${tasks_status}"
+}
+comments() {
+  util:plugin:call "${plugins_comments}" comments:list | emojify
+}
+comments_add() {
+  local text
+  if [[ -n ${comments_text} ]]; then
+    text=${comments_text}
+  else
+    if [[ -f ${comments_file} ]]; then
+      text=$(cat "${comments_file}")
+    else
+      if [[ -p /dev/stdin ]]; then
+        text=$(cat)
+      else
+        text=$(util:text:input)
+      fi
+    fi
+  fi
+  if [[ -z ${text} ]]; then
+    return 1
+  fi
+  util:plugin:call "${plugins_comments}" comments:add \
+    --text "${text}" \
+    --project "$(util:extract:project "${text}")"
+}
+csprint_plugin_status() {
+  if [[ -z ${enable_status} ]]; then
+    return 0
+  fi
+  util:plugin:call "${plugins_status}" status:list | emojify
+}
+date:sprint_curr_begin() {
+  date "$@" \
+    --date "$(date +%FT%T%z \
+      --date "$(date +%F) ${time_begin}")"
+}
+date:sprint_curr_ended() {
+  date "$@" \
+    --date "$(date +%FT%T%z \
+      --date "$(date +%F) ${time_ended}")"
+}
+date:sprint_next_begin() {
+  date "$@" \
+    --date "$(date +%FT%T%z \
+      --date "$(date +%F) ${time_box} ${time_begin}")"
+}
+date:sprint_next_ended() {
+  date "$@" \
+    --date "$(date +%FT%T%z \
+      --date "$(date +%F) ${time_box} ${time_ended}")"
+}
+date:sprint_prev_ended() {
+  date "$@" \
+    --date "$(date +%FT%T%z \
+      --date "$(date +%F) ${time_box} ago ${time_ended}")"
+}
+events() {
+  LANG=C util:plugin:call "${plugins_events}" events:list | emojify
+}
+format:sec2hrdate() {
+  local sec sec_min sec_hour sec_day
+  sec=$1
+  sec_min=60
+  sec_hour=$(("${sec_min}" * 60))
+  sec_day=$(("${sec_hour}" * 24))
+  if [[ ${sec} -le $(("${sec_min}" * 2)) ]]; then
+    echo "${sec}s"
+  else
+    if [[ ${sec} -le $(("${sec_hour}" * 2)) ]]; then
+      echo "$(("${sec}" / "${sec_min}"))m"
+    else
+      if [[ ${sec} -le $(("${sec_day}" * 2)) ]]; then
+        echo "$(("${sec}" / "${sec_hour}"))h"
+      else
+        echo "$(("${sec}" / "${sec_day}"))d"
+      fi
+    fi
+  fi
+}
+functions() {
+  declare -f | perl -pe "s/--(\w)/\\\\\n--\1/g" | shfmt | grep -v "^$"
+}
+main() {
+  local cmd=$1
+  shift
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --enable-cache)
+      enable_cache=1 && shift
+      ;;
+    --no-cache | \
+      --disable-cache)
+      enable_cache= && shift
+      ;;
+    --time-box)
+      time_box=$2 && shift 2
+      ;;
+    --day)
+      time_box=day && shift
+      ;;
+    --week)
+      time_box=week && shift
+      ;;
+    --month)
+      time_box=month && shift
+      ;;
+    --due)
+      tasks_due=$2
+      shift 2
+      ;;
+    --status)
+      tasks_status=$2
+      shift 2
+      ;;
+    --file)
+      comments_file=$2
+      shift 2
+      ;;
+    --icon)
+      pomodoro_running_icon=$2
+      rest_icon=$2
+      tasks_icon=$2
+      check_in_icon=$2
+      check_out_icon=$2
+      shift 2
+      ;;
+    --text)
+      comments_text=$2
+      pomodoro_text=$2
+      rest_text=$2
+      shift 2
+      ;;
+    --command)
+      shift
+      pomodoro_command=("$@")
+      break
+      ;;
+    --running)
+      pomodoro_running_time=$2 && shift 2
+      ;;
+    --breaking)
+      pomodoro_breaking_time=$2 && shift 2
+      rest_breaking_time=$2 && shift 2
+      ;;
+    --use-plugin)
+      plugins_status=$2
+      plugins_check_in=$2
+      plugins_check_out=$2
+      plugins_comments=$2
+      plugins_events=$2
+      plugins_pomodoro=$2
+      plugins_rest=$2
+      plugins_tasks=$2
+      shift 2
+      ;;
+    --no-plugin)
+      plugins_status=${plugins_status//$2/}
+      plugins_check_in=${plugins_check_in//$2/}
+      plugins_check_out=${plugins_check_out//$2/}
+      plugins_comments=${plugins_comments//$2/}
+      plugins_events=${plugins_events//$2/}
+      plugins_pomodoro=${plugins_pomodoro//$2/}
+      plugins_rest=${plugins_rest//$2/}
+      plugins_tasks=${plugins_tasks//$2/}
+      shift 2
+      ;;
+    --add-plugin)
+      plugins_status="${plugins_status} $2"
+      plugins_check_in="${plugins_check_in} $2"
+      plugins_check_out="${plugins_check_out} $2"
+      plugins_comments="${plugins_comments} $2"
+      plugins_events="${plugins_events} $2"
+      plugins_pomodoro="${plugins_pomodoro} $2"
+      plugins_rest="${plugins_rest} $2"
+      plugins_tasks="${plugins_tasks} $2"
+      shift 2
+      ;;
+    *)
+      echo "[E] unsupported flags: $*" 1>&2
+      return 1
+      ;;
+    esac
+  done
+  "${cmd}"
+}
+pomodoro() {
+  if [[ -z ${pomodoro_text} ]]; then
+    pomodoro_text=$({
+      echo "@misc XXX"
+      cmd:tasks:list
+    } |
+      util:text:select |
+      util:text:input)
+  fi
+  if [[ -z ${pomodoro_text} ]]; then
+    echo -ne "[E] require text\n" 1>&2
+    return 1
+  fi
+  pomodoro_dir=$(mktemp \
+    --directory)
+  util:plugin:call "${plugins_pomodoro}" pomodoro:begin \
+    --icon "${pomodoro_running_icon}" \
+    --text "${pomodoro_text}" \
+    --project "$(util:extract:project "${pomodoro_text}")" \
+    --dir "${pomodoro_dir}" \
+    --running "${pomodoro_running_time}" \
+    --breaking "${pomodoro_breaking_time}"
+  pomodoro_begin_sec=$(date +%s)
+  pomodoro_result=begin
+  while true; do
+    case ${pomodoro_result} in
+    begin | continue)
+      POMODORO_COMMIT_MSG="${pomodoro_text}" "${pomodoro_command[@]}" || true
+      pomodoro_result=$(
+        echo -ne "break\ncomplete\ncontinue\n" |
+          util:text:select
+      )
+      ;;
+    break | complete)
+      pomodoro_ended_sec=$((("$(date +%s)" - "${pomodoro_begin_sec}")))
+      echo "[I] ${pomodoro_result}: ${pomodoro_text} ($(format:sec2hrdate "${pomodoro_ended_sec}"))" 1>&2
+      util:plugin:call "${plugins_pomodoro}" "pomodoro:${pomodoro_result}" \
+        --icon "${pomodoro_breaking_icon}" \
+        --text "${pomodoro_text}" \
+        --project "$(util:extract:project "${pomodoro_text}")" \
+        --dir "${pomodoro_dir}" \
+        --running "${pomodoro_running_time}" \
+        --breaking "${pomodoro_breaking_time}" \
+        --duration "${pomodoro_ended_sec}"
+      break
+      ;;
+    esac
+  done
+  util:plugin:call "${plugins_pomodoro}" "pomodoro:cleanup" \
+    --icon "${pomodoro_breaking_icon}" \
+    --text "${pomodoro_text}" \
+    --project "$(util:extract:project "${pomodoro_text}")" \
+    --dir "${pomodoro_dir}" \
+    --running "${pomodoro_running_time}" \
+    --breaking "${pomodoro_breaking_time}" \
+    --duration "${pomodoro_ended_sec}"
+  rmdir "${pomodoro_dir}"
+}
+rest() {
+  rest_dir=$(mktemp \
+    --directory)
+  util:plugin:call "${plugins_rest}" "rest:in" \
+    --icon "${rest_icon}" \
+    --text "${rest_text}" \
+    --project "$(util:extract:project "${rest_text}")" \
+    --dir "${rest_dir}" \
+    --breaking "${rest_breaking_time}"
+  rest_begin_sec=$(date +%s)
+  echo -ne ":${rest_icon}: ${rest_text} (begin: $(date +%FT%T \
+    --date "@${rest_begin_sec}"))\n" | emojify 1>&2
+  read -r _
+  rest_ended_sec=$((("$(date +%s)" - "${rest_begin_sec}")))
+  echo -ne ":${rest_icon}: ${rest_text} (ended: $(format:sec2hrdate "${rest_ended_sec}"))\n" | emojify 1>&2
+  util:plugin:call "${plugins_rest}" "rest:out" \
+    --icon "${rest_icon}" \
+    --text "${rest_text}" \
+    --project "$(util:extract:project "${rest_text}")" \
+    --dir "${rest_dir}" \
+    --duration "${rest_ended_sec}"
+  rmdir "${rest_dir}"
+}
+status() {
+  util:plugin:call "${plugins_status}" status:list | emojify
+}
+tasks() {
+  cmd:tasks:list
+}
+tasks_add() {
+  local tasks_text_lines tasks_text tasks_due tasks_due_in_text
+  tasks_text_lines=$({
+    echo "@misc XXX"
+    cmd:tasks:list
+  } |
+    util:text:select |
+    util:text:input)
+  if [[ -z ${tasks_text_lines} ]]; then
+    echo -ne "[E] require text\n" 1>&2
+    return 1
+  fi
+  echo "${tasks_text_lines}" | while read -r tasks_text; do
+    tasks_due_in_text=$(util:extract:due "${tasks_text}")
+    if [[ -n ${tasks_due_in_text} ]]; then
+      tasks_due=$(date +%FT%T%z \
+        --date "${tasks_due_in_text}")
+    else
+      if [[ -z ${tasks_due} ]]; then
+        tasks_due=$(date:sprint_curr_ended +%FT%T%z)
+      fi
+    fi
+    util:plugin:call "${plugins_tasks}" tasks:add \
+      --icon "${tasks_icon}" \
+      --text "${tasks_text}" \
+      --project "$(util:extract:project "${tasks_text}")" \
+      --due "${tasks_due}"
+  done
+}
+tasks_complete() {
+  local tasks_text tasks_due
+  tasks_text=$(
+    cmd:tasks:list |
+      util:text:select
+  )
+  if [[ -z ${tasks_text} ]]; then
+    echo -ne "[E] require text\n" 1>&2
+    return 1
+  fi
+  util:plugin:call "${plugins_tasks}" tasks:complete \
+    --icon "${tasks_complete_icon}" \
+    --text "${tasks_text}" \
+    --project "$(util:extract:project "${tasks_text}")"
+}
+tasks_edit() {
+  util:plugin:call "${plugins_tasks}" tasks:edit \
+    --icon "${tasks_icon}"
+}
+util:cache() {
+  local cache_file
+  cache_file="${TMPDIR:-/tmp}/$(basename "$0")-$(basename "$1")-$(echo "${cache_key} $*" | md5sum | awk '{print$1}').dat"
+  if [[ ! -f "${cache_file}" ]] || [[ -z ${enable_cache} ]]; then
+    "${@}" >"${cache_file}"
+  fi
+  cat "${cache_file}"
+}
+util:extract:due() {
+  local text=$*
+  echo "${text}" | grep -E "${format_due}" | perl -pe "s%.*${format_due}.*%\1%" || true
+}
+util:extract:project() {
+  local text=$*
+  echo "${text}" | grep -E "${format_project}" | perl -pe "s%.*${format_project}.*%\1%" || true
+}
+util:plugin:call() {
+  local plugins
+  IFS=' ' read -r -a plugins <<<"$1"
+  local cmd=$2
+  shift 2
+  for plug in "${plugins[@]}"; do
+    "csprint_plugin_${plug}" "${cmd}" \
+      --csprint-prev-ended "$(date:sprint_prev_ended +%FT%T%z)" \
+      --csprint-begin "$(date:sprint_curr_begin +%FT%T%z)" \
+      --csprint-ended "$(date:sprint_curr_ended +%FT%T%z)" \
+      --csprint-next-begin "$(date:sprint_next_begin +%FT%T%z)" "$@"
+  done
+}
+util:text:input() {
+  tempfile=$(mktemp \
+    --suffix=.txt)
+  trap 'rm ${tempfile}' EXIT
+  if [[ -p /dev/stdin ]]; then
+    cat >"${tempfile}"
+  fi
+  ${EDITOR:-vim} "${tempfile}" </dev/tty >/dev/tty
+  emojify <"${tempfile}"
+}
+util:text:select() {
+  fzf \
+    --select-1
+}
+
+main "$@"

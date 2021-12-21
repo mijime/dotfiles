@@ -2,8 +2,8 @@
 
 set -Eeuo pipefail
 
-gtasks__google_profile=${GTASKS_BEAREQ_PROFILE:-"default"}
-gtasks__tasklist_id=${GTASKS_BEAREQ_TASKLIST:-""}
+gtasks__google_profile=${GTASKS_GOOGLE_BEAREQ_PROFILE:-${GOOGLE_BEAREQ_PROFILE:-"default"}}
+gtasks__tasklist_id=${GTASKS_GOOGLE_BEAREQ_TASKLIST:-${GOOGLE_BEAREQ_TASKLIST:-""}}
 
 cache_key=$(date +%F)
 with_cache() {

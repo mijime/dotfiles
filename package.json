@@ -4,17 +4,18 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "aws-cdk": "^1.130.0",
-    "eslint": "^8.1.0",
-    "lighthouse": "^8.6.0",
-    "pa11y": "^6.0.1",
-    "prettier": "^2.4.1",
-    "semantic-release": "^18.0.0",
-    "textlint": "^12.0.2",
+    "@architect/architect": "^9.4.2",
+    "aws-cdk": "^2.2.0",
+    "eslint": "^8.5.0",
+    "lighthouse": "^9.2.0",
+    "pa11y": "^6.1.1",
+    "prettier": "^2.5.1",
+    "semantic-release": "^18.0.1",
+    "textlint": "^12.1.0",
     "textlint-plugin-org": "^0.2.2",
     "textlint-rule-preset-ja-technical-writing": "^7.0.0",
     "textlint-rule-preset-japanese": "^7.0.0",
-    "typescript": "^4.4.4"
+    "typescript": "^4.5.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

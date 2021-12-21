@@ -16,8 +16,7 @@ let g:org_agenda_files=split(expand('$HOME/.org/**/*.org'), '\n')
 
 augroup MyOrg
   autocmd!
-  autocmd FileType org let b:did_ftplugin=1
-  autocmd FileType org set conceallevel=0
+  autocmd BufEnter *.org setlocal conceallevel=0
 augroup END
 
 Plug 'glidenote/memolist.vim', {'on':['MemoNew', 'MemoList', 'MemoGrep']}

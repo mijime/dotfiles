@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+send_kot() {
+  curl --fail -sSL https://s2.kingtime.jp/gateway/bprgateway \
+    --data-urlencode "id=$1" \
+    --data-urlencode "latitude=" \
+    --data-urlencode "longitude=" \
+    --data-urlencode "highAcPos=" \
+    --data-urlencode "lowAcPos=" \
+    --data-urlencode "highAccuracyFlg=false" \
+    --data-urlencode "credential_code=40" \
+    --data-urlencode "record_image=" \
+    --data-urlencode "version=1.4.15" \
+    --data-urlencode "comment=${comment}" \
+    --data-urlencode "user_token=${user_token}" \
+    --data-urlencode "unique_timestamp=$(date +%Y%m%d%H%M%S --date @"$(("${d_param}" / 1000))")" \
+    --data-urlencode "token=${token}" \
+    --data-urlencode "d_param=${d_param}" \
+    --compressed |
+    jq -r
+}
+
+user_token=${KOT_USER_TOKEN:-""}
+token=${KOT_TOKEN:-""}
+comment=
+d_param=$(($(date +%s%N) / 1000000))
+while [[ $# -gt 0 ]]; do
+  case $1 in
+  -u | --user-token)
+    user_token=$2
+    shift
+    ;;
+  -t | --token)
+    token=$2
+    shift
+    ;;
+  -c | --comment)
+    comment=$2
+    shift
+    ;;
+  check_in | check_out | rest_in | rest_out)
+    cmd=$1
+    ;;
+  esac
+  shift
+done
+
+case ${cmd} in
+check_in)
+  send_kot "qmXXCxw9WEWN3X/YrkMWuQ=="
+  ;;
+check_out)
+  send_kot "j8ekmJaw6W3M4w3i6hlSIQ=="
+  ;;
+rest_in)
+  send_kot "tgI75YcXVUW7d/VjiooYtA=="
+  ;;
+rest_out)
+  send_kot "1HnBUiZe8JiePXoZZkorfw=="
+  ;;
+*)
+  echo "[E] failed to match id: $*" >&2
+  exit 1
+  ;;
+esac

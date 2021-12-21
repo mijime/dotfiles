@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+set -ueo pipefail
+
+enable_google_calendar=${CSPRINT_ENABLE_GOOGLE_CALENDAR:-1}
+google_profile=${CSPRINT_GOOGLE_BEAREQ_PROFILE:-${GOOGLE_BEAREQ_PROFILE:-"default"}}
+google_calendar_icon=${CSPRINT_GOOGLE_CALENDAR_ICON:-calendar}
+
+cmd:events:list() {
+  local csprint_begin csprint_next_begin args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --csprint-begin)
+      csprint_begin=$2
+      shift 2
+      ;;
+    --csprint-next-begin)
+      csprint_next_begin=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  events:list \
+    --time-min "${csprint_begin}" \
+    --time-max "${csprint_next_begin}"
+}
+cmd:status:list() {
+  local csprint_begin csprint_next_begin args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --csprint-begin)
+      csprint_begin=$2
+      shift 2
+      ;;
+    --csprint-next-begin)
+      csprint_next_begin=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  events:list \
+    --time-min "${csprint_begin}" \
+    --time-max "${csprint_next_begin}" |
+    awk -F "\t" -v icon=":${google_calendar_icon}:" '$1!=""{print icon,$1}'
+}
+
+events:list() {
+  beareq-oapi \
+    --profile "${google_profile}" calendar.events.list \
+    --calendar-id primary \
+    --order-by startTime \
+    --show-deleted false \
+    --single-events true \
+    --jq '.items[]|select(.attendees and (.attendees[]|select(.self)|(.responseStatus=="accepted" or .responseStatus=="tentative")))|[.summary,.start.dateTime,.end.dateTime]|@tsv' \
+    "$@"
+}
+
+if [[ -z ${enable_google_calendar} ]]; then
+  return 0
+fi
+
+cmd=$1
+shift
+"cmd:${cmd}" "$@"

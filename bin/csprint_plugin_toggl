@@ -1,0 +1,138 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+enable_toggl=${CSPRINT_ENABLE_TOGGL:-1}
+workspace_id=${CSPRINT_TOGGL_WORKSPACE_ID:-${TOGGL_WORKSPACE_ID:-""}}
+
+cmd:pomodoro:begin() {
+  local text project args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --project)
+      project=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  toggl:entry:start:set_project --text "${text}" --project "${project}"
+}
+cmd:pomodoro:break() {
+  :
+}
+cmd:pomodoro:cleanup() {
+  toggl:entry:stop:current
+}
+cmd:pomodoro:complete() {
+  :
+}
+cmd:rest:in() {
+  local text project args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --project)
+      project=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+
+  toggl:entry:start:set_project --text "${text}" --project "${project}"
+}
+cmd:rest:out() {
+  toggl:entry:stop:current
+}
+toggl:entry:start() {
+  beareq-oapi \
+    --profile toggl startTimeEntry \
+    --body-time-entry-created-with beareq-oapi "$@"
+}
+toggl:entry:start:set_project() {
+  local text project args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --project)
+      project=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  if [[ -z ${project} ]]; then
+    toggl:entry:start \
+      --body-time-entry-description "${text}" \
+      --jq .
+    return
+  fi
+  project_id=$(
+    toggl:projects:list \
+      --jq ".[] | [.id,.name] | @tsv" |
+      awk -F "\t" -v match_text="${project}" '$2==match_text{print$1;exit}'
+  )
+  if [[ -z ${project_id} ]]; then
+    project_id=$(
+      toggl:projects:create \
+        --body-project-name "${project}" \
+        --jq .data.id
+    )
+  fi
+  toggl:entry:start \
+    --body-time-entry-pid "${project_id}" \
+    --body-time-entry-description "${text}" \
+    --jq .
+}
+toggl:entry:stop:current() {
+  entry_id=$(
+    beareq-oapi \
+      --profile toggl getCurrentTimeEntry \
+      --jq .data.id
+  )
+  if [[ -z ${entry_id} ]]; then
+    return
+  fi
+  beareq-oapi \
+    --profile toggl stopTimeEntry \
+    --time-entry-id "${entry_id}" \
+    --jq .
+}
+toggl:projects:create() {
+  beareq-oapi \
+    --profile toggl createProject \
+    --body-project-wid "${workspace_id}" "$@"
+}
+toggl:projects:list() {
+  beareq-oapi \
+    --profile toggl getProjects \
+    --workspace-id "${workspace_id}" "$@"
+}
+
+if [[ -z ${enable_toggl} ]]; then
+  return 0
+fi
+
+cmd=$1
+shift
+"cmd:${cmd}" "$@"

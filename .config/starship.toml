@@ -79,5 +79,5 @@ discharging_symbol = "💀 "
 disabled = false
 time_format = "%T"
 
-[env_var.POMO_COMMIT_MSG]
+[env_var.POMODORO_COMMIT_MSG]
 format = "[🎯 $env_value]($style)\n"

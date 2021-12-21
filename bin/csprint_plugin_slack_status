@@ -1,0 +1,215 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+enable_slack_status=${CSPRINT_ENABLE_SLACK_STATUS:-1}
+slack_profile=${CSPRINT_SLACK_STATUS_BEAREQ_PROFILE-${SLACK_BEAREQ_PROFILE:-"default"}}
+
+cmd:check:in() {
+  local icon text csprint_ended args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --icon)
+      icon=$2
+      shift 2
+      ;;
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --csprint-ended)
+      csprint_ended=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  slack:users_profile_set \
+    --emoji "${icon}" \
+    --text "${text}" \
+    --expiration "$(date +%s --date "${csprint_ended}")"
+}
+cmd:check:out() {
+  local icon text csprint_next_begin args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --icon)
+      icon=$2
+      shift 2
+      ;;
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --csprint-next-begin)
+      csprint_next_begin=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  slack:users_profile_set \
+    --emoji "${icon}" \
+    --text "${text}" \
+    --expiration "$(date +%s --date "${csprint_next_begin}")"
+}
+cmd:rest:in() {
+  local icon text dir breaking args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --icon)
+      icon=$2
+      shift 2
+      ;;
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --dir)
+      dir=$2
+      shift 2
+      ;;
+    --breaking)
+      breaking=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+
+  slack:users_profile_get >"${dir}/slack_status.profile"
+  slack:users_profile_set \
+    --emoji "${icon}" \
+    --text "${text}" \
+    --expiration "$(date +%s --date "${breaking}")"
+}
+cmd:rest:out() {
+  local icon dir args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --icon)
+      icon=$2
+      shift 2
+      ;;
+    --dir)
+      dir=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+
+  if [[ -f "${dir}/slack_status.profile" ]]; then
+    slack:users_profile_set:raw_profile "$(cat "${dir}/slack_status.profile")"
+    rm "${dir}/slack_status.profile"
+  else
+    slack:users_profile_set
+  fi
+}
+cmd:pomodoro:begin() {
+  local icon running args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --icon)
+      icon=$2
+      shift 2
+      ;;
+    --running)
+      running=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  slack:users_profile_set \
+    --emoji "${icon}" \
+    --text "作業中" \
+    --expiration "$(date +%s --date "${running}")"
+}
+cmd:pomodoro:break() {
+  :
+}
+cmd:pomodoro:cleanup() {
+  local icon breaking args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --icon)
+      icon=$2
+      shift 2
+      ;;
+    --breaking)
+      breaking=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+
+  slack:users_profile_set \
+    --emoji "${icon}" \
+    --text "休憩中" \
+    --expiration "$(date +%s --date "${breaking}")"
+}
+cmd:pomodoro:complete() {
+  :
+}
+slack:users_profile_set() {
+  local text emoji expiration
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --text)
+      text=$2 && shift 2
+      ;;
+    --emoji)
+      emoji=":$2:" && shift 2
+      ;;
+    --expiration)
+      expiration=$2 && shift 2
+      ;;
+    *)
+      echo "[E] unsupported flags: $*" 1>&2
+      return 1
+      ;;
+    esac
+  done
+  beareq-oapi \
+    --profile "${slack_profile}" users_profile_set \
+    --profile "{\"status_text\":\"${text}\",\"status_emoji\":\"${emoji}\",\"status_expiration\":${expiration}}" \
+    --jq .ok
+}
+slack:users_profile_set:raw_profile() {
+  beareq-oapi \
+    --profile "${slack_profile}" users_profile_set \
+    --profile "$*" \
+    --jq .ok
+}
+slack:users_profile_get() {
+  beareq-oapi \
+    --profile "${slack_profile}" users_profile_get \
+    --jq ".profile|{\"status_text\":.status_text,\"status_emoji\":.status_emoji,\"status_expiration\":.status_expiration}"
+}
+
+if [[ -z ${enable_slack_status} ]]; then
+  return 0
+fi
+cmd=$1
+shift
+"cmd:${cmd}" "$@"

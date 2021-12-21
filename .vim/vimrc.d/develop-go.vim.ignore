@@ -1,1 +1,2 @@
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries', 'for': ['go']}
+let g:go_fold_enable = ['block', 'import', 'varconst', 'comment', 'package_comment']
