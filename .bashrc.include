@@ -35,6 +35,18 @@ alias ll='ls -l'
 export TRASH_DIR=${HOME}/.Trash
 alias rm='mv --backup=numbered --target-directory=${TRASH_DIR}'
 
+a9e_cd:save() {
+  dirs -v -l | awk '!v[$NF]{v[$NF]=1;print$NF}' | head -n 100 | tee -a "${HOME}/.cd_history"
+}
+
+a9e_cd:load() {
+  for v in $(tail -n 1000 "${@:-"${HOME}/.cd_history"}" | awk '!v[$NF]{v[$NF]=1;print$NF}'); do
+    if [[ -d "$v" ]]; then
+      pushd -n "$v" >/dev/null || true
+    fi
+  done
+}
+
 a9e_cd() {
   case $1 in
   -) popd >/dev/null || return 1 ;;
@@ -43,16 +55,18 @@ a9e_cd() {
     dirs -v | awk '!v[$NF]{v[$NF]=1;print$0}'
     ;;
   --save | -S)
-    dirs -v -l | awk '!v[$NF]{v[$NF]=1;print$NF}' | head -n 100 | tee -a "${HOME}/.cd_history"
+    a9e_cd:save
     ;;
   --load | -L)
     shift
-    for v in $(tail -n 1000 "${@:-"${HOME}/.cd_history"}" | awk '!v[$NF]{v[$NF]=1;print$NF}'); do
-      if [[ -d "$v" ]]; then
-        pushd -n "$v" >/dev/null || true
-      fi
-    done
+    a9e_cd:load "$@"
     ;;
+  --reload)
+    dirs -c
+    shift
+    a9e_cd:load "$@"
+    ;;
+
   --fzf | -F)
     shift
     pushd "$({
@@ -166,19 +180,27 @@ __create_ssh_config() {
 __create_ssh_config "$@"
 
 # history settings
+_share_history_hook() {
+  local previous_exit_status=$?
+  trap -- '' SIGINT
 
-shopt -u histappend
-share_history() {
   history -a
   history -c
   history -r
+
+  trap - SIGINT
+  return ${previous_exit_status}
 }
-PROMPT_COMMAND='share_history'
-HISTSIZE=1000000000
-HISTFILESIZE=1000000000
-HISTTIMEFORMAT='[%F %T %Z]  '
-HISTIGNORE='l[sla]:history:pwd:exit:cd:[bf]g:jobs'
-HISTCONTROL='ignoredups:ignorespace:erasedups'
+if ! [[ "${PROMPT_COMMAND:-}" =~ _share_history_hook ]]; then
+  export PROMPT_COMMAND="${PROMPT_COMMAND:+${PROMPT_COMMAND};}_share_history_hook"
+fi
+
+shopt -u histappend
+export HISTSIZE=1000000000
+export HISTFILESIZE=1000000000
+export HISTTIMEFORMAT="[%F %T %Z]  "
+export HISTIGNORE='l[sla]:history:pwd:exit:cd:[bf]g:jobs'
+export HISTCONTROL='ignoredups:ignorespace:erasedups'
 
 export FZF_CTRL_T_COMMAND='git ls-files 2>/dev/null || rg --files --hidden --follow --glob "!.git/*"'
 export FZF_CTRL_T_OPTS='--preview "bat --color=always --style=header,grid --line-range :100 {}"'
