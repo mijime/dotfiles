@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+set -ueo pipefail
+
+enable_git=${CSPRINT_ENABLE_GIT:-1}
+
+csprint_plugin_git() {
+  if ! git rev-parse HEAD >/dev/null 2>/dev/null; then
+    return 0
+  fi
+
+  local cmd=$1
+  shift
+  local text args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --text)
+      text=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+
+  case ${cmd} in
+  status:list)
+    git status --short | awk -F "\t" -v icon=":octopus:" '$0!=""{print icon,$0}'
+    ;;
+  pomodoro:break)
+    git add -A
+    git commit --message "WIP: ${text}" || true
+    ;;
+  pomodoro:complete)
+    git add -A
+    git commit --message "${text}" || true
+    ;;
+  esac
+}
+
+if [[ -z ${enable_git} ]]; then
+  return 0
+fi
+
+csprint_plugin_git "${@}"

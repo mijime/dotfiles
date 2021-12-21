@@ -1,0 +1,460 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+enable_slack_thread=${CSPRINT_ENABLE_SLACK_THREAD:-1}
+slack_profile=${CSPRINT_SLACK_THREAD_BEAREQ_PROFILE:-${SLACK_BEAREQ_PROFILE:-"default"}}
+slack_channel=${CSPRINT_SLACK_THREAD_BEAREQ_CHANNEL:-${SLACK_BEAREQ_CHANNEL:-}}
+thread_icon=${CSPRINT_SLACK_THREAD_ICON:-"sunrise"}
+thread_text=${CSPRINT_SLACK_THREAD_TEXT:-"出勤"}
+
+cmd:check:in() {
+  local args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  slack:post_message \
+    --text "$({
+      echo -ne ":${thread_icon}: ${thread_text}\n"
+    })"
+}
+cmd:check:out() {
+  local icon text csprint_prev_ended csprint_next_begin args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --icon)
+      icon=$2
+      shift 2
+      ;;
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --csprint-prev-ended)
+      csprint_prev_ended=$2
+      shift 2
+      ;;
+    --csprint-next-begin)
+      csprint_next_begin=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  slack:post_message \
+    --thread-ts "$(slack_thread:get_ts \
+      --icon "${thread_icon}" \
+      --text "${thread_text}" \
+      --oldest "${csprint_prev_ended}" \
+      --latest "${csprint_next_begin}")" \
+    --text "$({
+      echo -ne ":${icon}: ${text}\n"
+    })"
+}
+cmd:comments:add() {
+  local text csprint_prev_ended csprint_next_begin args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --csprint-prev-ended)
+      csprint_prev_ended=$2
+      shift 2
+      ;;
+    --csprint-next-begin)
+      csprint_next_begin=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  slack:post_message \
+    --thread-ts "$(slack_thread:get_ts \
+      --icon "${thread_icon}" \
+      --text "${thread_text}" \
+      --oldest "${csprint_prev_ended}" \
+      --latest "${csprint_next_begin}")" \
+    --text "${text}"
+}
+cmd:comments:list() {
+  local csprint_prev_ended csprint_next_begin args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --csprint-prev-ended)
+      csprint_prev_ended=$2
+      shift 2
+      ;;
+    --csprint-next-begin)
+      csprint_next_begin=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  slack:conversations_replies \
+    --ts "$(slack_thread:get_ts \
+      --icon "${thread_icon}" \
+      --text "${thread_text}" \
+      --oldest "${csprint_prev_ended}" \
+      --latest "${csprint_next_begin}")" \
+    --jq '.messages[]|(.ts,.text)'
+}
+cmd:pomodoro:begin() {
+  local icon text csprint_prev_ended csprint_next_begin args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --icon)
+      icon=$2
+      shift 2
+      ;;
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --duration)
+      duration=$2
+      shift 2
+      ;;
+    --csprint-prev-ended)
+      csprint_prev_ended=$2
+      shift 2
+      ;;
+    --csprint-next-begin)
+      csprint_next_begin=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  slack:post_message \
+    --thread-ts "$(slack_thread:get_ts \
+      --icon "${thread_icon}" \
+      --text "${thread_text}" \
+      --oldest "${csprint_prev_ended}" \
+      --latest "${csprint_next_begin}")" \
+    --text ":${icon}: 開始 | ${text}"
+}
+cmd:pomodoro:break() {
+  local icon text duration csprint_prev_ended csprint_next_begin args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --icon)
+      icon=$2
+      shift 2
+      ;;
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --duration)
+      duration=$2
+      shift 2
+      ;;
+    --csprint-prev-ended)
+      csprint_prev_ended=$2
+      shift 2
+      ;;
+    --csprint-next-begin)
+      csprint_next_begin=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  slack:post_message \
+    --thread-ts "$(slack_thread:get_ts \
+      --icon "${thread_icon}" \
+      --text "${thread_text}" \
+      --oldest "${csprint_prev_ended}" \
+      --latest "${csprint_next_begin}")" \
+    --text ":${icon}: 休憩 | ${text} ($(format:sec2hrdate "${duration}"))"
+}
+cmd:pomodoro:cleanup() {
+  :
+}
+cmd:pomodoro:complete() {
+  local icon text duration csprint_prev_ended csprint_next_begin args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --icon)
+      icon=$2
+      shift 2
+      ;;
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --duration)
+      duration=$2
+      shift 2
+      ;;
+    --csprint-prev-ended)
+      csprint_prev_ended=$2
+      shift 2
+      ;;
+    --csprint-next-begin)
+      csprint_next_begin=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  slack:post_message \
+    --thread-ts "$(slack_thread:get_ts \
+      --icon "${thread_icon}" \
+      --text "${thread_text}" \
+      --oldest "${csprint_prev_ended}" \
+      --latest "${csprint_next_begin}")" \
+    --text ":${icon}: 終了 | ${text} ($(format:sec2hrdate "${duration}"))"
+}
+cmd:rest:in() {
+  local icon text csprint_prev_ended csprint_next_begin args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --icon)
+      icon=$2
+      shift 2
+      ;;
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --csprint-prev-ended)
+      csprint_prev_ended=$2
+      shift 2
+      ;;
+    --csprint-next-begin)
+      csprint_next_begin=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  slack:post_message \
+    --thread-ts "$(slack_thread:get_ts \
+      --icon "${thread_icon}" \
+      --text "${thread_text}" \
+      --oldest "${csprint_prev_ended}" \
+      --latest "${csprint_next_begin}")" \
+    --text ":${icon}: 開始 | ${text}"
+}
+cmd:rest:out() {
+  local icon text duration csprint_prev_ended csprint_next_begin args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --icon)
+      icon=$2
+      shift 2
+      ;;
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --duration)
+      duration=$2
+      shift 2
+      ;;
+    --csprint-prev-ended)
+      csprint_prev_ended=$2
+      shift 2
+      ;;
+    --csprint-next-begin)
+      csprint_next_begin=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  slack:post_message \
+    --thread-ts "$(slack_thread:get_ts \
+      --icon "${thread_icon}" \
+      --text "${thread_text}" \
+      --oldest "${csprint_prev_ended}" \
+      --latest "${csprint_next_begin}")" \
+    --text ":${icon}: 終了 | ${text} ($(format:sec2hrdate "${duration}"))"
+}
+cmd:tasks:list() {
+  :
+}
+cmd:tasks:add() {
+  local icon text due csprint_prev_ended csprint_next_begin args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --icon)
+      icon=$2
+      shift 2
+      ;;
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --due)
+      due=$2
+      shift 2
+      ;;
+    --csprint-prev-ended)
+      csprint_prev_ended=$2
+      shift 2
+      ;;
+    --csprint-next-begin)
+      csprint_next_begin=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  slack:post_message \
+    --thread-ts "$(slack_thread:get_ts \
+      --icon "${thread_icon}" \
+      --text "${thread_text}" \
+      --oldest "${csprint_prev_ended}" \
+      --latest "${csprint_next_begin}")" \
+    --text ":${icon}: 追加 | ${text} (期限: ${due})"
+}
+cmd:tasks:complete() {
+  local icon text csprint_prev_ended csprint_next_begin args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --icon)
+      icon=$2
+      shift 2
+      ;;
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --csprint-prev-ended)
+      csprint_prev_ended=$2
+      shift 2
+      ;;
+    --csprint-next-begin)
+      csprint_next_begin=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  slack:post_message \
+    --thread-ts "$(slack_thread:get_ts \
+      --icon "${thread_icon}" \
+      --text "${thread_text}" \
+      --oldest "${csprint_prev_ended}" \
+      --latest "${csprint_next_begin}")" \
+    --text ":${icon}: 完了 | ${text}"
+}
+format:date2ts() {
+  date "+%s.000000" "$@"
+}
+format:sec2hrdate() {
+  local sec sec_min sec_hour sec_day
+  sec=$1
+  sec_min=60
+  sec_hour=$(("${sec_min}" * 60))
+  sec_day=$(("${sec_hour}" * 24))
+  if [[ ${sec} -le $(("${sec_min}" * 2)) ]]; then
+    echo "${sec}s"
+  else
+    if [[ ${sec} -le $(("${sec_hour}" * 2)) ]]; then
+      echo "$(("${sec}" / "${sec_min}"))m"
+    else
+      if [[ ${sec} -le $(("${sec_day}" * 2)) ]]; then
+        echo "$(("${sec}" / "${sec_hour}"))h"
+      else
+        echo "$(("${sec}" / "${sec_day}"))d"
+      fi
+    fi
+  fi
+}
+slack:conversations_replies() {
+  beareq-oapi \
+    --profile "${slack_profile}" conversations_replies \
+    --channel "${slack_channel}" "$@"
+}
+slack:post_message() {
+  beareq-oapi \
+    --profile "${slack_profile}" \
+    --jq .ok chat_postMessage \
+    --channel "${slack_channel}" \
+    --as-user true "$@"
+}
+slack_thread:get_ts() {
+  local icon text date_oldest date_latest args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --icon)
+      icon=$2
+      shift 2
+      ;;
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --oldest)
+      date_oldest=$2
+      shift 2
+      ;;
+    --latest)
+      date_latest=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  beareq-oapi \
+    --profile "${slack_profile}" \
+    --jq ".messages[]|[.ts,.text]|@tsv" conversations_history \
+    --channel "${slack_channel}" \
+    --oldest "$(format:date2ts \
+      --date "${date_oldest}")" \
+    --latest "$(format:date2ts \
+      --date "${date_latest}")" \
+    --limit 5 "${args[@]}" | awk -F "\t" -v begin_prefix="^:${icon}: ${text}" '$2~begin_prefix{print$1}' | head -n 1
+}
+
+if [[ -z ${enable_slack_thread} ]]; then
+  return 0
+fi
+
+cmd=$1
+shift
+"cmd:${cmd}" "$@"

@@ -1,0 +1,368 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+enable_google_tasks=${CSPRINT_ENABLE_GOOGLE_TASKS:-1}
+google_profile=${CSPRINT_GOOGLE_BEAREQ_PROFILE:-${GOOGLE_BEAREQ_PROFILE:-"default"}}
+tasklists_id=${CSPRINT_GOOGLE_BEAREQ_TASKLIST:-${GOOGLE_BEAREQ_TASKLIST:-""}}
+
+cmd:status:list() {
+  local csprint_begin csprint_next_begin args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --csprint-begin)
+      csprint_begin=$2
+      shift 2
+      ;;
+    --csprint-next-begin)
+      csprint_next_begin=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  tasks:list:completed --completed-min "${csprint_begin}" | awk -v icon=":white_check_mark:" '$0!=""{print icon,$0}'
+  tasks:list:needsAction --due-max "${csprint_next_begin}" | awk -v icon=":pencil2:" '$0!=""{print icon,$0}'
+}
+cmd:check:in() {
+  local text args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --text)
+      text=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  local tasks_id
+  tasks_id=$(tasks:list:search \
+    --text "${text}")
+  tasks:complete \
+    --jq .status \
+    --task "${tasks_id}"
+}
+cmd:check:out() {
+  local text args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --text)
+      text=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  local tasks_id
+  tasks_id=$(tasks:list:search \
+    --text "${text}")
+  tasks:complete \
+    --jq .status \
+    --task "${tasks_id}"
+}
+cmd:pomodoro:begin() {
+  local text project dir csprint_ended args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --project)
+      project=$2
+      shift 2
+      ;;
+    --dir)
+      dir=$2
+      shift 2
+      ;;
+    --csprint-ended)
+      csprint_ended=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  tasklists_id=$(tasklists:list:fetch_or_create --text "${project}")
+  local tasks_id
+  tasks_id=$(tasks:list:match \
+    --tasklist "${tasklists_id}" \
+    --text "${text}")
+  if [[ -z ${tasks_id} ]]; then
+    tasks_id=$(
+      tasks:insert \
+        --tasklist "${tasklists_id}" \
+        --body-due "${csprint_ended}" \
+        --body-title "${text}" \
+        --jq .id
+    )
+  fi
+  echo "${tasks_id}" >"${dir}/google_tasks.pid"
+}
+cmd:pomodoro:break() {
+  :
+}
+cmd:pomodoro:cleanup() {
+  local dir args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --dir)
+      dir=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  if [[ -s "${dir}/google_tasks.pid" ]]; then
+    rm "${dir}/google_tasks.pid"
+  fi
+}
+cmd:pomodoro:complete() {
+  local text project dir args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --project)
+      project=$2
+      shift 2
+      ;;
+    --dir)
+      dir=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  tasklists_id=$(tasklists:list:fetch_or_create --text "${project}")
+  tasks:complete \
+    --tasklist "${tasklists_id}" \
+    --task "$(cat "${dir}/google_tasks.pid")"
+}
+cmd:tasks:add() {
+  local text project due args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --project)
+      project=$2
+      shift 2
+      ;;
+    --due)
+      due=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  tasklists_id=$(tasklists:list:fetch_or_create --text "${project}")
+  tasks:insert \
+    --tasklist "${tasklists_id}" \
+    --body-due "${due}" \
+    --body-title "${text}" \
+    --jq .
+}
+cmd:tasks:complete() {
+  local text project due args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --text)
+      text=$2
+      shift 2
+      ;;
+    --project)
+      project=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  tasklists_id=$(tasklists:list:fetch_or_create --text "${project}")
+  local tasks_id
+  tasks_id=$(tasks:list:match \
+    --text "${text}")
+  tasks:complete \
+    --tasklist "${tasklists_id}" \
+    --task "${tasks_id}" \
+    --jq .
+}
+cmd:tasks:edit() {
+  echo -ne "Update YourTasks on https://calendar.google.com/\n" 1>&2
+  open "https://calendar.google.com/"
+  read -r _
+}
+cmd:tasks:list() {
+  local status csprint_begin csprint_next_begin args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --status)
+      status=$2
+      shift 2
+      ;;
+    --csprint-begin)
+      csprint_begin=$2
+      shift 2
+      ;;
+    --csprint-next-begin)
+      csprint_next_begin=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  case ${status} in
+  completed)
+    tasks:list:completed \
+      --completed-min "${csprint_begin}"
+    ;;
+  *)
+    tasks:list:needsAction \
+      --due-max "${csprint_next_begin}"
+    ;;
+  esac
+}
+tasklists:list() {
+  beareq-oapi \
+    --profile "${google_profile}" tasks.tasklists.list "$@"
+}
+tasklists:list:fetch_or_create() {
+  local text args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --text)
+      text=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  if [[ -z ${text} ]]; then
+    echo "${tasklists_id}"
+    return
+  fi
+  tasklists_id=$(
+    tasklists:list \
+      --jq ".items[]|[.id,.title]|@tsv" "${args[@]}" |
+      awk -F "\t" -v match_text="${text}" '$2==match_text{print$1;exit}' || true
+  )
+  if [[ -n ${tasklists_id} ]]; then
+    echo "${tasklists_id}"
+    return
+  fi
+  tasklists_id=$(
+    beareq-oapi \
+      --profile "${google_profile}" tasks.tasklists.insert \
+      --body-title "${text}" \
+      --jq .id "${args[@]}"
+  )
+  echo "${tasklists_id}"
+}
+tasks:complete() {
+  beareq-oapi \
+    --profile "${google_profile}" tasks.tasks.patch \
+    --tasklist "${tasklists_id}" \
+    --body-status completed \
+    --body-hidden true "$@"
+}
+tasks:insert() {
+  beareq-oapi \
+    --profile "${google_profile}" tasks.tasks.insert \
+    --tasklist "${tasklists_id}" "$@"
+}
+tasks:list() {
+  for tasklists_id in $(tasklists:list \
+    --jq "if (.items|length)>0 then .items[]|[.id] else [] end|@tsv"); do
+    beareq-oapi \
+      --profile "${google_profile}" tasks.tasks.list \
+      --tasklist "${tasklists_id}" \
+      --jq "if (.items|length)>0 then .items[]|[.title] else [] end|@tsv" "$@"
+  done
+}
+tasks:list:completed() {
+  tasks:list \
+    --show-completed true \
+    --show-hidden true "$@"
+}
+tasks:list:needsAction() {
+  tasks:list \
+    --show-completed false \
+    --show-hidden false "$@"
+}
+tasks:list:match() {
+  local text args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --text)
+      text=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  tasks:list \
+    --jq ".items[]|[.id,.title]|@tsv" "${args[@]}" |
+    awk -F "\t" -v match_text="${text}" '$2==match_text{print$1;exit}' || true
+}
+tasks:list:search() {
+  local text args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --text)
+      text=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+  tasks:list \
+    --jq ".items[]|[.id,.title]|@tsv" "${args[@]}" | awk -F "\t" -v match_text="${text}" '$2~match_text{print$1;exit}' || true
+}
+
+if [[ -z ${enable_google_tasks} ]]; then
+  return
+fi
+
+cmd=$1
+shift
+"cmd:${cmd}" "$@"

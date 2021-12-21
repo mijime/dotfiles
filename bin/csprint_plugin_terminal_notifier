@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+enable_terminal_notifier=${CSPRINT_ENABLE_TERMINAL_NOTIFIER:-1}
+
+csprint_plugin_terminal_notifier() {
+  if [[ -z ${enable_terminal_notifier} ]]; then
+    return 0
+  fi
+  local cmd=$1
+  shift
+
+  local dir running breaking args=()
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --dir)
+      dir=$2
+      shift 2
+      ;;
+    --running)
+      running=$2
+      shift 2
+      ;;
+    --breaking)
+      breaking=$2
+      shift 2
+      ;;
+    *)
+      args=("${args[@]}" "$1")
+      shift 1
+      ;;
+    esac
+  done
+
+  case ${cmd} in
+  pomodoro:begin)
+    (
+      sleep "$(format:date2duration_sec --date "${running}")"
+      terminal-notifier -title pomodoro -message "開始 | 休憩"
+      rm "${dir}/terminal_notifier.pid"
+    ) &
+    echo $! >"${dir}/terminal_notifier.pid"
+    ;;
+  pomodoro:break)
+    :
+    ;;
+  pomodoro:cleanup)
+    if [[ -s "${dir}/terminal_notifier.pid" ]]; then
+      kill "$(cat "${dir}/terminal_notifier.pid")"
+      rm "${dir}/terminal_notifier.pid"
+    fi
+    (
+      sleep "$(format:date2duration_sec --date "${breaking}")"
+      terminal-notifier -title pomodoro -message "終了 | 休憩"
+    ) &
+    ;;
+  pomodoro:complete)
+    :
+    ;;
+  esac
+}
+format:date2duration_sec() {
+  echo $(($(date +%s "$@") - $(date +%s)))
+}
+
+csprint_plugin_terminal_notifier "$@"

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -ueo pipefail
+
+enable_kot=${CSPRINT_ENABLE_KOT:-1}
+
+csprint_plugin_kot() {
+  local cmd=$1
+  shift
+  case ${cmd} in
+  check:in)
+    kot check_in
+    ;;
+  check:out)
+    kot check_out
+    ;;
+  rest:in)
+    kot rest_in
+    ;;
+  rest:out)
+    kot rest_out
+    ;;
+  esac
+}
+
+if [[ -z ${enable_kot} ]]; then
+  return 0
+fi
+
+csprint_plugin_kot "${@}"
