@@ -1,0 +1,11 @@
+Plug 'dense-analysis/ale'
+
+let g:ale_completion_autoimport = 1
+let g:ale_completion_enabled = 1
+set omnifunc=ale#completion#OmniFunc
+
+augroup ALELspSettings
+      autocmd!
+      nnoremap gd :ALEGoToDefinition<CR>
+      nnoremap K  :ALEHover<CR>
+augroup END

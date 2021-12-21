@@ -30,7 +30,7 @@ augroup END
 Plug 'junegunn/vim-easy-align', {'on':['EasyAlign']}
 Plug 'junegunn/gv.vim', {'on':['GV']}
 
-Plug 'mattn/vim-sonictemplate'
+Plug 'mattn/vim-sonictemplate', {'on':['Template']}
  let g:sonictemplate_vim_template_dir = [
   \ '$HOME/.vim/templates/sonic/',
   \ '$HOME/.vim/templates/sonic.local/',
@@ -47,3 +47,5 @@ augroup AutoSaveSettings
                         \ cd -
       command AutoSaveDisable autocmd! AutoSaveSettings BufWritePost *
 augroup END
+
+autocmd Filetype go setlocal foldmethod=syntax

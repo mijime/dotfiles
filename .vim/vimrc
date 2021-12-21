@@ -24,6 +24,7 @@ set noshowcmd
 set scrolloff=999
 set showtabline=2
 set nowrap
+set foldnestmax=1
 
 " Encoding
 if &encoding !=? 'utf-8' | let &termencoding = &encoding | end

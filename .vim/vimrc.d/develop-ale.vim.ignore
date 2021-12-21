@@ -13,18 +13,12 @@ let g:ale_set_quickfix = 1
 let g:ale_sign_column_always = 0
 let g:ale_lint_delay = 1000
 
-let g:ale_completion_autoimport = 1
-let g:ale_completion_enabled = 1
-set omnifunc=ale#completion#OmniFunc
-
 let g:ale_go_golangci_lint_package = 1
 let g:ale_sh_shfmt_options = '-i=2'
 let g:ale_sql_sqlformat_options = '--reindent --indent_after_first --indent_columns --keywords upper --identifiers lower'
 
-augroup ALEConfig
+augroup ALESettings
       autocmd!
-      nnoremap gd :ALEGoToDefinition<CR>
-      nnoremap K  :ALEHover<CR>
       autocmd Filetype go let b:ale_fixers = ['gofmt', 'goimports']
       autocmd Filetype go let b:ale_linters = ['gopls', 'govet', 'golangci_lint']
       autocmd Filetype javascript,typescript,typescriptreact let b:ale_fixers = ['prettier', 'eslint']
@@ -36,6 +30,10 @@ augroup ALEConfig
       autocmd Filetype sh let b:ale_fixers = ['shfmt']
       autocmd Filetype sql let b:ale_fixers = ['sqlformat']
       autocmd Filetype terraform let b:ale_fixers = ['terraform']
+      let g:ale_linters = {
+            \ 'go': ['gopls', 'govet', 'golangci_lint'],
+            \ '*': ['remove_trailing_lines', 'trim_whitespace']
+      \ }
 
       let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
 augroup END
